@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'rest_framework',
     'corsheaders',
+    'accounts',  
 ]
 
 MIDDLEWARE = [
@@ -129,4 +130,20 @@ import os
 
 MEDIA_URL = '/equipment_images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'equipment_images')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'kvamsim7@gmail.com'
+EMAIL_HOST_PASSWORD = 'hlqplxqedvhcwdun'  
+
+
+JWT_ALGORITHM = 'HS256'
+JWT_EXP_DELTA_SECONDS = 3600  # Token valid for 1 hr
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
+
+
 
