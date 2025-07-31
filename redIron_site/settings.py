@@ -137,10 +137,21 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'kvamsim7@gmail.com'
 EMAIL_HOST_PASSWORD = 'hlqplxqedvhcwdun'  
+DEFAULT_FROM_EMAIL=EMAIL_HOST_USER
 
-
+# JWT Configuration
+JWT_SECRET_KEY = SECRET_KEY  # Or use a separate key if preferred
 JWT_ALGORITHM = 'HS256'
-JWT_EXP_DELTA_SECONDS = 3600  # Token valid for 1 hr
+JWT_EXP_DELTA_SECONDS = 3600  # 1 hour
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'accounts.authentication.JWTAuthentication',  
+    ),
+}
+
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
