@@ -1,1 +1,1 @@
-web: gunicorn rediron_backend.wsgi
+web: gunicorn redIron_backend.wsgi
