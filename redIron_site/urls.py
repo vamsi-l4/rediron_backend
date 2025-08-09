@@ -1,17 +1,24 @@
 # redIron_site/urls.py
-
 from django.contrib import admin
 from django.urls import path, include
+from django.http import JsonResponse
 from django.conf import settings
 from django.conf.urls.static import static
 
+def health_view(request):
+    """Simple health / root endpoint so visiting / won't return 404."""
+    return JsonResponse({
+        "status": "ok",
+        "service": "redIron backend",
+        "message": "Backend is up. Use /api/ for API endpoints."
+    })
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('main.urls')),       # Main app routes
-    path('accounts/', include('accounts.urls')),  # Accounts app routes
+    path("", health_view, name="health"),            # <-- root health check
+    path("admin/", admin.site.urls),
+    path("", include("main.urls")),                   # your main app routes
+    path("api/", include("accounts.urls")),           # accounts APIs e.g. signup, login etc.
 ]
 
-# Serve media and static files in development
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+# serve media during development / Render static show
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
