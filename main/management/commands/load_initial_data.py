@@ -8,11 +8,11 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write("Starting strict data sync...")
         
-        # EXACT FILES ONLY: No auto-discovery, no messy duplicates.
-        # Just add any new files to this list in the exact order you want them loaded.
+        # Professional Modular Loading: Parents are loaded before Children
         exact_fixtures = [
             'main/fixtures/seed_data.json',
             'main/fixtures/equipment.json',
+            'rediron_shop/fixtures/categories.json',
             'rediron_shop/fixtures/equipment_products_clean.json'
         ]
         

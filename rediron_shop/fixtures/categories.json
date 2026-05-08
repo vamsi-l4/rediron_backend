@@ -1,0 +1,10 @@
+[
+  {
+    "model": "rediron_shop.category",
+    "pk": 1,
+    "fields": {
+      "name": "Fitness Equipment",
+      "slug": "fitness-equipment"
+    }
+  }
+]
