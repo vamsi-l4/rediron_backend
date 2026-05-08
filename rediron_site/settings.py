@@ -220,3 +220,7 @@ LOGGING = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REFRESH_TOKEN_EXP_DAYS = 7
+
+# Force HTTPS for images in production
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
