@@ -8,12 +8,9 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.stdout.write("Starting strict data sync...")
         
-        # Professional Modular Loading: Parents are loaded before Children
+        # Load the complete master database to ensure 100% data match
         exact_fixtures = [
-            'main/fixtures/seed_data.json',
-            'main/fixtures/equipment.json',
-            'rediron_shop/fixtures/categories.json',
-            'rediron_shop/fixtures/equipment_products_clean.json'
+            'main/fixtures/master_db.json'
         ]
         
         for fixture in exact_fixtures:
