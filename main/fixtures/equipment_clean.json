@@ -1,0 +1,692 @@
+[
+  {
+    "model": "main.equipment",
+    "pk": 1,
+    "fields": {
+      "name": "Commercial Treadmill",
+      "usage": "High-performance commercial treadmill built for endurance training, fat loss, and professional gym usage. Designed with powerful motor capacity, advanced cushioning, and smart console features.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 2,
+    "fields": {
+      "name": "Manual Treadmill",
+      "usage": "Self-powered treadmill designed for natural walking and jogging without electricity. Ideal for home workouts, rehab training, and low-impact cardio sessions.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 3,
+    "fields": {
+      "name": "Curved Treadmill",
+      "usage": "High-performance self-powered curved treadmill designed for sprint training and HIIT workouts. Enhances natural running form and burns more calories compared to traditional treadmills.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 4,
+    "fields": {
+      "name": "Elliptical Trainer",
+      "usage": "Low-impact cardio machine that simulates walking, running, and climbing motions while reducing stress on joints. Ideal for full-body workouts combining upper and lower body movement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 5,
+    "fields": {
+      "name": "Air Walker",
+      "usage": "Lightweight, low-impact cardio machine that simulates a walking or gliding motion in the air. Commonly used for gentle workouts, rehabilitation, and beginner-friendly fitness routines.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 6,
+    "fields": {
+      "name": "Stationary Bike (Upright Bike)",
+      "usage": "Indoor cycling machine designed to simulate outdoor biking. Provides effective cardiovascular workouts with adjustable resistance and compact design.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 7,
+    "fields": {
+      "name": "Upright Bike",
+      "usage": "Classic indoor cycling machine that mimics outdoor bicycle posture. Provides effective cardiovascular workouts with adjustable resistance and compact design for home and gym use.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 8,
+    "fields": {
+      "name": "Recumbent Bike",
+      "usage": "Ergonomic stationary bike with a reclined seating position and back support. Designed for maximum comfort, low-impact cardio, and rehabilitation-focused workouts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 9,
+    "fields": {
+      "name": "Spin Bike (Indoor Cycling Bike)",
+      "usage": "High-intensity indoor cycling machine designed for endurance training, fat loss, and professional cycling workouts. Features a heavy flywheel and road-bike style posture for realistic riding experience.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 10,
+    "fields": {
+      "name": "Air Bike (Assault Bike / Fan Bike)",
+      "usage": "High-intensity cardio machine using air resistance and dual-action handles. Resistance increases with effort, making it ideal for HIIT, CrossFit, and full-body conditioning workouts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 11,
+    "fields": {
+      "name": "Rowing Machine",
+      "usage": "Full-body cardio machine that simulates rowing motion using a sliding seat and resistance system. Engages legs, back, arms, and core simultaneously for strength and endurance training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 12,
+    "fields": {
+      "name": "Water Rowing Machine",
+      "usage": "Premium rowing machine using water resistance to simulate real on-water rowing. Provides smooth, natural motion with dynamic resistance based on user effort.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 13,
+    "fields": {
+      "name": "Magnetic Rowing Machine",
+      "usage": "Low-noise, full-body cardio machine using magnetic resistance for smooth and controlled rowing workouts. Ideal for home gyms due to quiet operation and adjustable resistance levels.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 14,
+    "fields": {
+      "name": "Stair Climber",
+      "usage": "High-intensity cardio machine that simulates stair climbing motion. Provides powerful lower-body workout while improving cardiovascular endurance and calorie burn.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 15,
+    "fields": {
+      "name": "Stepper Machine",
+      "usage": "Compact cardio machine that simulates stair stepping motion using hydraulic or resistance-based pedals. Ideal for lower-body workouts, home fitness, and fat-burning routines.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 16,
+    "fields": {
+      "name": "Arc Trainer",
+      "usage": "Advanced cardio machine combining elements of elliptical and stair climber with a unique arc motion. Designed for high-calorie burn, joint-friendly workouts, and full lower-body engagement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 17,
+    "fields": {
+      "name": "Ski Erg",
+      "usage": "Upper-body focused cardio machine that simulates cross-country skiing using a pull-down motion. Designed for strength, endurance, and core training with high calorie burn.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 18,
+    "fields": {
+      "name": "VersaClimber",
+      "usage": "Vertical climbing cardio machine that simulates continuous climbing motion using both arms and legs. Provides one of the most intense full-body workouts with low joint impact.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "cardio"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 19,
+    "fields": {
+      "name": "Chest Press Machine",
+      "usage": "Seated strength machine designed to target chest, shoulders, and triceps through a controlled pressing motion. Provides a safer alternative to free-weight bench press with guided movement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 20,
+    "fields": {
+      "name": "Incline Chest Press Machine",
+      "usage": "Inclined pressing machine designed to target the upper chest (clavicular head), shoulders, and triceps with a natural pressing angle.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 21,
+    "fields": {
+      "name": "Decline Chest Press Machine",
+      "usage": "Strength machine designed to target the lower chest muscles (sternal head) using a downward pressing motion. Provides controlled movement for safe and effective chest development.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 22,
+    "fields": {
+      "name": "Pec Deck Machine (Butterfly Machine)",
+      "usage": "Isolation machine designed for chest fly movement, targeting the pectoral muscles. Also supports reverse fly variation for rear deltoid training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 23,
+    "fields": {
+      "name": "Smith Machine",
+      "usage": "Guided barbell system fixed within steel rails allowing vertical or near-vertical movement. Designed for safe, controlled strength training without requiring a spotter.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 24,
+    "fields": {
+      "name": "Power Rack (Squat Rack / Power Cage)",
+      "usage": "Open or enclosed steel cage system designed for free-weight barbell training with adjustable safety bars. Essential for performing squats, bench press, and heavy lifts safely.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 25,
+    "fields": {
+      "name": "Half Rack",
+      "usage": "Compact open-frame strength rack designed for barbell training with safety spotter arms. Provides essential functionality of a power rack while saving space.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 26,
+    "fields": {
+      "name": "Squat Rack (Squat Stand)",
+      "usage": "Basic barbell support structure designed primarily for squats and presses. Offers adjustable height settings for versatile strength training with minimal space usage.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 27,
+    "fields": {
+      "name": "Leg Press Machine",
+      "usage": "Lower-body strength machine designed to target quadriceps, hamstrings, and glutes through a controlled pressing motion. Available in 45° plate-loaded and horizontal selectorized variants.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 28,
+    "fields": {
+      "name": "Hack Squat Machine",
+      "usage": "Plate-loaded lower-body machine designed to simulate squat movement with back support. Targets quadriceps primarily while reducing balance and stability requirements.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 29,
+    "fields": {
+      "name": "Leg Extension Machine",
+      "usage": "Isolation machine designed to target the quadriceps by extending the knee against resistance. Provides controlled movement for focused muscle development and rehabilitation.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 30,
+    "fields": {
+      "name": "Seated Leg Curl Machine",
+      "usage": "Isolation machine designed to target hamstrings by flexing the knee while seated. Provides controlled resistance for safe and effective posterior leg training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 31,
+    "fields": {
+      "name": "Lying Leg Curl Machine",
+      "usage": "Prone-position isolation machine designed to target hamstrings through knee flexion. Provides strong contraction and stretch for effective posterior leg development.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 32,
+    "fields": {
+      "name": "Glute Bridge Machine (Hip Thrust Machine)",
+      "usage": "Plate-loaded or selectorized machine designed to target glutes through hip thrust/bridge movement. Provides safer and more controlled alternative to barbell hip thrusts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 33,
+    "fields": {
+      "name": "Hip Thrust Machine",
+      "usage": "Specialized lower-body machine designed to target glutes through hip extension movement. Offers a safer and more stable alternative to barbell hip thrusts with guided motion and belt/pad support.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 34,
+    "fields": {
+      "name": "Hip Abduction Machine",
+      "usage": "Isolation machine designed to target outer thigh muscles (gluteus medius and minimus) by moving legs outward against resistance. Commonly used for glute shaping and hip stability.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 35,
+    "fields": {
+      "name": "Lat Pulldown Machine",
+      "usage": "Upper-body strength machine designed to target the latissimus dorsi (back muscles) through a vertical pulling motion. Essential for building back width and strength.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 36,
+    "fields": {
+      "name": "Seated Row Machine",
+      "usage": "Horizontal pulling machine designed to target the middle back, lats, rhomboids, and biceps. Provides controlled rowing motion for strength and posture improvement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 37,
+    "fields": {
+      "name": "T-Bar Row Machine",
+      "usage": "Plate-loaded rowing machine designed for heavy back training. Targets lats, rhomboids, traps, and rear delts using a horizontal pulling motion with chest support for stability.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 38,
+    "fields": {
+      "name": "Low Row Machine (Seated Cable Row)",
+      "usage": "Strength machine designed for horizontal pulling movement targeting mid-back, lats, and rear delts. Provides controlled cable-based resistance for safe and effective training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 39,
+    "fields": {
+      "name": "Pull-up Machine (Pull-up Station)",
+      "usage": "Bodyweight training station designed for upper-body pulling exercises like pull-ups and chin-ups. Targets lats, biceps, shoulders, and core using natural body movement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 40,
+    "fields": {
+      "name": "Assisted Pull-up Machine",
+      "usage": "Strength machine designed to assist users in performing pull-ups and dips using a counterweight system. Ideal for beginners and progressive strength training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 41,
+    "fields": {
+      "name": "Shoulder Press Machine",
+      "usage": "Seated strength machine designed to target deltoid muscles (front and middle shoulders) through an overhead pressing motion. Provides controlled and safe alternative to free-weight shoulder press.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 42,
+    "fields": {
+      "name": "Lateral Raise Machine",
+      "usage": "Isolation machine designed to target the lateral (middle) deltoid muscles through a controlled outward arm raising motion. Essential for building shoulder width and definition.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 43,
+    "fields": {
+      "name": "Rear Delt Machine (Reverse Pec Deck)",
+      "usage": "Isolation machine designed to target the rear deltoids and upper back through a reverse fly motion. Often integrated with pec deck machines for dual functionality.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 44,
+    "fields": {
+      "name": "Bicep Curl Machine",
+      "usage": "Isolation machine designed to target biceps through a controlled curling motion. Provides strict form and consistent resistance for effective arm development.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 45,
+    "fields": {
+      "name": "Preacher Curl Machine",
+      "usage": "Isolation machine designed for strict bicep training using a fixed preacher pad. Eliminates momentum and ensures maximum bicep contraction throughout the movement.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 46,
+    "fields": {
+      "name": "Tricep Pushdown Machine (Cable Pushdown Station)",
+      "usage": "Cable-based strength machine designed to isolate triceps through a downward pushing motion. Commonly used with rope, bar, or V-handle attachments.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 47,
+    "fields": {
+      "name": "Dip Machine (Assisted / Bodyweight Dip Station)",
+      "usage": "Upper-body strength machine designed for dip exercises targeting chest, triceps, and shoulders. Available in assisted (counterweight) and bodyweight versions for different fitness levels.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 48,
+    "fields": {
+      "name": "Multi Gym Machine (Multi-Station Gym)",
+      "usage": "All-in-one strength training system combining multiple exercise stations into a single unit. Allows full-body workouts including chest, back, arms, legs, and core.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 49,
+    "fields": {
+      "name": "Functional Trainer",
+      "usage": "Dual adjustable cable machine designed for functional, multi-directional training. Allows users to perform a wide range of exercises targeting all muscle groups with natural movement patterns.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 50,
+    "fields": {
+      "name": "Cable Machine (Cable Crossover / Pulley Machine)",
+      "usage": "Versatile strength machine using cable and pulley systems to provide constant tension throughout movement. Used for a wide range of exercises targeting all muscle groups.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "strength"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 51,
+    "fields": {
+      "name": "Ab Crunch Machine",
+      "usage": "Selectorized core machine designed to isolate abdominal muscles through a controlled crunching motion. Provides resistance-based core training with proper spinal support.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 52,
+    "fields": {
+      "name": "Abdominal Bench (Ab Bench)",
+      "usage": "Adjustable bench designed for bodyweight abdominal exercises like sit-ups, crunches, and leg raises. Allows incline and decline angles for varied intensity.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 53,
+    "fields": {
+      "name": "Decline Bench",
+      "usage": "Angled workout bench designed for decline abdominal exercises and strength training. Increases workout intensity by positioning the body below horizontal level.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 54,
+    "fields": {
+      "name": "Roman Chair (Hyperextension Bench)",
+      "usage": "Bodyweight training equipment designed for lower back, glutes, and core strengthening through hyperextension and stabilization exercises.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 55,
+    "fields": {
+      "name": "Hyperextension Bench (Back Extension Bench)",
+      "usage": "Bodyweight training bench designed for strengthening lower back, glutes, and core through controlled hyperextension movements. Commonly used for posterior chain development and injury prevention.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 56,
+    "fields": {
+      "name": "Captain’s Chair (Vertical Knee Raise Station)",
+      "usage": "Bodyweight training station designed for abdominal and core exercises like knee raises and leg raises. Includes back support and arm pads for stability.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 57,
+    "fields": {
+      "name": "Ab Coaster",
+      "usage": "Unique core machine that trains abdominal muscles through a bottom-up lifting motion along a curved rail. Minimizes neck and lower back strain while maximizing abdominal contraction.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 58,
+    "fields": {
+      "name": "Torso Rotation Machine (Rotary Torso)",
+      "usage": "Selectorized machine designed to train oblique muscles through controlled rotational movement. Enhances core strength, stability, and rotational power.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 59,
+    "fields": {
+      "name": "Cable Woodchopper Setup",
+      "usage": "Functional cable-based setup used to perform rotational woodchopper exercises. Targets obliques, core, and stabilizer muscles through diagonal pulling movements.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 60,
+    "fields": {
+      "name": "Medicine Ball",
+      "usage": "Weighted ball used for strength, conditioning, and functional training exercises. Commonly used for throws, slams, and core workouts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 61,
+    "fields": {
+      "name": "Wall Ball",
+      "usage": "Soft-shell weighted ball designed for wall throws, squats, and functional training. Commonly used in CrossFit and HIIT workouts to build strength, coordination, and endurance.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 62,
+    "fields": {
+      "name": "Stability Ball (Swiss Ball / Exercise Ball)",
+      "usage": "Inflatable exercise ball used for core training, balance, and stability exercises. Widely used in fitness, physiotherapy, and rehabilitation programs.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 63,
+    "fields": {
+      "name": "BOSU Ball (Balance Trainer)",
+      "usage": "Half-dome inflatable stability trainer used for balance, core strength, and functional workouts. Can be used dome-side up or down for varied training intensity.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 64,
+    "fields": {
+      "name": "Ab Wheel Roller",
+      "usage": "Compact core training tool used for rollout exercises that target abs, shoulders, and lower back. Requires strong stabilization and control, making it effective for advanced core training.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 65,
+    "fields": {
+      "name": "Resistance Bands",
+      "usage": "Elastic training bands used for strength, mobility, and rehabilitation exercises. Provide variable resistance and are widely used for full-body workouts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 66,
+    "fields": {
+      "name": "Suspension Trainer (TRX)",
+      "usage": "Bodyweight training system using adjustable straps anchored to a fixed point. Allows functional, full-body workouts using gravity and bodyweight resistance.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 67,
+    "fields": {
+      "name": "Core Sliders (Gliding Discs)",
+      "usage": "Lightweight sliding discs used to perform dynamic core and full-body exercises. Create instability and continuous tension by allowing controlled sliding movements on different surfaces.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 68,
+    "fields": {
+      "name": "Balance Board (Wobble Board)",
+      "usage": "Stability training device used to improve balance, coordination, and core strength by creating an unstable surface.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  },
+  {
+    "model": "main.equipment",
+    "pk": 69,
+    "fields": {
+      "name": "Yoga Mat (Exercise Mat)",
+      "usage": "Cushioned mat designed for yoga, stretching, and floor exercises. Provides comfort, grip, and stability during workouts.",
+      "video_link": "https://www.youtube.com/watch?v=example",
+      "category": "core"
+    }
+  }
+]
