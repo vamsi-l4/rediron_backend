@@ -114,11 +114,40 @@ class RewardPointSerializer(serializers.ModelSerializer):
         model = RewardPoint
         fields = '__all__'
 
+class OrderItemSerializer(serializers.ModelSerializer):
+    product_variant = ProductVariantSerializer(read_only=True)
+    product_name = serializers.SerializerMethodField()
+    product_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = OrderItem
+        fields = ['id', 'order', 'product_variant', 'product_name', 'product_image', 'quantity', 'price']
+
+    def get_product_name(self, obj):
+        if obj.product_variant:
+            if hasattr(obj.product_variant, 'product') and obj.product_variant.product:
+                return obj.product_variant.product.name
+            return getattr(obj.product_variant, 'variant_name', None)
+        return None
+
+    def get_product_image(self, obj):
+        request = self.context.get('request')
+        image_url = None
+        if obj.product_variant and hasattr(obj.product_variant, 'product') and obj.product_variant.product:
+            product = obj.product_variant.product
+            if getattr(product, 'image', None) and hasattr(product.image, 'url'):
+                image_url = product.image.url
+        if image_url and request:
+            return request.build_absolute_uri(image_url)
+        return image_url
+
 class OrderSerializer(serializers.ModelSerializer):
     cart = CartSerializer(read_only=True)
     cart_id = serializers.PrimaryKeyRelatedField(
         queryset=Cart.objects.all(), write_only=True, source='cart'
     )
+    order_items = OrderItemSerializer(source='items', many=True, read_only=True)
+    items = OrderItemSerializer(many=True, read_only=True)
     coupon = CouponSerializer(read_only=True)
     coupon_id = serializers.PrimaryKeyRelatedField(
         queryset=Coupon.objects.all(), write_only=True, source='coupon', allow_null=True, required=False
@@ -128,8 +157,21 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'cart', 'cart_id', 'name', 'mobile', 'email', 'shipping_address',
-            'coupon', 'coupon_id', 'reward_points_used', 'status', 'placed_at'
+            'coupon', 'coupon_id', 'reward_points_used', 'status', 'placed_at', 'order_items', 'items'
         ]
+
+    def create(self, validated_data):
+        cart = validated_data.get('cart')
+        order = Order.objects.create(**validated_data)
+        if cart is not None:
+            for cart_item in cart.items.all():
+                OrderItem.objects.create(
+                    order=order,
+                    product_variant=cart_item.product_variant,
+                    quantity=cart_item.quantity,
+                    price=cart_item.product_variant.price,
+                )
+        return order
 
 # ---------- Blog ----------
 
@@ -217,11 +259,6 @@ class OfferSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 # ---------- OrderItem ----------
-
-class OrderItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OrderItem
-        fields = '__all__'
 
 # ---------- PaymentMethod ----------
 

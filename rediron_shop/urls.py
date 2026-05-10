@@ -40,6 +40,4 @@ router.register('shop-about', views.AboutViewSet, basename='shop-about')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('api/', include(router.urls)),
-    path('accounts/', include('accounts.urls')),
 ]

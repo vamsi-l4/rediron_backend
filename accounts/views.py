@@ -61,24 +61,41 @@ def razorpay_webhook(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def verify_razorpay_payment(request):
-    user = request.user
-    order_id = request.data.get('order_id')
-    payment_id = request.data.get('payment_id')
-    signature = request.data.get('signature')
+    order_id = request.data.get('order_id') or request.data.get('razorpay_order_id')
+    payment_id = request.data.get('payment_id') or request.data.get('razorpay_payment_id')
+    signature = request.data.get('signature') or request.data.get('razorpay_signature')
 
     if not (order_id and payment_id and signature):
         return Response({'error': 'order_id, payment_id, and signature are required'}, status=400)
 
-    generated_signature = hmac.new(
-        key=bytes(settings.RAZORPAY_KEY_SECRET or '', 'utf-8'),
-        msg=bytes(f"{order_id}|{payment_id}", 'utf-8'),
-        digestmod=hashlib.sha256
-    ).hexdigest()
+    try:
+        generated_signature = hmac.new(
+            key=bytes(settings.RAZORPAY_KEY_SECRET or '', 'utf-8'),
+            msg=bytes(f"{order_id}|{payment_id}", 'utf-8'),
+            digestmod=hashlib.sha256
+        ).hexdigest()
 
-    if generated_signature != signature:
-        return Response({'error': 'Invalid payment signature'}, status=400)
+        if generated_signature != signature:
+            return Response({'error': 'Invalid payment signature'}, status=400)
 
-    return Response({'error': 'Payment verification disabled'}, status=400)
+        PaymentTransaction.objects.create(
+            user=request.user,
+            payment_id=payment_id,
+            amount=float(request.data.get('amount', 0)),
+            currency=request.data.get('currency', 'INR'),
+            status='completed',
+            method='razorpay',
+            description=f'Razorpay payment verified for order {order_id}',
+            metadata={
+                'razorpay_order_id': order_id,
+                'razorpay_signature': signature,
+            }
+        )
+
+        return Response({'success': True, 'message': 'Payment verified successfully'})
+    except Exception as e:
+        logger.exception('Razorpay verification failed')
+        return Response({'error': str(e)}, status=500)
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -93,7 +110,7 @@ def create_razorpay_order(request):
 
     try:
         order_data = {
-            'amount': int(amount) * 100,
+            'amount': int(float(amount) * 100),
             'currency': currency,
             'receipt': receipt,
             'payment_capture': 1

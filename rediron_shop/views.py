@@ -62,8 +62,19 @@ class ProductImageViewSet(viewsets.ModelViewSet):
 # --- Cart, CartItem, Coupon, Reward, Order ---
 
 class CartViewSet(viewsets.ModelViewSet):
-    queryset = Cart.objects.all().order_by('-created_at')
     serializer_class = CartSerializer
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_authenticated:
+            return Cart.objects.filter(user=self.request.user).order_by('-created_at')
+        return Cart.objects.all().order_by('-created_at')
+
+    def create(self, request, *args, **kwargs):
+        if request.user and request.user.is_authenticated:
+            cart, created = Cart.objects.get_or_create(user=request.user)
+            serializer = self.get_serializer(cart)
+            return Response(serializer.data, status=201 if created else 200)
+        return super().create(request, *args, **kwargs)
 
 class CartItemViewSet(viewsets.ModelViewSet):
     queryset = CartItem.objects.all().order_by('cart__id')
@@ -78,11 +89,21 @@ class RewardPointViewSet(viewsets.ModelViewSet):
     serializer_class = RewardPointSerializer
 
 class OrderViewSet(viewsets.ModelViewSet):
-    queryset = Order.objects.all().order_by('-placed_at')
     serializer_class = OrderSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'mobile', 'email']
     ordering_fields = ['placed_at', 'status']
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_authenticated:
+            return Order.objects.filter(user=self.request.user).order_by('-placed_at')
+        return Order.objects.none()
+
+    def perform_create(self, serializer):
+        if self.request.user and self.request.user.is_authenticated:
+            serializer.save(user=self.request.user)
+        else:
+            serializer.save()
 
 # --- Blog & Dealer ---
 
