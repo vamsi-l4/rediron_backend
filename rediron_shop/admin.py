@@ -63,7 +63,7 @@ class CartAdmin(admin.ModelAdmin):
 
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
-    list_display = ('cart', 'product_variant', 'quantity')
+    list_display = ('cart', 'product_variant', 'product', 'quantity')
 
 @admin.register(Coupon)
 class CouponAdmin(admin.ModelAdmin):
@@ -165,8 +165,8 @@ class OfferAdmin(admin.ModelAdmin):
 
 @admin.register(OrderItem)
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('order', 'product_variant', 'quantity', 'price')
-    search_fields = ('order__id', 'product_variant__variant_name')
+    list_display = ('order', 'product_variant', 'product', 'quantity', 'price')
+    search_fields = ('order__id', 'product_variant__variant_name', 'product__name')
 
 # ---------- PaymentMethod ----------
 

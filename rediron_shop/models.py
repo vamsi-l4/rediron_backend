@@ -130,11 +130,17 @@ class Cart(models.Model):
 class CartItem(models.Model):
     """Cart items linked to a cart"""
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     
     def __str__(self):
-        return f"{self.cart.user.email} - {self.product_variant.variant_name} x{self.quantity}"
+        try:
+            name = self.product_variant.variant_name if self.product_variant else self.product.name
+            user_email = self.cart.user.email if self.cart.user else "Guest"
+            return f"{user_email} - {name} x{self.quantity}"
+        except:
+            return f"CartItem {self.id}"
 
 class Coupon(models.Model):
     code = models.CharField(max_length=20, unique=True)
@@ -337,12 +343,14 @@ class Offer(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
-    product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE)
+    product_variant = models.ForeignKey(ProductVariant, on_delete=models.CASCADE, null=True, blank=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=2)  # Price at time of order
 
     def __str__(self):
-        return f"{self.order.id} - {self.product_variant.variant_name}"
+        name = self.product_variant.variant_name if self.product_variant else (self.product.name if self.product else "Unknown")
+        return f"{self.order.id} - {name}"
 
 # ---------- PaymentMethod ----------
 

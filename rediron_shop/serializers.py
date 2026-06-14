@@ -88,14 +88,34 @@ class ProductSerializer(serializers.ModelSerializer):
 # ---------- Cart, Orders, Coupon, Reward ----------
 
 class CartItemSerializer(serializers.ModelSerializer):
-    product_variant = ProductVariantSerializer(read_only=True)
+    product_variant = serializers.SerializerMethodField()
     product_variant_id = serializers.PrimaryKeyRelatedField(
-        queryset=ProductVariant.objects.all(), write_only=True, source='product_variant'
+        queryset=ProductVariant.objects.all(), write_only=True, source='product_variant', required=False, allow_null=True
+    )
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), write_only=True, source='product', required=False, allow_null=True
     )
 
     class Meta:
         model = CartItem
-        fields = ['id', 'cart', 'product_variant', 'product_variant_id', 'quantity']
+        fields = ['id', 'cart', 'product_variant', 'product_variant_id', 'product', 'product_id', 'quantity']
+
+    def get_product_variant(self, obj):
+        if obj.product_variant:
+            return ProductVariantSerializer(obj.product_variant, context=self.context).data
+        if obj.product:
+            product_data = ProductSerializer(obj.product, context=self.context).data
+            return {
+                'id': None,
+                'variant_name': '',
+                'price': obj.product.price,
+                'inventory': 9999,
+                'in_stock': obj.product.is_active,
+                'product': product_data,
+                'image': obj.product.image.url if obj.product.image else None,
+            }
+        return None
 
 class CartSerializer(serializers.ModelSerializer):
     items = CartItemSerializer(many=True, read_only=True)
@@ -116,18 +136,21 @@ class RewardPointSerializer(serializers.ModelSerializer):
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product_variant = ProductVariantSerializer(read_only=True)
+    product = ProductSerializer(read_only=True)
     product_name = serializers.SerializerMethodField()
     product_image = serializers.SerializerMethodField()
 
     class Meta:
         model = OrderItem
-        fields = ['id', 'order', 'product_variant', 'product_name', 'product_image', 'quantity', 'price']
+        fields = ['id', 'order', 'product_variant', 'product', 'product_name', 'product_image', 'quantity', 'price']
 
     def get_product_name(self, obj):
         if obj.product_variant:
             if hasattr(obj.product_variant, 'product') and obj.product_variant.product:
                 return obj.product_variant.product.name
             return getattr(obj.product_variant, 'variant_name', None)
+        if obj.product:
+            return obj.product.name
         return None
 
     def get_product_image(self, obj):
@@ -137,6 +160,8 @@ class OrderItemSerializer(serializers.ModelSerializer):
             product = obj.product_variant.product
             if getattr(product, 'image', None) and hasattr(product.image, 'url'):
                 image_url = product.image.url
+        elif obj.product and hasattr(obj.product, 'image') and obj.product.image:
+            image_url = obj.product.image.url
         if image_url and request:
             return request.build_absolute_uri(image_url)
         return image_url
@@ -165,11 +190,13 @@ class OrderSerializer(serializers.ModelSerializer):
         order = Order.objects.create(**validated_data)
         if cart is not None:
             for cart_item in cart.items.all():
+                price = cart_item.product_variant.price if cart_item.product_variant else (cart_item.product.price if cart_item.product else 0)
                 OrderItem.objects.create(
                     order=order,
                     product_variant=cart_item.product_variant,
+                    product=cart_item.product,
                     quantity=cart_item.quantity,
-                    price=cart_item.product_variant.price,
+                    price=price,
                 )
         return order
 

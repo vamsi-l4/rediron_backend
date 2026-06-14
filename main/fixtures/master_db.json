@@ -11332,24 +11332,24 @@
   "model": "main.musclegroup",
   "pk": 7,
   "fields": {
-    "name": "Extra Group 7",
-    "slug": "extra-group-7"
+    "name": "Biceps",
+    "slug": "biceps"
   }
 },
 {
   "model": "main.musclegroup",
   "pk": 8,
   "fields": {
-    "name": "Extra Group 8",
-    "slug": "extra-group-8"
+    "name": "Triceps",
+    "slug": "triceps"
   }
 },
 {
   "model": "main.musclegroup",
   "pk": 9,
   "fields": {
-    "name": "Extra Group 9",
-    "slug": "extra-group-9"
+    "name": "Forearms",
+    "slug": "forearms"
   }
 },
 {

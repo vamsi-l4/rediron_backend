@@ -1,5 +1,5 @@
 # views.py
-
+from rest_framework.response import Response
 from rest_framework import viewsets, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
@@ -99,11 +99,82 @@ class OrderViewSet(viewsets.ModelViewSet):
             return Order.objects.filter(user=self.request.user).order_by('-placed_at')
         return Order.objects.none()
 
-    def perform_create(self, serializer):
-        if self.request.user and self.request.user.is_authenticated:
-            serializer.save(user=self.request.user)
-        else:
-            serializer.save()
+    def create(self, request, *args, **kwargs):
+        """
+        Create order from cart with inventory validation
+        """
+        from rest_framework.response import Response
+        from rest_framework import status
+        
+        cart_id = request.data.get('cart_id')
+        if not cart_id:
+            return Response({'error': 'cart_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        try:
+            cart = Cart.objects.get(id=cart_id)
+        except Cart.DoesNotExist:
+            return Response({'error': 'Cart not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Check if cart has items
+        if not cart.items.exists():
+            return Response({'error': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Validate inventory for all items
+        out_of_stock_items = []
+        for cart_item in cart.items.all():
+            if cart_item.product_variant:
+                variant = cart_item.product_variant
+                if not variant.in_stock:
+                    out_of_stock_items.append({
+                        'id': cart_item.id,
+                        'name': variant.product.name,
+                        'variant': variant.variant_name,
+                        'reason': 'out_of_stock'
+                    })
+                elif cart_item.quantity > variant.inventory:
+                    out_of_stock_items.append({
+                        'id': cart_item.id,
+                        'name': variant.product.name,
+                        'variant': variant.variant_name,
+                        'reason': 'insufficient_inventory',
+                        'available': variant.inventory
+                    })
+            elif cart_item.product:
+                if not cart_item.product.is_active:
+                    out_of_stock_items.append({
+                        'id': cart_item.id,
+                        'name': cart_item.product.name,
+                        'variant': 'N/A',
+                        'reason': 'out_of_stock'
+                    })
+        
+        if out_of_stock_items:
+            return Response({
+                'error': 'Some items are out of stock',
+                'out_of_stock_items': out_of_stock_items
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Create the order using serializer
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        
+        # Add user if authenticated
+        if request.user and request.user.is_authenticated:
+            serializer.validated_data['user'] = request.user
+        
+        order = serializer.save()
+        
+        # Decrease inventory for each ordered item
+        for cart_item in cart.items.all():
+            if cart_item.product_variant:
+                variant = cart_item.product_variant
+                variant.inventory -= cart_item.quantity
+                variant.save()
+        
+        # Clear cart items after successful order
+        cart.items.all().delete()
+        
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 # --- Blog & Dealer ---
 

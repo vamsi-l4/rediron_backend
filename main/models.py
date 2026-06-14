@@ -66,6 +66,7 @@ class NutritionArticle(models.Model):
     reading_time = models.PositiveSmallIntegerField(null=True, blank=True, help_text="Minutes")
     featured = models.BooleanField(default=False)
     references = models.JSONField(blank=True, null=True, help_text="List of reference dicts for the article")
+    video_url = models.URLField(blank=True, null=True, help_text="Optional YouTube/Vimeo link for the article")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

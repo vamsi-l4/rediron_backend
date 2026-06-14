@@ -177,7 +177,7 @@ class NutritionArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = NutritionArticle
         fields = (
-            "id", "title", "slug", "category", "excerpt", "content",
+            "id", "title", "slug", "category", "excerpt", "video_url", "content",
             "image_url", "featured_image_url", "author", "reading_time",
             "published_at", "featured", "created_at", "updated_at",
             "tags", "is_published", "references",
