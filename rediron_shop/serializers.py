@@ -346,9 +346,14 @@ class WishlistSerializer(serializers.ModelSerializer):
 # ---------- WishlistItem ----------
 
 class WishlistItemSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), write_only=True, source='product'
+    )
+
     class Meta:
         model = WishlistItem
-        fields = '__all__'
+        fields = ['id', 'wishlist', 'product', 'product_id', 'added_at']
 
 # ---------- UserProfile ----------
 

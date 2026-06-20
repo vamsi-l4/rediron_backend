@@ -150,6 +150,12 @@ class ClerkAuthentication(BaseAuthentication):
             try:
                 user = User.objects.get(clerk_user_id=clerk_user_id)
                 logger.info(f'✅ Found existing user for Clerk ID: {clerk_user_id}')
+
+                token_email = payload.get('email') or payload.get('primary_email_address')
+                if token_email and user.email.endswith('@clerk.invalid'):
+                    user.email = token_email
+                    user.save(update_fields=['email'])
+                    logger.info(f'✅ Repaired placeholder Clerk email for: {clerk_user_id}')
             except User.DoesNotExist:
                 # ============================================
                 # STEP 4A: CREATE NEW USER FROM CLERK TOKEN
