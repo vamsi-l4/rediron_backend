@@ -666,14 +666,39 @@ def manage_profile(request):
         if request.method == 'GET':
             from .serializers import UserProfileSerializer
             serializer = UserProfileSerializer(profile)
-            return Response(serializer.data, status=200)
+            data = serializer.data
+            data['name'] = user.name
+            data['email'] = user.email
+            if user.profile_image:
+                data['profile_image'] = request.build_absolute_uri(user.profile_image.url)
+            return Response(data, status=200)
         
         elif request.method == 'PATCH':
             from .serializers import UserProfileSerializer
             serializer = UserProfileSerializer(profile, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=200)
+                
+                user_updated = False
+                if 'name' in request.data:
+                    user.name = request.data['name']
+                    user_updated = True
+                    
+                if 'profile_image' in request.FILES:
+                    if user.profile_image:
+                        user.profile_image.delete(save=False) # Deletes the old image from the server!
+                    user.profile_image = request.FILES['profile_image']
+                    user_updated = True
+                    
+                if user_updated:
+                    user.save()
+                    
+                data = serializer.data
+                data['name'] = user.name
+                data['email'] = user.email
+                if user.profile_image:
+                    data['profile_image'] = request.build_absolute_uri(user.profile_image.url)
+                return Response(data, status=200)
             return Response(serializer.errors, status=400)
     
     except Exception as e:
@@ -812,6 +837,7 @@ def manage_saved_items(request):
             items = SavedItem.objects.filter(user=user)
             if item_type:
                 items = items.filter(item_type=item_type)
+            items = items.order_by('-id')
             from .serializers import SavedItemSerializer
             serializer = SavedItemSerializer(items, many=True)
             return Response(serializer.data, status=200)
@@ -863,7 +889,7 @@ def get_payment_history(request):
     user = request.user
     
     try:
-        transactions = PaymentTransaction.objects.filter(user=user)
+        transactions = PaymentTransaction.objects.filter(user=user).order_by('-created_at')
         from .serializers import PaymentTransactionSerializer
         serializer = PaymentTransactionSerializer(transactions, many=True)
         return Response(serializer.data, status=200)

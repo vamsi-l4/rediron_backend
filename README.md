@@ -154,6 +154,11 @@ PAGE_SIZE=20
    python manage.py loaddata fixtures/sample_data.json
    ```
 
+   If you want to load the complete master dataset and refresh the nutrition article library from the new structured JSON fixture, run:
+   ```bash
+   python manage.py load_initial_data
+   ```
+
 4. **Environment Configuration**
    ```bash
    cp .env.example .env

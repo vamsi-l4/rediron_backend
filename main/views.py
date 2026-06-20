@@ -188,9 +188,13 @@ class MuscleGroupViewSet(viewsets.ModelViewSet):
 @permission_classes([permissions.AllowAny])
 def nutrition_articles_list_api(request):
     """
-    Returns a list of all published nutrition articles without pagination.
+    Returns a list of published nutrition articles without pagination.
+    Supports optional category filtering via `?category=`.
     """
     articles = NutritionArticle.objects.filter(is_published=True).order_by("-featured", "-published_at")
+    category = request.GET.get("category")
+    if category:
+        articles = articles.filter(category__iexact=category)
     serializer = NutritionArticleSerializer(articles, many=True, context={"request": request})
     return Response(serializer.data)
 

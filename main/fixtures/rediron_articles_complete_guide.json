@@ -1,0 +1,3079 @@
+{
+  "NUTRITION": [
+    {
+      "id": "N01",
+      "title": "Macronutrients Explained: Carbs, Protein & Fats for Gym Members",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Macronutrients — carbohydrates, protein and fat — are the three energy-giving nutrients your body needs in large amounts every day. Understanding them is the single most important nutrition skill for any gym member.",
+        "Each macro serves a unique purpose. Carbohydrates are your body's preferred fuel. Protein builds and repairs muscle tissue. Fat supports hormones, brain function and fat-soluble vitamins. You need all three — none is your enemy.",
+        "Research published in 2024 by the American College of Sports Medicine confirms: for active adults, a balanced split of roughly 45-55% carbs, 25-35% protein and 20-30% fat supports both performance and body composition goals."
+      ],
+      "benefits": [
+        "Fuel every workout with optimal energy from carbohydrates",
+        "Build and preserve muscle mass with adequate protein (1.6-2.2g per kg body weight)",
+        "Maintain hormone health and absorb fat-soluble vitamins A, D, E, K with dietary fat",
+        "Understand food labels and make smarter choices at every meal",
+        "Eliminate food fear - all three macros have a purpose and a place"
+      ],
+      "how_to": [
+        "Step 1: Calculate your Total Daily Energy Expenditure (TDEE) using your weight, height, age and activity level",
+        "Step 2: Set protein first - 1.6 to 2.2g per kg of body weight daily (e.g. 80kg person = 128-176g protein)",
+        "Step 3: Set fat at 0.8-1.2g per kg body weight for hormonal health",
+        "Step 4: Fill remaining calories with carbohydrates - your primary workout fuel",
+        "Step 5: Track for 2 weeks using any food diary app to build awareness of your intake",
+        "Step 6: Adjust based on performance and energy levels, not appearance alone"
+      ],
+      "mistakes": [
+        "Fearing carbohydrates - they fuel your muscles and brain during intense training",
+        "Eating too little fat - below 0.5g/kg impairs testosterone and hormone production",
+        "Overcomplicating it - get your protein right first, the rest follows",
+        "Ignoring total calories - macro ratios mean nothing if calories are wildly off",
+        "Changing everything at once - adjust one macro at a time to see what works"
+      ],
+      "tips": [
+        "Pro Tip: Protein is the most important macro for gym members. Nail your protein target first every day.",
+        "Pro Tip: Eat carbs around your workout (before and after) for maximum performance and recovery.",
+        "Pro Tip: Don't track every day forever - 2 weeks of tracking builds lifelong nutritional intuition."
+      ],
+      "video": "https://www.youtube.com/watch?v=nWuB7WkECGE",
+      "video_title": "Macronutrients Explained Simply",
+      "related": [
+        "N02",
+        "N03",
+        "N06",
+        "N16"
+      ]
+    },
+    {
+      "id": "N02",
+      "title": "How Much Protein Do You Really Need?",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Protein is the building block of muscle. Every time you train, you create micro-tears in muscle fibres. Protein provides the amino acids needed to repair and grow those fibres back stronger.",
+        "The old guideline of 0.8g per kg body weight is for sedentary adults. For gym members, the ISSN recommends 1.6 to 2.2g of protein per kg of body weight per day.",
+        "For an 80kg person, that means 128-176g of protein daily. This is achievable through whole foods alone, but protein supplements can help bridge the gap."
+      ],
+      "benefits": [
+        "Maximises muscle protein synthesis after every training session",
+        "Preserves lean muscle mass during fat loss phases",
+        "Reduces muscle soreness and speeds recovery between sessions",
+        "Increases satiety - protein is the most filling macronutrient",
+        "Supports immune function, enzymes, hormones and connective tissue"
+      ],
+      "how_to": [
+        "Step 1: Weigh yourself and multiply by 1.6 (minimum) and 2.2 (maximum) to find your daily protein range",
+        "Step 2: Spread protein across 3-5 meals - research shows 20-40g per meal optimises muscle protein synthesis",
+        "Step 3: Prioritise complete protein sources: chicken, eggs, fish, beef, dairy, whey, soy",
+        "Step 4: Have 20-40g protein within 2 hours post-workout for recovery",
+        "Step 5: If you struggle to hit targets, add a whey protein shake (25-30g protein per serving)",
+        "Step 6: Track protein specifically for 2 weeks to identify gaps in your intake"
+      ],
+      "mistakes": [
+        "Thinking 0.8g per kg is enough for gym members - it is not; that is a minimum for sedentary adults",
+        "Eating all your protein in one meal - spread it across the day for better muscle protein synthesis",
+        "Relying only on protein shakes instead of whole food sources",
+        "Ignoring protein on rest days - muscle repair continues for 24-48 hours post-training",
+        "Forgetting plant proteins need combination (rice + beans = complete amino acid profile)"
+      ],
+      "tips": [
+        "Pro Tip: Eggs are one of the best protein sources - high in leucine, which directly triggers muscle protein synthesis.",
+        "Pro Tip: If you are vegetarian, combine legumes with grains (rice and lentils, toast and beans) at each meal.",
+        "Pro Tip: Leucine is the key amino acid for muscle building - found highest in whey, eggs, chicken and beef."
+      ],
+      "video": "https://www.youtube.com/watch?v=R6LoJXJByno",
+      "video_title": "How Much Protein Do You Actually Need?",
+      "related": [
+        "N01",
+        "N03",
+        "S02",
+        "N16"
+      ]
+    },
+    {
+      "id": "N03",
+      "title": "Calories Explained: How to Find Your Number",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "A calorie is simply a unit of energy. Your body needs a certain amount each day just to exist (BMR) plus more for physical activity, digestion and exercise. This total is your TDEE.",
+        "Understanding your calorie needs is the foundation of all nutrition goals. Whether you want to lose fat, gain muscle or maintain, calories are the lever that controls the outcome.",
+        "Research consistently shows that calorie balance is the primary driver of body weight change. Macronutrient ratios matter for performance, but calories determine whether you gain, lose or maintain weight."
+      ],
+      "benefits": [
+        "Understand exactly why you are gaining, losing or maintaining weight",
+        "Set realistic fat loss or muscle gain targets based on real numbers",
+        "Stop guessing - know what you need to eat to hit your goal",
+        "Make food choices with confidence instead of fear or confusion",
+        "Identify hidden calorie sources that have been sabotaging your progress"
+      ],
+      "how_to": [
+        "Step 1: Mifflin-St Jeor equation (Men): (10 x weight kg) + (6.25 x height cm) - (5 x age) + 5",
+        "Step 2: Women: (10 x weight kg) + (6.25 x height cm) - (5 x age) - 161",
+        "Step 3: Multiply by activity factor: Sedentary=1.2, Light=1.375, Moderate=1.55, Very active=1.725",
+        "Step 4: This gives your TDEE - calories needed to maintain current weight",
+        "Step 5: For fat loss: subtract 300-500 calories. For muscle gain: add 200-300 calories",
+        "Step 6: Weigh yourself weekly and adjust if progress is not matching expectations after 2-3 weeks"
+      ],
+      "mistakes": [
+        "Using the same calorie target for months without adjusting as body weight changes",
+        "Not accounting for calories from drinks - smoothies, juices and sports drinks add up fast",
+        "Overestimating calorie burn from exercise - gym machines overestimate by 20-40%",
+        "Eating too aggressively in a deficit - losing more than 0.5-1% body weight per week risks muscle loss",
+        "Ignoring weekend calories - tracking Monday-Friday while eating freely at weekends undermines progress"
+      ],
+      "tips": [
+        "Pro Tip: Weigh food in grams using a kitchen scale for the first few weeks. Portion sizes are universally underestimated.",
+        "Pro Tip: A 500-calorie daily deficit equals roughly 0.5kg of fat loss per week - a safe and sustainable rate.",
+        "Pro Tip: Your calorie needs change as you lose or gain weight. Recalculate every 4-6 weeks."
+      ],
+      "video": "https://www.youtube.com/watch?v=Cxyg_UlMfG0",
+      "video_title": "How to Count Calories for Beginners",
+      "related": [
+        "N01",
+        "N02",
+        "N04",
+        "N05"
+      ]
+    },
+    {
+      "id": "N04",
+      "title": "Bulking vs Cutting: A Beginner's Guide",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Bulking means eating in a calorie surplus to gain muscle. Cutting means eating in a calorie deficit to lose fat. These two phases, cycled strategically, are how most gym members build the body they want.",
+        "You cannot maximally gain muscle and lose fat simultaneously (except in specific cases like true beginners). Understanding which phase to prioritise is essential.",
+        "A clean bulk adds 200-300 calories above TDEE to minimise fat gain while building muscle. A cut subtracts 300-500 calories to lose fat while preserving muscle."
+      ],
+      "benefits": [
+        "Build muscle efficiently without excessive fat gain during a clean bulk",
+        "Lose fat while preserving hard-earned muscle during a cut",
+        "Understand what phase is appropriate for your current body composition",
+        "Avoid the common mistake of indefinitely trying to do both at once",
+        "Build a long-term plan that gets you to your goal physique"
+      ],
+      "how_to": [
+        "Step 1: Assess your current body fat level - if above 20% (men) or 30% (women), start with a cut",
+        "Step 2: If at a healthy body fat, choose bulk: add 200-300 calories above TDEE",
+        "Step 3: Maintain high protein throughout (1.8-2.2g per kg) during both phases",
+        "Step 4: Bulk for 3-6 months, then cut for 8-16 weeks, then reassess",
+        "Step 5: During a cut, keep all training intensity the same - this signals your body to keep muscle",
+        "Step 6: Track body weight and measurements weekly; adjust calories every 2 weeks based on progress"
+      ],
+      "mistakes": [
+        "Dirty bulking (eating everything) - leads to excessive fat gain that takes months to reverse",
+        "Cutting too aggressively - losing more than 0.75kg per week risks significant muscle loss",
+        "Stopping training during a cut - resistance training is what tells your body to hold onto muscle",
+        "Switching phases every 2 weeks - neither phase works without consistency over months",
+        "Not tracking - guessing your calorie surplus or deficit almost never works accurately"
+      ],
+      "tips": [
+        "Pro Tip: Beginners can build muscle and lose fat simultaneously for the first 6-12 months of training.",
+        "Pro Tip: Body weight fluctuates 1-2kg daily due to water and food. Use weekly averages, not daily weigh-ins.",
+        "Pro Tip: The leaner you get, the slower and more carefully you need to cut to preserve muscle."
+      ],
+      "video": "https://www.youtube.com/watch?v=xY3MYB6Q0TI",
+      "video_title": "Bulking vs Cutting Explained",
+      "related": [
+        "N03",
+        "N05",
+        "N11",
+        "N12"
+      ]
+    },
+    {
+      "id": "N05",
+      "title": "Meal Timing Basics: Does When You Eat Matter?",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Meal timing refers to when you eat relative to your workouts and throughout the day. While total daily calories and protein are more important than timing, strategic meal timing can optimise performance and recovery.",
+        "The concept of an anabolic window - eating within 30 minutes post-workout - has been overstated. Research shows the window extends 2+ hours post-exercise.",
+        "What matters most: consistency in daily protein and calorie intake. Timing is a secondary tool to optimise once your fundamentals are in place."
+      ],
+      "benefits": [
+        "Better energy and performance during training by eating carbs beforehand",
+        "Faster recovery by consuming protein within 2 hours post-workout",
+        "More stable energy levels throughout the day with evenly spaced meals",
+        "Reduced late-night cravings by front-loading calories earlier in the day",
+        "Improved sleep quality by avoiding large meals within 2 hours of bedtime"
+      ],
+      "how_to": [
+        "Step 1: Eat a balanced meal 2-3 hours before training: protein + carbs + moderate fat",
+        "Step 2: If training within 60 minutes, have a light snack: banana + small protein source",
+        "Step 3: Post-workout: consume 20-40g protein + carbohydrates within 1-2 hours",
+        "Step 4: Distribute remaining protein across 3-5 total meals throughout the day",
+        "Step 5: Don't skip breakfast - morning training on an empty stomach impairs performance for most people",
+        "Step 6: Stay hydrated - drink 400-600ml water in the hour before training"
+      ],
+      "mistakes": [
+        "Training fasted then eating nothing for 3+ hours after - impairs recovery significantly",
+        "Eating a large high-fat meal within 1 hour of training - fat slows digestion and can cause discomfort",
+        "Skipping post-workout protein when trying to lose weight - protein post-workout is critical even in a deficit",
+        "Obsessing over timing when total daily nutrition is inconsistent",
+        "Drinking only water during 90-minute+ sessions without any carbohydrate intake"
+      ],
+      "tips": [
+        "Pro Tip: If you train early morning and can't eat beforehand, have a small banana and 10-15g protein 20 minutes before.",
+        "Pro Tip: Protein before bed (casein or cottage cheese) supports overnight muscle repair.",
+        "Pro Tip: The most important timing variable is your post-workout meal - don't skip it."
+      ],
+      "video": "https://www.youtube.com/watch?v=rRpLAGHSHoA",
+      "video_title": "Meal Timing for Muscle Growth",
+      "related": [
+        "N01",
+        "N02",
+        "N16",
+        "N17"
+      ]
+    },
+    {
+      "id": "N06",
+      "title": "Hydration Essentials: How Much Water Do You Need?",
+      "sub": "Beginner Nutrition",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Water makes up approximately 60% of your body weight and is involved in virtually every biological process from transporting nutrients to regulating body temperature during exercise.",
+        "Even mild dehydration of 2% body weight loss impairs strength, endurance and cognitive performance. A 70kg person losing just 1.4kg of fluid begins to experience measurable performance decline.",
+        "The ACSM recommends drinking 5-7ml of water per kg body weight in the 4 hours before exercise, 150-250ml every 15-20 minutes during training."
+      ],
+      "benefits": [
+        "Maintains strength and power output during resistance training",
+        "Prevents heat exhaustion and muscle cramping in long or intense sessions",
+        "Supports nutrient transport to muscles for better recovery",
+        "Improves mental focus and decision-making throughout training",
+        "Reduces post-workout fatigue and next-day soreness"
+      ],
+      "how_to": [
+        "Step 1: Start each day with 500ml of water immediately upon waking",
+        "Step 2: 2-3 hours before training, drink 400-600ml",
+        "Step 3: During training, drink 150-250ml every 15-20 minutes",
+        "Step 4: After training, weigh yourself - drink 1.5L per kg lost during exercise",
+        "Step 5: For sessions over 60 minutes, add electrolytes (sodium, potassium) to replace what is lost in sweat",
+        "Step 6: Monitor urine colour - pale yellow = well hydrated, dark yellow = dehydrated"
+      ],
+      "mistakes": [
+        "Drinking only when thirsty - thirst is a late signal of dehydration",
+        "Excessive caffeine without compensating with water - caffeine has a mild diuretic effect",
+        "Ignoring electrolytes on long or hot training days",
+        "Drinking too much plain water (over 1L per hour) without electrolytes risks hyponatraemia",
+        "Skipping hydration on rest days - muscles recover and rebuild during rest, which requires hydration"
+      ],
+      "tips": [
+        "Pro Tip: Check your urine colour - pale lemon yellow is optimal. Dark means drink more.",
+        "Pro Tip: Add a pinch of salt and squeeze of lemon to your water bottle for sessions over 60 minutes.",
+        "Pro Tip: Coffee and tea count toward daily fluid intake - the diuretic effect is mild."
+      ],
+      "video": "https://www.youtube.com/watch?v=9iMGFqMmUFs",
+      "video_title": "Hydration for Athletes Explained",
+      "related": [
+        "N20",
+        "N17",
+        "N18",
+        "N01"
+      ]
+    },
+    {
+      "id": "N07",
+      "title": "Fat Loss Nutrition: The Science Made Simple",
+      "sub": "Weight Loss",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Fat loss has one non-negotiable requirement: a sustained calorie deficit over time. Your body must expend more energy than it takes in for fat stores to be used as fuel.",
+        "However, the quality of your deficit matters. Adequate protein (1.8-2.4g per kg) during a cut preserves muscle mass while the calorie deficit drives fat loss.",
+        "The most successful fat loss plans are moderate, consistent and sustainable. A 300-500 calorie daily deficit produces 0.3-0.5kg of fat loss per week."
+      ],
+      "benefits": [
+        "Lose fat while retaining the muscle you have built in the gym",
+        "Understand exactly what creates a calorie deficit and how to maintain it",
+        "Avoid the muscle loss that comes from aggressive crash dieting",
+        "Improve body composition (fat-to-muscle ratio) even at similar body weight",
+        "Develop sustainable habits instead of temporary extreme diets"
+      ],
+      "how_to": [
+        "Step 1: Calculate TDEE and subtract 300-500 calories for your fat loss target",
+        "Step 2: Set protein at 1.8-2.4g per kg body weight - this is your non-negotiable anchor",
+        "Step 3: Fill remaining calories with mostly complex carbs and healthy fats",
+        "Step 4: Continue resistance training throughout - this preserves muscle during the deficit",
+        "Step 5: Add 2-3 sessions of moderate cardio per week for additional calorie burn if needed",
+        "Step 6: Reassess every 4 weeks - if weight loss has stalled for 2+ weeks, reduce calories by a further 100-150"
+      ],
+      "mistakes": [
+        "Cutting carbs to near-zero - glycogen depletion kills training performance",
+        "Doing only cardio with no resistance training - leads to muscle loss alongside fat",
+        "Eating too little protein - this is the number one cause of muscle loss during a cut",
+        "Weighing in daily and panicking - water weight fluctuates 1-2kg; use weekly averages",
+        "Unsustainable restriction that leads to binge cycles - consistency over perfection always wins"
+      ],
+      "tips": [
+        "Pro Tip: High-volume, low-calorie foods (vegetables, lean protein, broth-based soups) reduce hunger on a deficit.",
+        "Pro Tip: Liquid calories are the easiest way to undermine a deficit without realising it.",
+        "Pro Tip: Walk 8,000-10,000 steps daily - it adds significant calorie burn with minimal recovery cost."
+      ],
+      "video": "https://www.youtube.com/watch?v=BFe8oRhFVMQ",
+      "video_title": "Fat Loss Explained: The Basics",
+      "related": [
+        "N03",
+        "N08",
+        "N04",
+        "N09"
+      ]
+    },
+    {
+      "id": "N08",
+      "title": "Best Foods for Fat Loss (High Protein, Low Calorie)",
+      "sub": "Weight Loss",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Not all calories are created equal when it comes to fat loss. Protein-rich, high-volume foods are your best allies - they provide satiety, support muscle retention and take more energy to digest.",
+        "The thermic effect of food (TEF) means protein requires 20-30% of its own calories for digestion, compared to 5-10% for carbs and 0-3% for fats.",
+        "Building your meals around lean protein sources with plenty of fibrous vegetables creates a naturally lower-calorie diet without constant hunger."
+      ],
+      "benefits": [
+        "Chicken breast, tuna, eggs and cottage cheese deliver high protein per calorie",
+        "Fibrous vegetables (broccoli, spinach, cucumber) add volume and satiety for very few calories",
+        "Greek yogurt provides 15-20g protein per 170g serving with minimal fat",
+        "Oats provide slow-release energy perfect pre-workout with 5g protein per 50g serving",
+        "Legumes (lentils, chickpeas, black beans) combine protein and fibre for long-lasting fullness"
+      ],
+      "how_to": [
+        "Step 1: Base every meal around a lean protein source (chicken, fish, eggs, Greek yogurt, tofu)",
+        "Step 2: Fill half your plate with non-starchy vegetables - virtually zero calories, high volume and fibre",
+        "Step 3: Choose complex carbs in moderate amounts: oats, sweet potato, brown rice",
+        "Step 4: Use cooking methods that add no calories: grilling, baking, steaming, air-frying",
+        "Step 5: Replace calorie-dense snacks with high-protein alternatives: Greek yogurt, cottage cheese, boiled eggs",
+        "Step 6: Batch cook lean protein and vegetables on Sundays to prevent poor food choices during the week"
+      ],
+      "mistakes": [
+        "Choosing 'healthy' foods that are still calorie-dense: granola, smoothies, nut butters, avocados in large amounts",
+        "Drinking fruit juices instead of eating whole fruit - you lose fibre and add liquid calories",
+        "Not tracking sauces, oils and dressings - they can add 200-400 calories invisibly",
+        "Eating processed low-fat products which often replace fat with sugar",
+        "Thinking salads are always low calorie - a loaded salad with dressing can exceed 800 calories"
+      ],
+      "tips": [
+        "Pro Tip: Egg whites are 4-5g protein per egg with virtually zero fat - ideal for high-volume omelettes on a deficit.",
+        "Pro Tip: Frozen vegetables are just as nutritious as fresh, cheaper and always available.",
+        "Pro Tip: Flavour food with herbs, spices, lemon and vinegar - zero calories, maximum enjoyment."
+      ],
+      "video": "https://www.youtube.com/watch?v=1Hg0bQVtA8U",
+      "video_title": "Best Foods for Fat Loss",
+      "related": [
+        "N07",
+        "N09",
+        "R01",
+        "R06"
+      ]
+    },
+    {
+      "id": "N09",
+      "title": "Intermittent Fasting: A Practical Guide for Gym Members",
+      "sub": "Weight Loss",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Intermittent fasting (IF) is an eating pattern, not a diet. It structures when you eat rather than specifically what you eat. The most popular protocol is 16:8 - 16 hours fasting, 8-hour eating window.",
+        "IF works for fat loss because it naturally reduces total calorie intake for most people. The fasting window makes it harder to overeat, particularly late at night.",
+        "Important caveat: IF does not offer metabolic advantages over regular calorie restriction when protein and calories are matched. It is a useful tool for adherence, not a magic protocol."
+      ],
+      "benefits": [
+        "Simplifies meal planning by reducing the number of daily meals",
+        "Reduces opportunity for late-night snacking and overeating",
+        "Improves insulin sensitivity with consistent practice over weeks",
+        "May increase growth hormone levels during the fasting window",
+        "Practical for people who are not hungry in the mornings"
+      ],
+      "how_to": [
+        "Step 1: Choose your protocol - 16:8 is the most beginner-friendly (e.g., eat noon to 8pm)",
+        "Step 2: During the fasting window, drink water, black coffee or plain tea only",
+        "Step 3: Break the fast with a protein-rich meal - this blunts hunger and supports muscle retention",
+        "Step 4: Fit your normal daily protein and calorie targets within your eating window",
+        "Step 5: Schedule training toward the end of your fast or within the eating window for best performance",
+        "Step 6: Give your body 2 weeks to adjust before judging whether IF suits you"
+      ],
+      "mistakes": [
+        "Overeating in the eating window and eliminating the calorie deficit entirely",
+        "Training hard in a fasted state without any protein - this can increase muscle protein breakdown",
+        "Applying IF to already aggressive calorie restriction - double deficit risks muscle loss",
+        "Thinking IF is the only way to lose fat - it is one approach among many equally valid ones",
+        "Socialising or family meals outside your window creating stress - flexibility matters"
+      ],
+      "tips": [
+        "Pro Tip: If you train fasted, take 10g of BCAAs or 20-25g complete protein before training to protect muscle.",
+        "Pro Tip: Coffee is your friend during the fast - it suppresses appetite and slightly boosts metabolism.",
+        "Pro Tip: A gradual transition works better than jumping straight to 16 hours - start at 12 hours and build up."
+      ],
+      "video": "https://www.youtube.com/watch?v=7nJgHBbAuksm",
+      "video_title": "Intermittent Fasting Explained",
+      "related": [
+        "N07",
+        "N05",
+        "N03",
+        "N10"
+      ]
+    },
+    {
+      "id": "N10",
+      "title": "5 Common Fat Loss Mistakes Gym Members Make",
+      "sub": "Weight Loss",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Most people who struggle to lose fat are not failing because of lack of effort - they are failing because of specific, identifiable and fixable mistakes.",
+        "The fitness industry complicates fat loss with supplements, protocols and trends. In reality, five mistakes account for the vast majority of fat loss failures.",
+        "This article covers the five most common and impactful mistakes - each one, when corrected, typically produces immediate and visible progress."
+      ],
+      "benefits": [
+        "Identify why your fat loss has stalled despite training hard",
+        "Fix specific, actionable errors immediately rather than guessing",
+        "Understand why consistency beats perfection in fat loss",
+        "Stop wasting money on supplements that cannot compensate for nutritional errors",
+        "Build sustainable habits that produce permanent results"
+      ],
+      "how_to": [
+        "Mistake 1 - Not tracking calories: Most people underestimate intake by 20-40%. Track for 2 weeks minimum.",
+        "Mistake 2 - Too little protein: Under 1.6g per kg leads to muscle loss on a cut. Hit protein first, every day.",
+        "Mistake 3 - No resistance training: Cardio only leads to losing muscle alongside fat - doing both is critical.",
+        "Mistake 4 - Weekend bingeing: A 500-calorie daily deficit can be completely undone by a single heavy weekend.",
+        "Mistake 5 - Unrealistic timeframes: 0.5kg per week is excellent progress. Most people expect 2-3x this.",
+        "Fix: Pick ONE mistake from above, correct it for 3 weeks, then address the next one."
+      ],
+      "mistakes": [
+        "Trying to fix all five mistakes at once - overwhelm leads to abandoning the plan entirely",
+        "Comparing your progress to social media transformations which rarely show realistic timelines",
+        "Using the scale as the only metric - measurements, photos and strength gains matter too",
+        "Thinking diet variety is required - plain chicken, rice and vegetables work perfectly if calories and protein hit",
+        "Restarting the plan every Monday - a slightly imperfect consistent plan beats a perfect plan done on-and-off"
+      ],
+      "tips": [
+        "Pro Tip: A food scale is the single best investment for fat loss - costs under 500 rupees and eliminates guesswork.",
+        "Pro Tip: Photograph your meals for one week without tracking anything - most people are shocked at what they see.",
+        "Pro Tip: One bad day does not ruin a diet. One bad week does not ruin a month. Consistency is compounding."
+      ],
+      "video": "https://www.youtube.com/watch?v=KwWeGVxkWnA",
+      "video_title": "Why You Are Not Losing Fat",
+      "related": [
+        "N07",
+        "N03",
+        "N04",
+        "N09"
+      ]
+    },
+    {
+      "id": "N11",
+      "title": "Eating for Muscle Growth: Your Complete Guide",
+      "sub": "Muscle Gain",
+      "date": "June 2025",
+      "read": "5 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Building muscle requires two non-negotiable things: a consistent resistance training stimulus and adequate nutrition to support growth. Training provides the signal; nutrition provides the raw materials.",
+        "For muscle gain, you need a small calorie surplus (200-300 calories above TDEE), high protein (1.8-2.2g per kg), sufficient carbohydrates and enough dietary fat for hormonal health.",
+        "Research confirms that muscle protein synthesis is maximised with 20-40g of high-quality protein every 3-5 hours throughout the day."
+      ],
+      "benefits": [
+        "Maximise muscle protein synthesis with optimal protein distribution",
+        "Fuel intense training sessions with adequate carbohydrate intake",
+        "Support hormonal environment for muscle building with healthy fats",
+        "Gain lean muscle with minimal fat by keeping surplus modest",
+        "Accelerate recovery between sessions with targeted post-workout nutrition"
+      ],
+      "how_to": [
+        "Step 1: Calculate TDEE and add 200-300 calories for a lean bulk surplus",
+        "Step 2: Set protein at 1.8-2.2g per kg body weight and distribute across 4-5 meals",
+        "Step 3: Consume 30-60g carbohydrates 1-2 hours before training for peak performance",
+        "Step 4: Post-workout: 30-40g protein + 40-80g carbohydrates within 1-2 hours",
+        "Step 5: Set fat at 0.8-1.2g per kg body weight for testosterone and hormone support",
+        "Step 6: Track weekly body weight - aim for 0.25-0.5kg gain per week to stay lean"
+      ],
+      "mistakes": [
+        "Dirty bulking (eating everything) - excessive fat gain that requires months to reverse",
+        "Too little protein on training days - muscles cannot grow without the raw materials",
+        "Skipping post-workout nutrition - the post-training window matters for recovery",
+        "Not being consistent with the surplus - going in and out of a surplus every few days stalls progress",
+        "Expecting visible muscle growth in weeks - natural muscle building takes months to years"
+      ],
+      "tips": [
+        "Pro Tip: Beginners gain muscle fastest. The first year of training is your most anabolically sensitive period.",
+        "Pro Tip: Sleep is anabolic - 7-9 hours of sleep per night is as important as your post-workout shake.",
+        "Pro Tip: Creatine monohydrate (3-5g daily) is the most evidence-based supplement for muscle gain."
+      ],
+      "video": "https://www.youtube.com/watch?v=kLGVMSiOvkc",
+      "video_title": "How to Eat for Muscle Growth",
+      "related": [
+        "N02",
+        "N12",
+        "N04",
+        "S01"
+      ]
+    },
+    {
+      "id": "N12",
+      "title": "Best Bulking Foods for Lean Muscle Gain",
+      "sub": "Muscle Gain",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Not all calorie-dense foods are equal for building muscle. The best bulking foods are nutrient-dense - they deliver protein, complex carbohydrates and micronutrients alongside their calories.",
+        "The goal of a clean bulk is to reach your calorie surplus primarily through whole foods that support performance, recovery and long-term health.",
+        "This article lists the top muscle-building foods by category with practical portion guides."
+      ],
+      "benefits": [
+        "Chicken breast and thigh: 25-31g protein per 100g cooked with minimal fat",
+        "Whole eggs: high-quality complete protein with choline for brain and muscle function",
+        "Oats: slow-release energy perfect pre-workout with 5g protein per 50g serving",
+        "Rice and sweet potato: reliable carbohydrate sources for glycogen replenishment",
+        "Whole milk and Greek yogurt: convenient high-protein, calorie-dense options for hard gainers"
+      ],
+      "how_to": [
+        "Step 1: Build meals around a palm-sized lean protein source (100-200g chicken, fish, beef or eggs)",
+        "Step 2: Add a fist-sized serving of complex carbohydrate (rice, oats, sweet potato, pasta)",
+        "Step 3: Include healthy fats from olive oil, avocado, nuts or whole eggs",
+        "Step 4: Eat 4-5 such meals daily to distribute protein and hit your calorie surplus",
+        "Step 5: For hard gainers struggling to eat enough: add nut butters, whole milk, dried fruit and oats to shakes",
+        "Step 6: Minimise ultra-processed food - nutrient quality affects training performance and recovery"
+      ],
+      "mistakes": [
+        "Thinking any calorie counts the same - junk food bulks reduce performance and increase fat gain",
+        "Not eating enough whole food carbohydrates - glycogen fuels your training",
+        "Avoiding dietary fat entirely - dietary cholesterol from eggs actually supports testosterone production",
+        "Relying too heavily on protein shakes instead of whole food protein",
+        "Underestimating how many calories are needed - most beginners are in a deficit without realising it"
+      ],
+      "tips": [
+        "Pro Tip: Salmon provides 20g protein + omega-3 fatty acids - an anti-inflammatory combination ideal for recovery.",
+        "Pro Tip: Beef mince (95% lean) is affordable, high in protein, creatine and B-vitamins.",
+        "Pro Tip: Mixing whey protein into oats gives 40-50g protein at breakfast with zero preparation time."
+      ],
+      "video": "https://www.youtube.com/watch?v=jHvCBTFKcJc",
+      "video_title": "Best Foods to Build Muscle",
+      "related": [
+        "N11",
+        "N04",
+        "R06",
+        "R11"
+      ]
+    },
+    {
+      "id": "N13",
+      "title": "Post-Workout Nutrition: What to Eat After Training",
+      "sub": "Muscle Gain",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Post-workout nutrition is about providing two critical things: protein to initiate muscle protein synthesis and carbohydrates to replenish glycogen stores depleted during training.",
+        "The post-workout anabolic window is real but not as narrow as once believed. Consuming protein and carbohydrates within 1-2 hours of training is optimal.",
+        "Research confirms that total daily protein intake matters more than timing for most gym members. However, post-workout nutrition meaningfully supports recovery when total nutrition is already on track."
+      ],
+      "benefits": [
+        "Initiates muscle protein synthesis which peaks 1-2 hours post-exercise",
+        "Replenishes glycogen stores for next day's training session",
+        "Reduces muscle protein breakdown that occurs during intense training",
+        "Speeds up recovery and reduces delayed onset muscle soreness (DOMS)",
+        "Supports immune function which is temporarily suppressed after hard training"
+      ],
+      "how_to": [
+        "Step 1: Aim to eat within 1-2 hours of finishing your workout",
+        "Step 2: Target 20-40g of high-quality protein (whey, chicken, eggs, Greek yogurt)",
+        "Step 3: Include 40-80g of carbohydrates to replenish glycogen (rice, oats, fruit, bread)",
+        "Step 4: Keep fat moderate post-workout (under 15g) - it slows digestion without added benefit",
+        "Step 5: Rehydrate - drink at least 500ml of water post-workout before eating",
+        "Step 6: If you cannot eat immediately, a whey protein shake with a banana is a perfectly effective bridge"
+      ],
+      "mistakes": [
+        "Skipping the post-workout meal to save calories - you undermine all the training you just did",
+        "Eating only protein post-workout and ignoring carbohydrates - glycogen replenishment matters",
+        "Having high-fat meals immediately post-workout - fat significantly slows protein absorption",
+        "Waiting 3+ hours to eat after training without any protein intake",
+        "Thinking the post-workout window excuses poor nutrition for the rest of the day"
+      ],
+      "tips": [
+        "Pro Tip: Whey protein + banana + milk blended into a shake takes 2 minutes to prepare and covers all bases.",
+        "Pro Tip: Chocolate milk is a surprisingly effective post-workout drink - 3:1 carb-to-protein ratio.",
+        "Pro Tip: If you trained in the evening, a high-protein meal before bed (casein or cottage cheese) extends muscle repair overnight."
+      ],
+      "video": "https://www.youtube.com/watch?v=AMRQTX3oAqg",
+      "video_title": "Post Workout Nutrition Guide",
+      "related": [
+        "N11",
+        "N05",
+        "N16",
+        "S02"
+      ]
+    },
+    {
+      "id": "N14",
+      "title": "Clean Bulk vs Dirty Bulk: Which Is Right for You?",
+      "sub": "Muscle Gain",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "A clean bulk adds 200-300 calories above TDEE through mostly whole, nutrient-dense foods. A dirty bulk eats everything in sight - often 500-1,000+ calories above TDEE.",
+        "Dirty bulking is tempting because it makes gaining weight easy. But research shows that excess calories above an optimally modest surplus do not build more muscle - they only accelerate fat gain.",
+        "For most gym members, a clean bulk is the right choice. It builds muscle at the maximum natural rate while keeping body fat at a manageable level."
+      ],
+      "benefits": [
+        "Clean bulk: maximum muscle gain with minimal fat accumulation",
+        "Clean bulk: better body composition throughout the bulk",
+        "Clean bulk: less total time required in subsequent cut to reach target body fat",
+        "Clean bulk: better energy, digestion and health from quality food choices",
+        "Dirty bulk: effective only in very short loading phases for advanced competitive athletes"
+      ],
+      "how_to": [
+        "Step 1: Calculate TDEE accurately before deciding on surplus size",
+        "Step 2: Add 200-300 calories above TDEE for a clean bulk",
+        "Step 3: Build the surplus from whole food carbohydrates and complete protein sources",
+        "Step 4: Weigh yourself weekly - if gaining more than 0.5kg per week, reduce surplus by 100 calories",
+        "Step 5: If gaining less than 0.2kg per week after 3 weeks, increase by 100 calories",
+        "Step 6: Run the clean bulk for 3-6 months before transitioning to a cut"
+      ],
+      "mistakes": [
+        "Dirty bulking and thinking you are gaining pure muscle - at 1,000+ calorie surplus, most gain is fat",
+        "Being too aggressive with the surplus even on a clean bulk - 500+ calories above TDEE is unnecessary",
+        "Not tracking during a bulk - surpluses are easy to exceed or miss without measurement",
+        "Stopping training or reducing intensity during a bulk - training drives the muscle signal",
+        "Expecting to see dramatic weekly changes - muscle growth is a long game measured in months"
+      ],
+      "tips": [
+        "Pro Tip: Take monthly progress photos and measurements rather than daily weigh-ins during a bulk.",
+        "Pro Tip: If you are gaining strength in the gym, you are building muscle - strength progress is the most reliable indicator.",
+        "Pro Tip: Every 3-4 months, take a 1-week maintenance break to reset hunger hormones."
+      ],
+      "video": "https://www.youtube.com/watch?v=BvQgEJUhqFk",
+      "video_title": "Clean Bulk vs Dirty Bulk",
+      "related": [
+        "N04",
+        "N11",
+        "N12",
+        "N03"
+      ]
+    },
+    {
+      "id": "N15",
+      "title": "Recovery Nutrition: What to Eat on Rest Days",
+      "sub": "Muscle Gain",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Muscles grow on rest days - not during training. Training creates the stimulus; recovery is where adaptation and growth actually happen. Rest day nutrition is therefore as important as training day nutrition.",
+        "A common mistake is dramatically reducing food intake on rest days. While you can modestly reduce calories (by 100-200), maintaining protein intake is non-negotiable.",
+        "Carbohydrate intake on rest days supports glycogen replenishment for next day's workout."
+      ],
+      "benefits": [
+        "Muscle protein synthesis continues 24-48 hours after training - rest day protein is essential",
+        "Glycogen stores are replenished on rest days for the next workout's energy needs",
+        "Anti-inflammatory foods (fatty fish, berries, turmeric) reduce muscle soreness",
+        "Adequate calories prevent the hormonal suppression that comes from extended under-eating",
+        "Rest day nutrition supports sleep quality which drives growth hormone release overnight"
+      ],
+      "how_to": [
+        "Step 1: Maintain the same protein intake as training days - 1.6-2.2g per kg bodyweight",
+        "Step 2: Reduce carbohydrate intake slightly if desired (by 50-100g) but do not eliminate them",
+        "Step 3: Maintain total calories within 100-200 below training day intake",
+        "Step 4: Prioritise anti-inflammatory foods: salmon, blueberries, walnuts, dark leafy greens",
+        "Step 5: Maintain hydration - 2-3L of water daily even without training",
+        "Step 6: Consider a casein protein source before bed for overnight recovery"
+      ],
+      "mistakes": [
+        "Dramatically cutting calories on rest days - this impairs recovery and sends your body into a catabolic state",
+        "Thinking rest days mean not eating protein - this is when muscle is repairing and needs the supply",
+        "Overeating on rest days in an attempt to compensate for a deficit - undermines fat loss goals",
+        "Skipping vegetables and fruits on rest days - micronutrients are essential for repair processes",
+        "Rehydrating inadequately - soreness and recovery are both worsened by dehydration"
+      ],
+      "tips": [
+        "Pro Tip: Tart cherry juice consumed on rest days has genuine evidence for reducing muscle soreness.",
+        "Pro Tip: Turmeric with black pepper has anti-inflammatory properties useful on recovery days.",
+        "Pro Tip: Curcumin supplements reduce DOMS when taken consistently - 500mg daily with black pepper."
+      ],
+      "video": "https://www.youtube.com/watch?v=oKBBTNVQJRY",
+      "video_title": "Rest Day Nutrition Guide",
+      "related": [
+        "N13",
+        "N05",
+        "N11",
+        "N06"
+      ]
+    },
+    {
+      "id": "N16",
+      "title": "Pre-Workout Nutrition: What to Eat for Peak Performance",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Pre-workout nutrition sets the foundation for training quality. The right meal eaten at the right time improves strength, endurance, focus and even post-workout recovery.",
+        "The two most important nutrients before training are carbohydrates (for fuel) and protein (to reduce muscle protein breakdown). Fat and fibre should be minimised close to a workout.",
+        "Timing matters: a full balanced meal 2-3 hours before training is optimal. If training within 1 hour, choose small, easily digestible carbohydrate-forward snacks."
+      ],
+      "benefits": [
+        "Carbohydrates top up glycogen stores for sustained energy during training",
+        "Protein before training reduces muscle protein breakdown during the session",
+        "Proper fueling delays fatigue, allowing you to train harder for longer",
+        "Blood glucose stability prevents mid-workout energy crashes",
+        "Better pre-workout nutrition directly improves training performance and muscle gain"
+      ],
+      "how_to": [
+        "Step 1: 2-3 hours before: eat a balanced meal with 30-50g protein, 50-80g carbs, moderate fat",
+        "Step 2: 1-2 hours before: protein + carbs with minimal fat (banana + Greek yogurt, oats + whey)",
+        "Step 3: 30-60 minutes before: easily digestible carbs only (banana, white rice, sports drink)",
+        "Step 4: Avoid high-fibre foods, high-fat foods and large portions within 1 hour of training",
+        "Step 5: Drink 400-600ml water in the hour leading up to training",
+        "Step 6: If using caffeine, consume 200-400mg coffee 30-60 minutes before"
+      ],
+      "mistakes": [
+        "Training completely fasted without any pre-workout nutrition - reduces performance significantly",
+        "Eating a large high-fat meal within 1 hour of training - causes sluggishness and GI distress",
+        "High-fibre foods (large salads, beans, bran) right before training - risk of cramping",
+        "Relying on pre-workout supplements without proper food foundation",
+        "Skipping the pre-workout meal when in a calorie deficit - this is when nutrition timing matters most"
+      ],
+      "tips": [
+        "Pro Tip: A banana + 25g whey in 200ml milk is the most convenient, fast and effective pre-workout combination.",
+        "Pro Tip: White rice digests faster than brown rice - better for last-minute pre-workout carbs.",
+        "Pro Tip: Test your pre-workout meals in training before using them before a competition or fitness test."
+      ],
+      "video": "https://www.youtube.com/watch?v=rRpLAGHSHoA",
+      "video_title": "Pre-Workout Nutrition Guide",
+      "related": [
+        "N05",
+        "N13",
+        "N06",
+        "S04"
+      ]
+    },
+    {
+      "id": "N17",
+      "title": "Electrolytes Explained: Sodium, Potassium and Magnesium",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Electrolytes are minerals that carry an electric charge when dissolved in fluid. They regulate fluid balance, nerve signalling, and muscle contractions. Critical during any session exceeding 60 minutes.",
+        "Sweat contains significant quantities of sodium, potassium, magnesium and chloride. Plain water replaces fluid but not electrolytes.",
+        "Sodium is the most important electrolyte for athletes. It regulates fluid balance and helps retain the water you drink."
+      ],
+      "benefits": [
+        "Prevents hyponatraemia (dangerous low sodium) in endurance and long training sessions",
+        "Reduces muscle cramps by maintaining proper electrolyte balance",
+        "Supports nerve function and signal transmission to muscle fibres",
+        "Potassium maintains heart rhythm and muscle contraction quality",
+        "Magnesium supports over 300 enzymatic reactions including ATP energy production"
+      ],
+      "how_to": [
+        "Step 1: Sessions under 60 minutes - plain water is sufficient for most people",
+        "Step 2: Sessions 60-90 minutes - add a pinch of salt (200-300mg sodium) to your water bottle",
+        "Step 3: Sessions over 90 minutes or in heavy heat - use an electrolyte drink or tablet",
+        "Step 4: Post-workout, replace electrolytes through food - coconut water, banana, dairy, salted snacks",
+        "Step 5: On very hot days, increase sodium intake at meals (not just during workouts)",
+        "Step 6: Monitor for cramps, headaches and fatigue post-workout - these signal electrolyte depletion"
+      ],
+      "mistakes": [
+        "Drinking only water during 2+ hour training sessions - risk of hyponatraemia",
+        "Over-relying on sports drinks for short sessions - unnecessary added sugar for workouts under 60 minutes",
+        "Ignoring magnesium - most gym members are magnesium deficient and do not realise it",
+        "Using electrolyte drinks at rest as a daily beverage - adds unnecessary sugar and cost",
+        "Not increasing sodium intake during extended heat and sweat periods"
+      ],
+      "tips": [
+        "Pro Tip: A simple DIY electrolyte drink: 500ml water + pinch of salt + squeeze of lemon + small amount of honey.",
+        "Pro Tip: Magnesium glycinate before bed improves sleep quality AND supports muscle recovery.",
+        "Pro Tip: Coconut water is a natural source of potassium - a good post-workout addition."
+      ],
+      "video": "https://www.youtube.com/watch?v=vmRlEsjFVxE",
+      "video_title": "Electrolytes for Athletes Explained",
+      "related": [
+        "N06",
+        "N18",
+        "S10",
+        "N16"
+      ]
+    },
+    {
+      "id": "N18",
+      "title": "Carbohydrate Loading: When and How to Do It",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Carbohydrate loading is a nutritional strategy to maximise glycogen stores before a prolonged high-intensity event. It involves increasing carbohydrate intake significantly in the 24-72 hours before competition.",
+        "Glycogen is your body's stored form of carbohydrate and the primary fuel source for moderate-to-high intensity exercise. Maximising stores before an event delays fatigue.",
+        "Carb loading is relevant for events exceeding 90 minutes. For regular gym sessions, it is unnecessary."
+      ],
+      "benefits": [
+        "Maximises muscle glycogen stores before prolonged high-intensity events",
+        "Delays onset of fatigue by 1-3% in events over 90 minutes",
+        "Reduces perception of effort during endurance competition",
+        "Maintains blood glucose levels later into extended training",
+        "Well-supported by decades of sports science research for appropriate events"
+      ],
+      "how_to": [
+        "Step 1: Identify events or sessions exceeding 90 minutes at moderate-high intensity",
+        "Step 2: 3 days before: reduce training volume by 50% (taper) while keeping carbs normal",
+        "Step 3: 48-72 hours before: increase carbohydrate intake to 8-12g per kg body weight daily",
+        "Step 4: Choose easily digestible, low-fibre carbs: white rice, pasta, bread, fruit, sports drinks",
+        "Step 5: Reduce fat and protein intake slightly during the loading phase to make room for additional carbs",
+        "Step 6: Final meal 3-4 hours before the event: moderate carb meal, low fat, low fibre, familiar foods"
+      ],
+      "mistakes": [
+        "Carb loading before a normal 45-minute gym session - unnecessary and leads to sluggishness",
+        "Trying new foods during carb loading - stick to familiar foods to avoid GI issues",
+        "Not tapering training alongside the carb load - fatigue undermines the glycogen loading",
+        "Excessive fat intake during loading - fat competes for storage and impairs the glycogen loading process",
+        "Expecting dramatic body transformation - muscles hold water with glycogen; expect temporary weight gain"
+      ],
+      "tips": [
+        "Pro Tip: Rice and banana are the safest, most digestible carb loading foods for most people.",
+        "Pro Tip: You will look fuller and slightly heavier during carb loading - this is water stored with glycogen, not fat.",
+        "Pro Tip: Carb loading has no benefit for sessions under 90 minutes - save it for the events that warrant it."
+      ],
+      "video": "https://www.youtube.com/watch?v=_VLn-oPPK7M",
+      "video_title": "Carbohydrate Loading Guide",
+      "related": [
+        "N17",
+        "N16",
+        "N01",
+        "N05"
+      ]
+    },
+    {
+      "id": "N19",
+      "title": "Endurance Fueling: What to Eat for Long Training Sessions",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Endurance training demands sustained energy supply over extended periods. Glycogen is finite; once depleted, performance drops sharply - a phenomenon known as hitting the wall.",
+        "Fueling endurance training requires strategic nutrition both before and during extended sessions.",
+        "For sessions under 60 minutes, pre-workout carbohydrates are sufficient. For 60-120 minutes, consume 30-60g of easily digestible carbohydrate per hour during the session."
+      ],
+      "benefits": [
+        "Prevents glycogen depletion and the associated dramatic performance decline",
+        "Maintains pace, power output and technique quality throughout long sessions",
+        "Reduces cortisol and immune suppression from glycogen depletion",
+        "Supports faster recovery for the next day's session",
+        "Reduces muscle protein catabolism during very long training sessions"
+      ],
+      "how_to": [
+        "Step 1: Before: eat 1-4g carbohydrate per kg body weight 1-4 hours before long sessions",
+        "Step 2: During (>60 min): consume 30-60g carbohydrate per hour from bananas, gels, sports drinks or chews",
+        "Step 3: During (>2.5 hours): target 90g per hour using mixed carbohydrate sources (glucose + fructose)",
+        "Step 4: Hydrate every 15-20 minutes - 150-250ml including electrolytes for sessions over 60 minutes",
+        "Step 5: Post-session: prioritise carbohydrate and protein within 30-60 minutes for rapid glycogen restoration",
+        "Step 6: Practice in-session fueling strategy during training before relying on it in competition"
+      ],
+      "mistakes": [
+        "Training for 2+ hours with only water and no carbohydrate intake",
+        "Waiting until you feel fatigued to start fueling - begin carbohydrate intake at 45-60 minutes",
+        "Using unfamiliar gels or foods during a race for the first time",
+        "Neglecting protein post-endurance session - even endurance athletes need 20-30g protein post-workout",
+        "Skipping electrolytes in favour of plain water during long hot sessions"
+      ],
+      "tips": [
+        "Pro Tip: Dates are a natural, whole-food source of rapidly absorbed carbohydrate - ideal mid-session fuel.",
+        "Pro Tip: Train your gut to accept in-session nutrition - start with small amounts and gradually increase.",
+        "Pro Tip: Recovery shake after endurance training: 3:1 carb-to-protein ratio (chocolate milk is a classic example)."
+      ],
+      "video": "https://www.youtube.com/watch?v=oZQPL8g_8h8",
+      "video_title": "Endurance Nutrition Guide",
+      "related": [
+        "N18",
+        "N17",
+        "N16",
+        "N06"
+      ]
+    },
+    {
+      "id": "N20",
+      "title": "Micronutrients for Gym Members: Iron, Vitamin D and Zinc",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Nutrition",
+      "overview": [
+        "Macronutrients get most of the attention, but micronutrients - vitamins and minerals - regulate the biochemical processes that allow training to actually produce results.",
+        "Iron, Vitamin D and Zinc are the three micronutrients most commonly deficient in gym members. Each plays a critical role in energy production, muscle function and recovery.",
+        "Deficiencies in any of these three nutrients can cause fatigue, reduced performance, impaired recovery and even increased injury risk."
+      ],
+      "benefits": [
+        "Iron: transports oxygen in the blood; deficiency causes fatigue, reduced endurance and poor recovery",
+        "Vitamin D: supports bone health, immune function and testosterone production; deficiency reduces strength gains",
+        "Zinc: essential for protein synthesis, testosterone production and immune function",
+        "Adequate micronutrients reduce inflammation and support the immune suppression following hard training",
+        "Simple food-first strategies cover most micronutrient needs without supplementation"
+      ],
+      "how_to": [
+        "Step 1 - Iron: eat red meat 2-3 times per week, leafy greens daily, and pair plant iron with vitamin C",
+        "Step 2 - Vitamin D: get 15-20 minutes of sun exposure daily if possible; supplement with 1,000-2,000 IU D3 if not",
+        "Step 3 - Zinc: eat red meat, shellfish, pumpkin seeds and nuts regularly",
+        "Step 4: Blood test every 6-12 months if you train hard - identify deficiencies before they impair performance",
+        "Step 5: Choose a quality multivitamin as an insurance policy if your diet has gaps",
+        "Step 6: Vegetarians and vegans are at higher risk of iron and zinc deficiency - consider targeted supplementation"
+      ],
+      "mistakes": [
+        "Taking iron supplements without a confirmed deficiency - excess iron is toxic and impairs zinc absorption",
+        "Assuming vitamin D levels are fine without testing - in India, deficiency affects an estimated 70-100% of the population",
+        "Pairing iron-rich plant foods with calcium-rich foods at the same meal - calcium blocks non-haem iron absorption",
+        "Ignoring zinc and magnesium in favour of focusing only on protein",
+        "Relying on cheap, synthetic multivitamins that have poor bioavailability"
+      ],
+      "tips": [
+        "Pro Tip: Vitamin D3 with K2 is the most effective supplement form for bone and cardiovascular health.",
+        "Pro Tip: If you are always tired despite adequate sleep and nutrition, get your iron and vitamin D tested.",
+        "Pro Tip: Pumpkin seeds are one of the richest plant-based zinc sources."
+      ],
+      "video": "https://www.youtube.com/watch?v=3eLmkMMNcOE",
+      "video_title": "Micronutrients for Athletes",
+      "related": [
+        "N06",
+        "N17",
+        "S07",
+        "S09"
+      ]
+    }
+  ],
+  "SUPPLEMENTS": [
+    {
+      "id": "S01",
+      "title": "Creatine Monohydrate: The Most Evidence-Based Supplement",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "5 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Creatine monohydrate is the most thoroughly researched sports supplement in history - with over 1,000 peer-reviewed studies and consistent evidence of benefit for strength, power and muscle mass.",
+        "Creatine works by increasing phosphocreatine stores in muscle, rapidly regenerating ATP - the immediate energy currency of muscle contractions.",
+        "The ISSN confirms creatine monohydrate is safe, effective, and the most ergogenic nutritional supplement available for increasing high-intensity exercise performance."
+      ],
+      "benefits": [
+        "5-15% increase in maximum strength and power output (ISSN Position Stand 2017)",
+        "0.5-2kg increase in lean body mass over 4-8 weeks of supplementation",
+        "Improved muscle recovery - less DOMS and faster glycogen resynthesis",
+        "Cognitive benefits: improved memory, mental fatigue resistance and brain energy metabolism",
+        "Safe for long-term use - no evidence of kidney or liver damage in healthy individuals"
+      ],
+      "how_to": [
+        "Step 1: Choose creatine monohydrate specifically - other forms are not superior",
+        "Step 2: Loading phase (optional): 20g daily for 5 days (split into 4x5g doses)",
+        "Step 3: Maintenance: 3-5g daily - this achieves full saturation in 3-4 weeks without loading",
+        "Step 4: Take with carbohydrates and/or protein for slightly better uptake",
+        "Step 5: Timing is flexible - pre or post workout, or any time daily; consistency matters more than timing",
+        "Step 6: Stay well hydrated - creatine draws water into muscle cells and increases water requirements"
+      ],
+      "mistakes": [
+        "Cycling creatine on and off - there is no scientific reason to cycle creatine",
+        "Paying a premium for 'buffered' or 'micronised' creatine - plain monohydrate is equally effective",
+        "Not loading water intake - inadequate hydration when taking creatine can cause mild cramping",
+        "Expecting visible results in 1-2 days - strength gains take 3-4 weeks",
+        "Combining creatine with caffeine - some research suggests caffeine may partially blunt creatine's ergogenic effect"
+      ],
+      "tips": [
+        "Pro Tip: Creatine monohydrate powder is essentially identical to premium brands - buy unflavoured bulk powder.",
+        "Pro Tip: Vegetarians and vegans benefit more from creatine supplementation because dietary creatine from meat is their only natural source.",
+        "Pro Tip: Non-responders exist (10-30% of people) - if after 8 weeks with no effect, you may be one."
+      ],
+      "video": "https://www.youtube.com/watch?v=HCDhWfqNmv4",
+      "video_title": "Creatine: Everything You Need to Know",
+      "related": [
+        "S02",
+        "S04",
+        "N11",
+        "N02"
+      ]
+    },
+    {
+      "id": "S02",
+      "title": "Whey Protein: Types, Benefits and When to Use It",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Whey protein is a fast-digesting, complete protein derived from milk during the cheese-making process. It contains all nine essential amino acids and has the highest leucine content of any protein source.",
+        "Whey is not a replacement for whole food protein - it is a convenient supplement to help gym members hit their daily protein target.",
+        "Three forms exist: Whey Concentrate (80% protein), Whey Isolate (90%+ protein, better for lactose intolerant people) and Whey Hydrolysate (fastest absorption)."
+      ],
+      "benefits": [
+        "Highest leucine content of any protein source - most potent trigger of muscle protein synthesis",
+        "Fast absorption makes it ideal for post-workout consumption within the 1-2 hour window",
+        "Complete amino acid profile supports all muscle repair and growth processes",
+        "Convenient and cost-effective per gram of protein compared to many whole food sources",
+        "Whey concentrate retains beneficial growth factors and immune-supporting compounds from milk"
+      ],
+      "how_to": [
+        "Step 1: Choose concentrate for general use (more affordable); isolate if lactose intolerant",
+        "Step 2: Take 25-40g post-workout mixed in 200-300ml water or milk",
+        "Step 3: Can also be taken at breakfast, as a mid-meal snack, or before bed",
+        "Step 4: Mix with milk instead of water for added protein, calcium and a better taste",
+        "Step 5: Try adding a scoop to oats, yogurt or smoothies for more palatable consumption",
+        "Step 6: Do not exceed 2 scoops daily if using as a supplement - whole food protein should form the foundation"
+      ],
+      "mistakes": [
+        "Relying on whey as your primary protein source instead of whole foods",
+        "Choosing flavoured whey with 10-15g added sugar per scoop - read the label",
+        "Paying premium prices for 'advanced' formulas with proprietary blends",
+        "Taking more than needed - excess protein above your daily target is simply oxidised for energy",
+        "Assuming whey causes acne - the evidence for this is weak; test it personally if concerned"
+      ],
+      "tips": [
+        "Pro Tip: Cold water mixes better and tastes better than warm water for whey protein.",
+        "Pro Tip: Unflavoured whey can be added to savoury dishes (omelettes, pasta sauce, soups) invisibly.",
+        "Pro Tip: Check the protein per serving ratio - a good whey should provide 70-90% of calories from protein."
+      ],
+      "video": "https://www.youtube.com/watch?v=9xt36pLbxQM",
+      "video_title": "Whey Protein Guide",
+      "related": [
+        "S01",
+        "S03",
+        "N02",
+        "N13"
+      ]
+    },
+    {
+      "id": "S03",
+      "title": "Casein Protein: Slow-Release Muscle Recovery",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Casein is the slow-digesting protein found in milk, constituting about 80% of milk protein. Unlike whey which is absorbed in 2-3 hours, casein forms a gel in the stomach and releases amino acids slowly over 5-7 hours.",
+        "This slow-release property makes casein ideal before bed - providing a sustained overnight supply of amino acids to support the muscle repair that occurs during sleep.",
+        "Research has shown that consuming 40g of casein 30-60 minutes before sleep increases muscle protein synthesis overnight by approximately 22% compared to placebo."
+      ],
+      "benefits": [
+        "7-hour sustained release of amino acids - ideal for overnight muscle repair during sleep",
+        "Higher in glutamine than whey - supports immune function and gut health",
+        "Micellar casein retains the natural slow-release structure from milk",
+        "Highly satiating - casein keeps you feeling full for longer than fast proteins",
+        "Can reduce overnight muscle protein breakdown (catabolism) during calorie restriction"
+      ],
+      "how_to": [
+        "Step 1: Take 30-40g casein 30-60 minutes before bed",
+        "Step 2: Mix with minimal water for a thick pudding-like consistency",
+        "Step 3: Greek yogurt and cottage cheese are excellent whole food casein alternatives",
+        "Step 4: During calorie deficit phases, casein before bed is particularly valuable for anti-catabolic effects",
+        "Step 5: Casein can also replace meals as a high-protein, satiating snack during fat loss phases",
+        "Step 6: Choose micellar casein over calcium caseinate for slower digestion and better amino acid profile"
+      ],
+      "mistakes": [
+        "Taking casein post-workout instead of whey - casein's slow release is a disadvantage at this time",
+        "Expecting casein to provide the same performance benefits as creatine or whey post-workout",
+        "Not considering whole food alternatives - Greek yogurt and cottage cheese are cheaper and equally effective",
+        "Taking casein if lactose intolerant without choosing a hydrolysed casein product",
+        "Paying premium for 'time-release' blended proteins when pure micellar casein achieves the same result"
+      ],
+      "tips": [
+        "Pro Tip: Mix casein with minimal water and freeze for 10 minutes - it becomes a high-protein pudding.",
+        "Pro Tip: Cottage cheese blended into the batter adds extra protein and creaminess.",
+        "Pro Tip: On non-training days, casein before bed is still useful - muscle repair continues 48 hours after your last session."
+      ],
+      "video": "https://www.youtube.com/watch?v=aQN9Zp0LDRI",
+      "video_title": "Casein Protein: Night-Time Recovery",
+      "related": [
+        "S02",
+        "N13",
+        "N15",
+        "R14"
+      ]
+    },
+    {
+      "id": "S04",
+      "title": "Caffeine: How It Boosts Performance and When to Use It",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Caffeine is the world's most widely consumed psychoactive substance and one of the most evidence-supported ergogenic aids in sports nutrition.",
+        "Caffeine works by blocking adenosine receptors in the brain. Adenosine promotes fatigue. By blocking it, caffeine reduces the perception of effort and fatigue during training.",
+        "The ISSN confirms that 3-6mg per kg body weight consumed 60 minutes before exercise meaningfully enhances performance."
+      ],
+      "benefits": [
+        "Reduces perception of effort and fatigue - allowing harder training at the same perceived exertion",
+        "Improves endurance performance by 3-5% in most research",
+        "Increases strength output by 3-7% in resistance training studies",
+        "Enhances mental focus, reaction time and alertness",
+        "Stimulates fat mobilisation as a fuel source - marginally useful during fat loss phases"
+      ],
+      "how_to": [
+        "Step 1: Dose: 3-6mg per kg body weight (for an 80kg person = 240-480mg; start at the lower end)",
+        "Step 2: Timing: consume 45-60 minutes before training for peak blood levels",
+        "Step 3: Source: black coffee, pre-workout supplement, caffeine tablets - all equally effective",
+        "Step 4: Avoid caffeine within 6 hours of sleep - half-life is 5-7 hours and poor sleep negates all benefits",
+        "Step 5: Non-habitual users get the greatest benefit - if you consume caffeine daily, your tolerance is elevated",
+        "Step 6: Cycle off caffeine for 1-2 weeks every 8-12 weeks to reset tolerance"
+      ],
+      "mistakes": [
+        "Consuming caffeine too close to bedtime - sleep quality impairment removes all performance benefits",
+        "Relying on caffeine to compensate for poor sleep - caffeine masks fatigue without resolving it",
+        "Using caffeinated pre-workouts that also contain undisclosed stimulants",
+        "Taking 400mg+ on your first use - start with 100-150mg and assess your individual response",
+        "Using caffeine before every session indefinitely - tolerance builds, requiring cycling"
+      ],
+      "tips": [
+        "Pro Tip: Black coffee is the most natural, cost-effective and healthiest caffeine source available.",
+        "Pro Tip: Caffeine anhydrous in capsule form allows precise dosing without the variables of coffee strength.",
+        "Pro Tip: 100mg caffeine before a session on days you feel fatigued is enough to restore near-normal performance."
+      ],
+      "video": "https://www.youtube.com/watch?v=lYdW3RiJMcs",
+      "video_title": "Caffeine for Athletic Performance",
+      "related": [
+        "S05",
+        "S08",
+        "N16",
+        "S01"
+      ]
+    },
+    {
+      "id": "S05",
+      "title": "Beta-Alanine: Muscular Endurance Supplement",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Beta-alanine is a non-essential amino acid that increases muscle carnosine levels. Carnosine acts as a buffer against the hydrogen ions that accumulate during high-intensity exercise - directly delaying the burning sensation and fatigue in muscles.",
+        "The performance benefit is most pronounced in exercises lasting 1-4 minutes at near-maximum intensity. Highly relevant for weightlifting sets of 8-20 reps, HIIT, rowing and team sports.",
+        "The ISSN confirms beta-alanine supplementation of 4-6g daily for 2-4 weeks meaningfully increases muscle carnosine and improves high-intensity exercise performance."
+      ],
+      "benefits": [
+        "Increases muscle carnosine by 40-80% over 4-8 weeks of consistent supplementation",
+        "Delays muscular fatigue in high-rep sets and high-intensity intervals",
+        "Particularly effective for sets lasting 60-240 seconds (8-20 rep ranges)",
+        "Supports increased training volume over time by delaying fatigue onset",
+        "Synergistic with creatine for combined strength and endurance training"
+      ],
+      "how_to": [
+        "Step 1: Take 3.2-6.4g daily - consistent daily dosing matters more than timing",
+        "Step 2: Split into smaller doses (800mg-1.2g x 4-5 times daily) to minimise paraesthesia",
+        "Step 3: Expect 4 weeks of consistent use before meaningful performance benefit",
+        "Step 4: Sustained release formulations significantly reduce the tingling side effect",
+        "Step 5: Stack with creatine monohydrate for combined strength and endurance enhancement",
+        "Step 6: Continue indefinitely for maintained carnosine levels"
+      ],
+      "mistakes": [
+        "Taking a single large dose of 5-6g at once - this is almost guaranteed to cause intense paraesthesia",
+        "Stopping after a few days because of the tingling - it reduces with continued use and smaller doses",
+        "Expecting an immediate pre-workout effect - beta-alanine requires weeks of loading to work",
+        "Overpaying for proprietary formulas - generic beta-alanine powder is equally effective",
+        "Expecting benefit from sets shorter than 30 seconds - benefits are specific to 60-240 second exercise bouts"
+      ],
+      "tips": [
+        "Pro Tip: The tingling (paraesthesia) is harmless and does not indicate anything is wrong - smaller split doses minimise it.",
+        "Pro Tip: Best suited for high-rep training and cardio - less benefit for pure strength sets of 1-5 reps.",
+        "Pro Tip: Take your dose with food to reduce the intensity of any tingling sensation."
+      ],
+      "video": "https://www.youtube.com/watch?v=NM3tEalJZOM",
+      "video_title": "Beta-Alanine: Does It Work?",
+      "related": [
+        "S04",
+        "S01",
+        "S08",
+        "N19"
+      ]
+    },
+    {
+      "id": "S06",
+      "title": "Omega-3 Fish Oil: Recovery and Inflammation",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Omega-3 fatty acids - specifically EPA and DHA - are polyunsaturated fats found primarily in oily fish. They are classified as essential because the body cannot produce them.",
+        "For gym members, omega-3s reduce exercise-induced inflammation, support muscle protein synthesis, improve joint health and may enhance body composition.",
+        "Research demonstrates that 2-3g EPA+DHA daily reduces markers of muscle damage and DOMS after exercise."
+      ],
+      "benefits": [
+        "Reduces post-exercise muscle damage markers for faster recovery",
+        "Supports muscle protein synthesis - particularly beneficial for those over 40",
+        "Improves joint comfort and reduces exercise-related joint inflammation",
+        "Supports cardiovascular health through blood pressure and triglyceride reduction",
+        "DHA is essential for brain health, mental focus and cognitive function during training"
+      ],
+      "how_to": [
+        "Step 1: Target 2-3g of combined EPA+DHA daily - not just total fish oil",
+        "Step 2: Take with meals containing fat for better absorption",
+        "Step 3: Choose a product that has been third-party tested for heavy metals and contaminants",
+        "Step 4: Algae-based omega-3 is an effective vegan alternative providing DHA+EPA",
+        "Step 5: Take consistently - benefits accumulate over 4-8 weeks of regular use",
+        "Step 6: Dietary sources: 2 servings of oily fish (salmon, mackerel, sardines) per week cover omega-3 needs"
+      ],
+      "mistakes": [
+        "Choosing cheap fish oil with low EPA+DHA per capsule - read the label",
+        "Expecting rapid anti-inflammatory effects - omega-3 benefits develop gradually over 4-8 weeks",
+        "Not storing fish oil properly - exposure to heat and light oxidises it",
+        "Relying only on flaxseed/chia for omega-3 - ALA conversion to EPA+DHA is less than 10% efficient",
+        "Taking with anticoagulant medication without medical advice"
+      ],
+      "tips": [
+        "Pro Tip: Burp-free or enteric-coated fish oil capsules eliminate the 'fish burp' side effect.",
+        "Pro Tip: If fish oil smells strongly, it is likely oxidised - store in the fridge after opening.",
+        "Pro Tip: Algae oil provides the same DHA+EPA as fish oil - cleaner and sustainable."
+      ],
+      "video": "https://www.youtube.com/watch?v=F31SQdHNPdY",
+      "video_title": "Omega-3 Fish Oil Guide",
+      "related": [
+        "S07",
+        "S09",
+        "N21",
+        "N20"
+      ]
+    },
+    {
+      "id": "S07",
+      "title": "Vitamin D for Athletes: Testing, Dosing and Benefits",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Vitamin D is a fat-soluble vitamin that acts more like a hormone. It is produced by the skin upon exposure to UVB sunlight and is involved in bone health, immune function, muscle function and testosterone production.",
+        "Vitamin D deficiency is epidemic - estimated to affect 70-100% of the Indian population. Gym members who train indoors are at particularly high risk.",
+        "Research links low vitamin D to reduced strength gains, impaired immune function, increased injury risk and reduced testosterone."
+      ],
+      "benefits": [
+        "Supports testosterone production - low vitamin D is strongly associated with low testosterone in men",
+        "Enhances muscle function and strength expression - receptors exist in every muscle cell",
+        "Supports bone density and reduces stress fracture risk in high-volume training",
+        "Improves immune function, reducing the frequency and duration of illness",
+        "Associated with improved mood, reduced depression and better sleep quality"
+      ],
+      "how_to": [
+        "Step 1: Test your 25-OH vitamin D blood level - optimal range is 40-60 ng/mL for athletes",
+        "Step 2: If deficient (<20 ng/mL): supplement with 4,000-6,000 IU D3 daily until repletion",
+        "Step 3: Maintenance dose for most indoor-active people: 1,000-2,000 IU D3 daily",
+        "Step 4: Take vitamin D3 (cholecalciferol) - more effective than D2",
+        "Step 5: Take with a meal containing fat for absorption",
+        "Step 6: Pair with vitamin K2 (100-200mcg daily) to direct calcium into bones"
+      ],
+      "mistakes": [
+        "Taking vitamin D2 instead of D3 - D3 raises blood levels approximately twice as effectively",
+        "Not retesting after supplementation - blood levels should be checked after 3-6 months",
+        "Relying on sunscreen-blocked sunlight for vitamin D synthesis",
+        "Not pairing with vitamin K2 - high vitamin D without K2 can increase soft tissue calcification risk",
+        "Megadosing without testing (>10,000 IU daily long-term) - vitamin D toxicity is possible"
+      ],
+      "tips": [
+        "Pro Tip: 15-20 minutes of midday sun on arms and legs (without sunscreen) in summer provides adequate vitamin D.",
+        "Pro Tip: Vitamin D3 + K2 combination supplements represent excellent value.",
+        "Pro Tip: Post-supplementation retest at 3 months ensures your dose is correct."
+      ],
+      "video": "https://www.youtube.com/watch?v=NqLl43uv_sU",
+      "video_title": "Vitamin D for Athletes",
+      "related": [
+        "S09",
+        "S06",
+        "N20",
+        "S11"
+      ]
+    },
+    {
+      "id": "S08",
+      "title": "Pre-Workout Supplements: What Works and What to Avoid",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Pre-workout supplements are multi-ingredient formulas designed to enhance training performance. The market is saturated with products claiming to deliver superhuman energy and focus.",
+        "The truth: most pre-workout ingredients are either underdosed, unproven or duplicative of caffeine. A select few - caffeine, beta-alanine, creatine and citrulline malate - have genuine evidence for performance enhancement.",
+        "Understanding which ingredients work allows you to either select quality products or build your own pre-workout stack from individual evidence-based ingredients."
+      ],
+      "benefits": [
+        "Caffeine (200-400mg): most effective single ingredient - improves strength, endurance and focus",
+        "Beta-alanine (3.2-6.4g): increases carnosine, delays muscular fatigue in high-rep training",
+        "Creatine monohydrate (3-5g): improves strength and power",
+        "Citrulline malate (6-8g): increases nitric oxide, enhances muscle blood flow and reduces fatigue",
+        "Beetroot/nitrate: natural nitric oxide booster with evidence for endurance performance"
+      ],
+      "how_to": [
+        "Step 1: Read ingredient labels - look for clinical doses of proven ingredients, not proprietary blends",
+        "Step 2: Caffeine should be 150-300mg per serving - if not listed on the label, avoid the product",
+        "Step 3: Build your own stack: 200mg caffeine + 3g beta-alanine + 6g citrulline + 5g creatine",
+        "Step 4: Take 30-45 minutes before training for caffeine to reach peak blood levels",
+        "Step 5: Avoid pre-workouts within 6 hours of sleep due to caffeine's half-life",
+        "Step 6: Start with half a serving to assess tolerance to stimulants"
+      ],
+      "mistakes": [
+        "Choosing products based on marketing, flavours or athlete endorsement rather than ingredient labels",
+        "Proprietary blends that hide individual ingredient doses - a major red flag",
+        "Taking pre-workouts every session indefinitely - caffeine tolerance builds, requiring cycling",
+        "Expecting pre-workouts to compensate for poor sleep, nutrition or training effort",
+        "Spending heavily on pre-workouts when creatine + coffee achieves 80% of the benefit at 10% of the cost"
+      ],
+      "tips": [
+        "Pro Tip: The most effective and affordable pre-workout: 5g creatine + 200mg caffeine (from coffee) 45 minutes before training.",
+        "Pro Tip: Tingle from beta-alanine confirms it is dosed correctly - under 3g usually produces no effect.",
+        "Pro Tip: Third-party tested pre-workouts (NSF, Informed Sport certified) are essential for competitive athletes."
+      ],
+      "video": "https://www.youtube.com/watch?v=8lBGGcNELpI",
+      "video_title": "Pre-Workout Supplements: Truth",
+      "related": [
+        "S04",
+        "S05",
+        "S01",
+        "N16"
+      ]
+    },
+    {
+      "id": "S09",
+      "title": "Magnesium: The Overlooked Mineral for Gym Performance",
+      "sub": "Recovery",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Magnesium is involved in over 300 enzymatic reactions in the body - including ATP energy production, protein synthesis, muscle contraction, nerve function and DNA repair.",
+        "Exercise increases magnesium losses through sweat and urine. Studies show that up to 60% of athletes are deficient in magnesium. Low magnesium manifests as muscle cramps, fatigue, poor sleep and impaired recovery.",
+        "Supplementation with magnesium glycinate or malate consistently improves sleep quality, reduces muscle cramps and supports recovery."
+      ],
+      "benefits": [
+        "Reduces muscle cramps and spasms - magnesium deficiency is a primary cause of training-related cramps",
+        "Improves sleep quality - magnesium activates GABA receptors which calm the nervous system",
+        "Supports testosterone production in men with low baseline magnesium levels",
+        "Reduces cortisol response to training - important for recovery and body composition",
+        "Essential for ATP synthesis - directly affects energy production during exercise"
+      ],
+      "how_to": [
+        "Step 1: Target 300-500mg elemental magnesium daily from all sources (food + supplement)",
+        "Step 2: Choose magnesium glycinate or magnesium malate - highest bioavailability and least GI side effects",
+        "Step 3: Avoid magnesium oxide - cheapest but very poorly absorbed (less than 4% bioavailability)",
+        "Step 4: Take before bed - magnesium's calming effect supports sleep onset and quality",
+        "Step 5: Food sources: dark chocolate, spinach, pumpkin seeds, almonds, avocado - include these daily",
+        "Step 6: If using for cramps: 200-400mg elemental magnesium glycinate before bed for 4-6 weeks"
+      ],
+      "mistakes": [
+        "Buying magnesium oxide - the most common form sold, and the least absorbed",
+        "Taking magnesium at the same time as zinc - they compete for absorption; separate by 2+ hours",
+        "Expecting instant results - magnesium deficiency takes weeks to correct",
+        "Not addressing dietary sources - seeds, nuts and dark leafy greens should form the foundation",
+        "Overdosing: >400mg elemental magnesium per dose can cause diarrhoea - start with 200mg"
+      ],
+      "tips": [
+        "Pro Tip: Magnesium glycinate before bed is one of the most impactful supplements for sleep quality and recovery.",
+        "Pro Tip: A handful of pumpkin seeds (30g) provides roughly 150mg of magnesium.",
+        "Pro Tip: Magnesium spray applied to skin bypasses GI absorption issues."
+      ],
+      "video": "https://www.youtube.com/watch?v=vU5ZT_RbMBM",
+      "video_title": "Magnesium for Athletes",
+      "related": [
+        "S07",
+        "S06",
+        "N17",
+        "N20"
+      ]
+    },
+    {
+      "id": "S10",
+      "title": "Electrolyte Supplements: Tablets vs Drinks",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Electrolyte supplements replace the sodium, potassium, magnesium and chloride lost in sweat during exercise. They come in four main forms: ready-to-drink sports drinks, electrolyte powders, effervescent tablets and concentrated drops.",
+        "Each form has different advantages depending on session length, intensity, portability and personal preference.",
+        "Sports drinks are most familiar but often contain significant added sugar. Electrolyte tablets and drops are lower sugar, more portable and easily added to plain water."
+      ],
+      "benefits": [
+        "Prevent performance decline from electrolyte loss during sessions over 60 minutes",
+        "Reduce muscle cramping associated with sodium and magnesium depletion",
+        "Improve fluid retention - electrolytes help your body hold onto the water you drink",
+        "Tablets are portable, precise and zero-sugar - ideal for gym bags and travel",
+        "Drops allow custom electrolyte concentration in any quantity of water"
+      ],
+      "how_to": [
+        "Step 1: Under 60 minutes - plain water is sufficient for most gym sessions",
+        "Step 2: 60-90 minutes - add a small electrolyte tablet or 300ml coconut water to your bottle",
+        "Step 3: Over 90 minutes or in heat - use full electrolyte formulation: 500-1,000mg sodium per hour",
+        "Step 4: Compare products by sodium content per serving - this is the primary electrolyte to replace",
+        "Step 5: For carbohydrate + electrolytes in endurance events, sports drinks are convenient dual-purpose",
+        "Step 6: Post-workout: eat salty whole foods to replace electrolytes naturally"
+      ],
+      "mistakes": [
+        "Using sugary sports drinks for 30-minute gym sessions - unnecessary calories without benefit",
+        "Choosing zero-sodium electrolyte supplements - sodium is the primary electrolyte lost in sweat",
+        "Drinking electrolyte products while sedentary as a 'health drink'",
+        "Ignoring individual sweat rate - heavy sweaters need significantly more electrolytes",
+        "Relying solely on sports drinks without eating post-workout"
+      ],
+      "tips": [
+        "Pro Tip: DIY electrolyte water: 500ml water + 1/4 tsp salt + squeeze of lemon + small amount of honey.",
+        "Pro Tip: Sweat test: weigh yourself before and after a 1-hour session - every kg lost = 1L fluid to replace.",
+        "Pro Tip: Himalayan salt contains trace minerals including magnesium and potassium."
+      ],
+      "video": "https://www.youtube.com/watch?v=vmRlEsjFVxE",
+      "video_title": "Electrolytes Explained",
+      "related": [
+        "N17",
+        "N06",
+        "S09",
+        "N19"
+      ]
+    },
+    {
+      "id": "S11",
+      "title": "Zinc: Testosterone, Immunity and Recovery",
+      "sub": "Recovery",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Zinc is an essential mineral involved in over 300 enzymatic processes - including protein synthesis, DNA repair, testosterone production, immune function and wound healing.",
+        "For gym members, zinc is particularly important for testosterone production and muscle protein synthesis. Low zinc directly suppresses testosterone levels and impairs recovery.",
+        "Exercise increases zinc losses through sweat and urine. Heavy training athletes have elevated zinc requirements."
+      ],
+      "benefits": [
+        "Directly involved in testosterone synthesis - low zinc correlates with low testosterone",
+        "Supports immune function - zinc deficiency increases susceptibility to illness",
+        "Essential for protein synthesis and the cellular repair processes following training",
+        "Antioxidant properties reduce oxidative stress from high-volume training",
+        "ZMA (zinc + magnesium aspartate + B6) has evidence for improving sleep quality and recovery"
+      ],
+      "how_to": [
+        "Step 1: Target 11mg elemental zinc daily (men); 8mg (women)",
+        "Step 2: Best food sources: oysters (highest zinc food), beef, lamb, pumpkin seeds, cashews, chickpeas",
+        "Step 3: If supplementing: zinc glycinate or zinc picolinate - most bioavailable forms",
+        "Step 4: Take on an empty stomach or 2 hours after a calcium-rich meal",
+        "Step 5: Do not exceed 40mg daily (tolerable upper limit) - excess zinc impairs copper absorption",
+        "Step 6: ZMA supplement (zinc + magnesium + B6) before bed combines two critical recovery minerals"
+      ],
+      "mistakes": [
+        "Taking zinc with milk or cheese - calcium significantly reduces zinc absorption",
+        "Supplementing with zinc oxide - poorly absorbed; choose glycinate or picolinate",
+        "Exceeding 40mg daily - upper limit exists because excess zinc depletes copper",
+        "Ignoring food sources - pumpkin seeds, red meat and shellfish are excellent dietary zinc sources",
+        "Attributing low testosterone only to training stress without investigating nutritional causes first"
+      ],
+      "tips": [
+        "Pro Tip: Oysters contain more zinc per gram than any other food - 6 oysters provide approximately 30-35mg.",
+        "Pro Tip: ZMA before bed stacks zinc and magnesium for sleep improvement and recovery simultaneously.",
+        "Pro Tip: Vegetarians and vegans are consistently lower in zinc - consider regular testing and supplementation."
+      ],
+      "video": "https://www.youtube.com/watch?v=vU5ZT_RbMBM",
+      "video_title": "Zinc for Gym Performance",
+      "related": [
+        "S09",
+        "S07",
+        "N20",
+        "S06"
+      ]
+    },
+    {
+      "id": "S12",
+      "title": "Collagen Supplements: Joint Health and Recovery",
+      "sub": "Recovery",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Collagen is the most abundant protein in the human body - forming the structural basis of tendons, ligaments, cartilage, skin and bones.",
+        "Training places significant stress on connective tissues. Tendons and ligaments adapt more slowly than muscle - making collagen supplementation relevant for joint health and injury prevention.",
+        "Research demonstrates that 15g of hydrolysed collagen taken with vitamin C 60 minutes before exercise significantly increases the synthesis of collagen in tendons and ligaments."
+      ],
+      "benefits": [
+        "Supports tendon and ligament collagen synthesis when taken pre-exercise with vitamin C",
+        "May reduce joint pain associated with high training volumes",
+        "Supports skin elasticity and structural integrity during significant weight loss",
+        "Contains unique amino acids (glycine, proline) not abundant in standard protein sources",
+        "Convenient protein addition to hot beverages - collagen peptides dissolve easily in coffee and tea"
+      ],
+      "how_to": [
+        "Step 1: Take 10-15g hydrolysed collagen (collagen peptides) 45-60 minutes before exercise",
+        "Step 2: Combine with vitamin C (e.g. 50mg) - vitamin C is essential for collagen synthesis",
+        "Step 3: Collagen dissolves in hot or cold liquids - add to morning coffee or tea before training",
+        "Step 4: Take consistently for 8-12 weeks - connective tissue adaptation is slow",
+        "Step 5: Use in addition to a complete protein source - collagen is not a complete protein",
+        "Step 6: Whole food gelatin (from bone broth) provides collagen peptides at a lower cost"
+      ],
+      "mistakes": [
+        "Using collagen as a replacement for complete protein - it lacks essential amino acids",
+        "Expecting muscle growth from collagen - it is not appropriate for this purpose",
+        "Not taking with vitamin C - collagen synthesis requires ascorbic acid as a cofactor",
+        "Expecting fast results - tendon and ligament adaptation takes 8-12+ weeks",
+        "Spending on marine collagen vs bovine collagen - both forms are equally effective as peptides"
+      ],
+      "tips": [
+        "Pro Tip: Add collagen powder to your pre-workout coffee for the most convenient delivery.",
+        "Pro Tip: Bone broth provides natural collagen peptides alongside glycine and minerals.",
+        "Pro Tip: If you have recurring joint pain from training, collagen + vitamin C pre-workout is worth a serious 12-week trial."
+      ],
+      "video": "https://www.youtube.com/watch?v=Kn2LpHB2JkE",
+      "video_title": "Collagen for Joints and Recovery",
+      "related": [
+        "S06",
+        "N21",
+        "N15",
+        "S07"
+      ]
+    },
+    {
+      "id": "S13",
+      "title": "BCAAs: Are They Worth It in 2025?",
+      "sub": "Truth Series",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Branched-chain amino acids (BCAAs) - leucine, isoleucine and valine - are essential amino acids that directly stimulate muscle protein synthesis via leucine's activation of the mTOR pathway.",
+        "BCAA supplements were heavily marketed throughout the 2010s as essential for muscle building. But the science tells a different story: BCAAs are only useful when your total protein intake is insufficient.",
+        "The most common argument for BCAAs - preventing muscle breakdown during fasted training - has merit, but is better addressed by simply consuming a complete protein source."
+      ],
+      "benefits": [
+        "Leucine is the most potent trigger of muscle protein synthesis - but is abundant in whey, eggs and meat",
+        "May reduce perceived exertion and mental fatigue during prolonged exercise",
+        "Useful during confirmed fasted training when no other protein source is available",
+        "Low calorie protein signal for those in very strict calorie deficits who train fasted",
+        "Flavoured BCAAs may improve water intake for people who struggle to drink enough"
+      ],
+      "how_to": [
+        "Step 1: Prioritise hitting your total daily protein target (1.6-2.2g/kg) through whole food and complete proteins",
+        "Step 2: Only consider BCAAs if you train fasted AND cannot consume a complete protein source beforehand",
+        "Step 3: If using during fasted training: 5-10g BCAAs or 20-25g complete protein before the session",
+        "Step 4: Choose a 2:1:1 ratio product (leucine:isoleucine:valine) if you do purchase BCAAs",
+        "Step 5: Consider 25g whey protein instead of BCAAs - whey costs less and provides all essential amino acids",
+        "Step 6: Save your budget for creatine monohydrate, vitamin D and omega-3 first"
+      ],
+      "mistakes": [
+        "Spending on BCAAs while eating adequate protein - redundant and expensive",
+        "Using BCAAs as a replacement for a proper post-workout meal",
+        "Buying expensive BCAA products when a cheaper scoop of whey is nutritionally superior",
+        "Believing proprietary BCAA ratios offer special advantages",
+        "Using BCAAs during a meal - redundant when protein from food is being digested simultaneously"
+      ],
+      "tips": [
+        "Pro Tip: If you love BCAAs during training for hydration reasons, they are fine to use - just know the muscle-building benefit is minimal if your protein intake is already adequate.",
+        "Pro Tip: A 500g bag of whey protein provides more leucine per rupee than any BCAA product.",
+        "Pro Tip: Spend BCAA money on creatine monohydrate instead - the return on investment is dramatically higher."
+      ],
+      "video": "https://www.youtube.com/watch?v=GhZXGdHVA0",
+      "video_title": "BCAAs: The Truth",
+      "related": [
+        "S02",
+        "S01",
+        "N02",
+        "S04"
+      ]
+    },
+    {
+      "id": "S14",
+      "title": "Mass Gainers: Are They Worth It?",
+      "sub": "Truth Series",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Mass gainers are high-calorie protein supplements typically containing 50-100g carbohydrates, 20-30g protein and 400-1,000 calories per serving.",
+        "Mass gainers can be a practical tool for people with genuinely high calorie needs who struggle to eat enough. However, most products are largely maltodextrin - essentially sugar.",
+        "The key question is whether you actually need the extra calories and whether this is the most nutritious way to get them."
+      ],
+      "benefits": [
+        "Convenient high-calorie option for true hard gainers who struggle to eat enough",
+        "Useful when appetite is suppressed (post-surgery, illness, extremely high training volume)",
+        "Convenient portable form for people with limited meal prep time",
+        "Can accelerate calorie surplus achievement when food intake is genuinely inadequate",
+        "Some products include creatine and digestive enzymes as added value"
+      ],
+      "how_to": [
+        "Step 1: First, calculate whether you actually need a mass gainer - track 3 days of food intake honestly",
+        "Step 2: If genuinely under your calorie target, try increasing whole food intake before a mass gainer",
+        "Step 3: Choose a product with at least 20-25g protein per 100g calorie-adjusted serving",
+        "Step 4: Use as a supplement between meals - not as a replacement for whole food meals",
+        "Step 5: Mix with milk instead of water for additional protein and calories",
+        "Step 6: Budget alternative: make your own gainer shake with oats + banana + whey + peanut butter + milk (~600-800 calories)"
+      ],
+      "mistakes": [
+        "Using mass gainers while already in a calorie surplus - leads to unnecessary fat gain",
+        "Thinking mass gainer quality is equivalent to whole food nutrition - they are calorie vehicles",
+        "Buying premium mass gainers at huge cost when homemade versions are cheaper and better",
+        "Consuming mass gainers without tracking - easy to massively overshoot calorie surplus",
+        "Using mass gainers to compensate for not training hard enough"
+      ],
+      "tips": [
+        "Pro Tip: Make your own mass gainer: 100g oats + 1 banana + 50g peanut butter + 2 scoops whey + 400ml whole milk = ~900 calories, 70g protein.",
+        "Pro Tip: Real hard gainers need to eat more meals, not just bigger ones.",
+        "Pro Tip: Digestive enzymes may help if you struggle to eat large quantities."
+      ],
+      "video": "https://www.youtube.com/watch?v=9iMGFqMmUFs",
+      "video_title": "Mass Gainers: Worth It or Not?",
+      "related": [
+        "S02",
+        "N12",
+        "N04",
+        "N11"
+      ]
+    },
+    {
+      "id": "S15",
+      "title": "Fat Burners: The Truth Every Gym Member Should Know",
+      "sub": "Truth Series",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Fat burners are multi-ingredient supplements claiming to accelerate fat loss through increased metabolism, reduced appetite and enhanced fat oxidation.",
+        "The honest truth: the most effective active ingredient in virtually every fat burner is caffeine. Caffeine has a modest thermogenic effect.",
+        "No supplement can create meaningful fat loss without a calorie deficit. Fat burners may provide a small additional benefit when added to a structured calorie-controlled diet and training program."
+      ],
+      "benefits": [
+        "Caffeine content (usually 150-300mg) provides a modest metabolic boost and training performance improvement",
+        "Green tea extract (EGCG) has minor evidence for slightly elevated fat oxidation",
+        "Capsaicin (chilli extract) marginally increases thermogenesis and reduces appetite",
+        "Appetite suppression from stimulant ingredients can help adherence to a calorie deficit",
+        "Legitimate thermogenics may add 50-100 extra calories burned daily"
+      ],
+      "how_to": [
+        "Step 1: Establish a proper calorie deficit first - fat burners have no meaningful effect without it",
+        "Step 2: If using, treat the caffeine dose as your pre-workout caffeine and adjust accordingly",
+        "Step 3: Read the ingredient list - if caffeine is the first ingredient, that is your primary active compound",
+        "Step 4: Avoid proprietary blends that hide individual ingredient amounts",
+        "Step 5: Cycle off after 4-8 weeks to prevent stimulant tolerance build-up",
+        "Step 6: Direct your budget toward whole food and proven supplements (creatine, protein, vitamin D and omega-3) first"
+      ],
+      "mistakes": [
+        "Using fat burners without a calorie deficit - you will not lose fat",
+        "Spending large amounts on fat burners when the active ingredient is simply caffeine",
+        "Using fat burners from unregulated brands with undisclosed stimulants - risk of adverse cardiac events",
+        "Expecting dramatic results - maximum realistic benefit is 50-100 extra calories per day",
+        "Using fat burners as a substitute for dietary discipline or training consistency"
+      ],
+      "tips": [
+        "Pro Tip: Black coffee + a small calorie deficit will produce more fat loss than any fat burner supplement.",
+        "Pro Tip: Check for banned substances on WADA list if you compete in any tested sport.",
+        "Pro Tip: The best fat burner is resistance training + calorie deficit + adequate protein."
+      ],
+      "video": "https://www.youtube.com/watch?v=BFe8oRhFVMQ",
+      "video_title": "Fat Burners: Do They Work?",
+      "related": [
+        "N07",
+        "S04",
+        "S08",
+        "N03"
+      ]
+    },
+    {
+      "id": "S16",
+      "title": "Multivitamins: Do Active People Actually Need Them?",
+      "sub": "Essentials",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Multivitamins are the most widely sold dietary supplement globally. They provide a broad spectrum of vitamins and minerals in a single daily dose.",
+        "For most people eating a varied, balanced diet, multivitamins offer minimal additional benefit. However, active gym members have elevated micronutrient needs.",
+        "Rather than replacing real food, a quality multivitamin fills the gaps that inevitably exist in any real-world diet."
+      ],
+      "benefits": [
+        "Insurance policy against micronutrient gaps common in busy, varied real-world diets",
+        "Active people have higher B-vitamin needs for energy metabolism",
+        "Consistent B12 intake is critical for vegetarians and vegans who may be at risk of deficiency",
+        "Antioxidant vitamins C and E reduce some of the oxidative stress from hard training",
+        "Iodine, selenium and chromium are often missed from diet - a multivitamin covers these reliably"
+      ],
+      "how_to": [
+        "Step 1: Assess your diet honestly - are you consistently eating fruits, vegetables, lean proteins and whole grains?",
+        "Step 2: Choose a multivitamin from a reputable brand with third-party testing",
+        "Step 3: Take with a meal containing fat - fat-soluble vitamins require fat for absorption",
+        "Step 4: Do not double-supplement - if taking separate vitamin D and fish oil, choose a multivitamin without these",
+        "Step 5: Avoid megadose multivitamins - more is not better and some vitamins are toxic in excess",
+        "Step 6: Consider targeted supplements for confirmed deficiencies over multivitamin reliance"
+      ],
+      "mistakes": [
+        "Assuming multivitamins compensate for a consistently poor diet - they do not",
+        "Taking on an empty stomach - nausea is common and fat-soluble vitamins are not absorbed without food",
+        "Doubling up on vitamin A by combining a multivitamin with a cod liver oil supplement - risk of toxicity",
+        "Paying premium prices for gummy vitamins which typically contain sub-therapeutic doses",
+        "Not addressing the root cause of a deficiency through nutritional improvements"
+      ],
+      "tips": [
+        "Pro Tip: Whole food multivitamins (made from real food concentrates) typically have better bioavailability.",
+        "Pro Tip: Male and female multivitamins differ primarily in iron content - women need iron; most men do not.",
+        "Pro Tip: A multivitamin is your lowest-priority supplement after protein, creatine, vitamin D and omega-3."
+      ],
+      "video": "https://www.youtube.com/watch?v=3eLmkMMNcOE",
+      "video_title": "Do Multivitamins Work?",
+      "related": [
+        "S07",
+        "S09",
+        "S06",
+        "N20"
+      ]
+    },
+    {
+      "id": "S17",
+      "title": "Ashwagandha: Stress, Recovery and Strength",
+      "sub": "Recovery",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Ashwagandha (Withania somnifera) is an Ayurvedic adaptogen herb with an emerging body of clinical research supporting its use for stress reduction, recovery enhancement and modest strength improvements.",
+        "Adaptogens work by modulating the body's stress response - specifically by reducing cortisol. Chronically elevated cortisol from overtraining impairs recovery and suppresses testosterone.",
+        "A double-blind placebo-controlled study found that 300mg KSM-66 ashwagandha twice daily for 8 weeks significantly improved VO2 max, muscle strength and testosterone levels."
+      ],
+      "benefits": [
+        "Reduces cortisol levels by 15-27% in clinical studies - supports recovery and testosterone",
+        "KSM-66 ashwagandha increases testosterone by 14-40% in men with subclinical low testosterone",
+        "Improves perceived stress, anxiety and sleep quality in randomised controlled trials",
+        "Modest strength improvements (5-8%) observed in resistance training studies",
+        "May improve VO2 max and cardiovascular endurance in preliminary research"
+      ],
+      "how_to": [
+        "Step 1: Choose KSM-66 or Sensoril - the two most clinically validated branded ashwagandha extracts",
+        "Step 2: Dose: 300-600mg daily of a concentrated extract (typically 5% withanolide content)",
+        "Step 3: Take with food - fat improves absorption of ashwagandha's active withanolide compounds",
+        "Step 4: Effects develop gradually over 4-8 weeks - do not judge efficacy in the first 2 weeks",
+        "Step 5: Can be taken morning or evening - evening dosing may improve sleep quality specifically",
+        "Step 6: Suitable for continuous daily use without cycling concerns"
+      ],
+      "mistakes": [
+        "Buying cheap ashwagandha root powder without knowing the withanolide standardisation",
+        "Expecting dramatic muscle growth - ashwagandha's strength benefits are modest and secondary",
+        "Short-term use - benefits require 4-8 weeks of consistent supplementation",
+        "Combining with thyroid medication without medical advice",
+        "Expecting it to replace proper sleep, training and nutrition"
+      ],
+      "tips": [
+        "Pro Tip: KSM-66 is the most well-researched branded form - verified by over 22 clinical trials.",
+        "Pro Tip: Ashwagandha is one of the few adaptogens with genuine controlled clinical evidence.",
+        "Pro Tip: If you are under-recovering, overtrained or chronically stressed, ashwagandha is worth a serious 8-week trial."
+      ],
+      "video": "https://www.youtube.com/watch?v=5nrxH0i4LlM",
+      "video_title": "Ashwagandha: Evidence Review",
+      "related": [
+        "S09",
+        "S07",
+        "N21",
+        "N15"
+      ]
+    },
+    {
+      "id": "S18",
+      "title": "Citrulline Malate: Muscle Pump and Endurance",
+      "sub": "Performance",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "Citrulline malate significantly increases arginine and nitric oxide production - causing blood vessels to dilate and improving blood flow to working muscles.",
+        "Increased blood flow delivers more oxygen and nutrients to muscles during training, removes metabolic waste products faster and produces the muscle pump effect.",
+        "Multiple randomised controlled trials confirm that 6-8g of citrulline malate 60 minutes before training increases exercise volume, reduces muscle soreness and improves anaerobic performance."
+      ],
+      "benefits": [
+        "Increases nitric oxide production for significantly improved muscle blood flow and pump",
+        "Reduces muscle fatigue during high-rep training - allows more total volume per session",
+        "Reduces muscle soreness 24-48 hours after training by improving waste product clearance",
+        "Improves ATP efficiency through malate's role in the Krebs energy cycle",
+        "Well-tolerated with minimal side effects at recommended doses"
+      ],
+      "how_to": [
+        "Step 1: Dose: 6-8g citrulline malate (2:1 form) 60 minutes before training",
+        "Step 2: Choose citrulline malate 2:1 - not citrulline HCl which requires higher doses",
+        "Step 3: Stack with caffeine and creatine for a comprehensive performance pre-workout",
+        "Step 4: Take on an empty stomach for faster absorption and peak effect during training",
+        "Step 5: Allow 4-6 sessions before fully assessing the benefit",
+        "Step 6: Available as unflavoured powder - significantly cheaper than pre-workout formulas containing it"
+      ],
+      "mistakes": [
+        "Under-dosing - most pre-workout blends contain 2-3g citrulline, well below the clinical dose of 6-8g",
+        "Expecting a skin-splitting pump from the first dose - the effect builds with consistent use",
+        "Confusing L-citrulline with citrulline malate - they have different dosing requirements",
+        "Neglecting hydration when using citrulline - vasodilation increases fluid demand during training",
+        "Relying on citrulline malate without adequate training stimulus"
+      ],
+      "tips": [
+        "Pro Tip: Combine citrulline malate + creatine + caffeine for a fully evidence-based pre-workout.",
+        "Pro Tip: Watermelon is a natural source of citrulline - not at supplement-level doses but a useful food source.",
+        "Pro Tip: The pump effect from citrulline is not just aesthetic - better blood flow means better nutrient delivery."
+      ],
+      "video": "https://www.youtube.com/watch?v=M3CHv2a3j9I",
+      "video_title": "Citrulline Malate: Does It Work?",
+      "related": [
+        "S04",
+        "S05",
+        "S08",
+        "S01"
+      ]
+    },
+    {
+      "id": "S19",
+      "title": "Probiotics for Athletes: Gut Health and Performance",
+      "sub": "Recovery",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Supplements",
+      "overview": [
+        "The gut microbiome plays a critical role in immune function, nutrient absorption, inflammation and even mood and brain function via the gut-brain axis.",
+        "For gym members, gut health matters because intense exercise temporarily suppresses immune function, and nutrient absorption quality affects how much protein and micronutrients you actually absorb.",
+        "Clinical research supports the use of specific probiotic strains - particularly Lactobacillus and Bifidobacterium species - for reducing upper respiratory tract infections and improving digestive comfort."
+      ],
+      "benefits": [
+        "Reduces incidence and duration of upper respiratory tract infections in athletes",
+        "Improves gut comfort during high-intensity training which commonly causes GI distress",
+        "Enhances nutrient absorption - a healthy gut absorbs protein and micronutrients more efficiently",
+        "Reduces systemic inflammation through improved gut barrier function",
+        "Lactobacillus rhamnosus and Bifidobacterium longum have the strongest athlete-specific evidence"
+      ],
+      "how_to": [
+        "Step 1: Choose a product with at least 10 billion CFU and multiple strains",
+        "Step 2: Look for clinically studied strains: Lactobacillus acidophilus, L. rhamnosus, Bifidobacterium longum",
+        "Step 3: Take with or just before a meal - food buffers stomach acid and improves probiotic survival",
+        "Step 4: Consistency is critical - take daily for at least 4 weeks before assessing benefit",
+        "Step 5: Pair with prebiotic-rich foods (oats, garlic, onion, banana, leeks) to feed beneficial bacteria",
+        "Step 6: Fermented whole foods (yogurt, kefir, sauerkraut, kimchi) provide natural probiotics"
+      ],
+      "mistakes": [
+        "Choosing the cheapest product with unknown strains - strain identity determines clinical effect",
+        "Taking antibiotics and probiotics simultaneously - antibiotics kill probiotics; separate by at least 2 hours",
+        "Using probiotics only when sick rather than consistently for preventive benefit",
+        "Ignoring diet - a poor diet destroys beneficial gut bacteria regardless of probiotic supplementation",
+        "Expecting overnight results - gut microbiome changes take weeks to months"
+      ],
+      "tips": [
+        "Pro Tip: Daily kefir provides 10-30 billion CFU of diverse probiotic strains alongside protein and calcium.",
+        "Pro Tip: Taking probiotics after a course of antibiotics is particularly valuable.",
+        "Pro Tip: A diverse plant-heavy diet naturally diversifies the microbiome more effectively than any supplement."
+      ],
+      "video": "https://www.youtube.com/watch?v=LgU_pBUlvIo",
+      "video_title": "Probiotics for Athletes",
+      "related": [
+        "S06",
+        "N21",
+        "N15",
+        "S09"
+      ]
+    },
+    {
+      "id": "S20",
+      "title": "How to Read a Supplement Label: Avoiding Scams",
+      "sub": "Truth Series",
+      "date": "June 2025",
+      "read": "4 min read",
+      "tag": "Supplements",
+      "overview": [
+        "The supplement industry in India and globally is poorly regulated compared to pharmaceutical drugs. Products can be sold with ingredient claims that are untested, underdosed, mislabelled or outright false.",
+        "Understanding how to read a supplement label is your primary defence against wasting money, consuming ineffective products or unknowingly taking potentially harmful substances.",
+        "This guide covers the essential label literacy skills every gym member needs to evaluate any supplement honestly."
+      ],
+      "benefits": [
+        "Save money by identifying underdosed products that will not produce their advertised effects",
+        "Avoid proprietary blends that hide ingredient amounts - a major red flag",
+        "Identify third-party certifications that verify label accuracy and purity",
+        "Recognise misleading marketing claims from genuine clinical evidence references",
+        "Understand what ingredients are evidence-based and which are filler or hype"
+      ],
+      "how_to": [
+        "Step 1: Check serving size first - many products appear impressive until you realise a serving is 3 scoops",
+        "Step 2: Look for individual ingredient doses - if hidden in a 'proprietary blend', walk away",
+        "Step 3: Research each ingredient: does it have clinical evidence at the dose listed on the label?",
+        "Step 4: Check for third-party certifications: NSF Certified for Sport, Informed Sport, USP Verified",
+        "Step 5: Look up the brand's certificate of analysis (COA) - transparent brands publish batch testing results",
+        "Step 6: Ignore: celebrity endorsements, before/after photos, 'breakthrough formula' language"
+      ],
+      "mistakes": [
+        "Buying based on flavour, packaging or influencer recommendation",
+        "Ignoring the proprietary blend and assuming an impressive ingredients list means impressive doses",
+        "Not researching ingredient names - many have scientific-sounding names that are simply aliases for cheap fillers",
+        "Trusting 'clinically proven' claims without checking if the cited research used the same dose as the product",
+        "Assuming expensive = better quality - the markup is often pure marketing"
+      ],
+      "tips": [
+        "Pro Tip: Examine.com is the best free resource for evidence-based supplement research.",
+        "Pro Tip: The four supplements with the strongest evidence-to-cost ratio: creatine monohydrate, whey protein, vitamin D3, omega-3.",
+        "Pro Tip: If a supplement promises fat loss, muscle gain AND energy - it almost certainly does none of them meaningfully."
+      ],
+      "video": "https://www.youtube.com/watch?v=8lBGGcNELpI",
+      "video_title": "How to Read Supplement Labels",
+      "related": [
+        "S01",
+        "S08",
+        "S15",
+        "S13"
+      ]
+    }
+  ],
+  "RECIPES": [
+    {
+      "id": "R01",
+      "title": "High Protein Oats (Overnight or Cooked)",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Oats are one of the best pre-workout breakfasts available - slow-release complex carbohydrates, 5g protein per 50g dry serving and high fibre for sustained energy. Adding protein powder transforms them into a complete muscle-building meal.",
+        "This recipe works as overnight oats (made the night before) or as cooked oats in 5 minutes. Both versions hit 40-50g protein per serving.",
+        "The key is adding whey protein after removing oats from heat - cooking protein powder destroys some quality and creates a rubbery texture."
+      ],
+      "benefits": [
+        "Slow-release carbohydrates provide 2-3 hours of sustained energy",
+        "40-50g protein per serving maximises morning muscle protein synthesis",
+        "High fibre improves satiety and gut health",
+        "Prepare overnight - zero morning preparation time",
+        "Naturally rich in beta-glucan which supports cholesterol and blood sugar"
+      ],
+      "how_to": [
+        "Ingredients: 80g oats, 1 scoop whey protein (25g), 300ml milk, 1 banana, 1 tbsp peanut butter, pinch of salt",
+        "Overnight version: Mix oats + milk in a jar. Refrigerate overnight. Add whey and banana in the morning.",
+        "Cooked version: Bring oats + milk to simmer for 4-5 minutes. Remove from heat. Stir in whey protein once cooled slightly.",
+        "Top with sliced banana, peanut butter drizzle and a pinch of salt.",
+        "Macros per serving: ~600 calories, 45g protein, 70g carbs, 15g fat"
+      ],
+      "mistakes": [
+        "Adding protein powder to boiling oats - high heat denatures protein differently and creates poor texture",
+        "Using water instead of milk - reduces protein content significantly",
+        "Not salting the oats - salt enhances every flavour in the bowl"
+      ],
+      "tips": [
+        "Pro Tip: Freeze a banana and blend into oats for a thick ice cream-like consistency.",
+        "Pro Tip: Add cinnamon - improves flavour and has evidence for blood sugar regulation.",
+        "Pro Tip: Blueberries on top provide antioxidants that support post-workout recovery."
+      ],
+      "video": "https://www.youtube.com/watch?v=C4IiS_pv0Xw",
+      "video_title": "High Protein Oats Recipe",
+      "related": [
+        "R02",
+        "R03",
+        "N05",
+        "N16"
+      ]
+    },
+    {
+      "id": "R02",
+      "title": "Protein Pancakes with Fruit Topping",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Protein pancakes are a weekend staple for gym members who want the enjoyment of pancakes without sacrificing their nutrition goals. By replacing most flour with protein powder and eggs, the protein content triples while calories stay similar.",
+        "This recipe produces thick, fluffy pancakes that hold together well. The key is the correct ratio of eggs to protein powder.",
+        "Perfect for post-workout weekend breakfasts when you have more time to cook."
+      ],
+      "benefits": [
+        "35-45g protein per serving from eggs and whey protein",
+        "Lower glycaemic than regular pancakes - slower blood sugar response",
+        "Customisable with any fruit topping for antioxidants and natural sweetness",
+        "Satisfying and indulgent without derailing nutrition goals",
+        "High leucine content from eggs and whey maximises muscle protein synthesis"
+      ],
+      "how_to": [
+        "Ingredients (2 servings): 2 eggs, 2 scoops whey protein, 1 mashed banana, 50ml milk, 1/2 tsp baking powder, pinch salt",
+        "Mash banana. Mix all ingredients together until smooth batter forms.",
+        "Heat non-stick pan on medium-low. Pour small amounts per pancake.",
+        "Cook 2-3 minutes per side - flip when bubbles form on surface.",
+        "Top with mixed berries, 1 tbsp Greek yogurt, honey drizzle.",
+        "Macros: ~500 calories, 42g protein, 45g carbs, 12g fat"
+      ],
+      "mistakes": [
+        "High heat - protein powder burns faster than flour; medium-low is essential",
+        "Too thick batter - add milk gradually to reach pourable consistency",
+        "Flipping too early - wait for surface bubbles before flipping"
+      ],
+      "tips": [
+        "Pro Tip: Banana acts as both a binder and natural sweetener - do not skip it.",
+        "Pro Tip: Make a batch and freeze - reheat in 90 seconds in the microwave.",
+        "Pro Tip: Cottage cheese blended into the batter adds extra protein and creaminess."
+      ],
+      "video": "https://www.youtube.com/watch?v=LMH8jtSGLJU",
+      "video_title": "Protein Pancakes Recipe",
+      "related": [
+        "R01",
+        "R05",
+        "N05",
+        "N11"
+      ]
+    },
+    {
+      "id": "R03",
+      "title": "Greek Yogurt Parfait with Granola and Berries",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A Greek yogurt parfait is one of the highest protein-per-minute-of-preparation breakfasts available. Greek yogurt provides 15-20g protein per 170g serving through its slow-digesting casein protein.",
+        "Layering with granola provides crunchy texture and complex carbohydrates. Fresh or frozen berries add antioxidants and natural sweetness.",
+        "Perfect for busy mornings or as a pre-workout snack 90 minutes before training."
+      ],
+      "benefits": [
+        "20-25g protein per serving from Greek yogurt - supports satiety and muscle synthesis",
+        "Berries provide anthocyanins with evidence for reducing post-exercise muscle damage",
+        "Probiotics in Greek yogurt support gut health and immune function",
+        "5-minute preparation - no cooking required",
+        "High calcium supports bone density stressed by resistance training"
+      ],
+      "how_to": [
+        "Ingredients: 200g full-fat Greek yogurt, 40g granola, 100g mixed berries, 1 tsp honey, 1 tbsp chia seeds",
+        "Layer in a bowl or jar: yogurt, granola, berries, chia seeds, honey drizzle.",
+        "For overnight version: skip granola until morning to keep it crunchy.",
+        "Macros: ~380 calories, 22g protein, 48g carbs, 10g fat"
+      ],
+      "mistakes": [
+        "Flavoured Greek yogurt - often 15-20g added sugar per serving; choose plain",
+        "Too much granola - most are calorie-dense; measure 30-40g rather than pouring freely",
+        "Using low-fat yogurt - full-fat is more satiating and has better flavour"
+      ],
+      "tips": [
+        "Pro Tip: Add a scoop of unflavoured whey to the yogurt for a 35-40g protein hit.",
+        "Pro Tip: Frozen berries work perfectly - they thaw in 5 minutes and are often richer in antioxidants than fresh.",
+        "Pro Tip: Chia seeds absorb liquid overnight creating a pudding-like texture in the layered jar."
+      ],
+      "video": "https://www.youtube.com/watch?v=LMH8jtSGLJU",
+      "video_title": "Greek Yogurt Parfait",
+      "related": [
+        "R01",
+        "R05",
+        "S03",
+        "N15"
+      ]
+    },
+    {
+      "id": "R04",
+      "title": "Peanut Butter Banana Toast (Pre-Workout)",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Peanut butter banana toast is the simplest, most accessible pre-workout snack available. It combines fast-acting carbohydrates from banana with slow-release energy from whole grain bread and healthy fats and protein from peanut butter.",
+        "Ready in under 3 minutes, it requires zero cooking skill and works perfectly for early morning training sessions when appetite is low but energy is needed.",
+        "The combination of simple and complex carbohydrates provides immediate energy plus sustained fuel throughout the workout."
+      ],
+      "benefits": [
+        "Natural sugars from banana provide immediate, fast-acting pre-workout energy",
+        "Whole grain bread adds complex carbohydrates for sustained energy release",
+        "Peanut butter provides 7-8g protein and healthy monounsaturated fats per 2 tbsp",
+        "Portable - works as pre-workout for gym, outdoor training or sports",
+        "Potassium from banana supports muscle contraction and reduces cramping"
+      ],
+      "how_to": [
+        "Ingredients: 2 slices whole grain bread, 2 tbsp natural peanut butter, 1 medium banana",
+        "Toast bread to your preference.",
+        "Spread peanut butter generously on each slice.",
+        "Slice banana and layer on top.",
+        "Optional: drizzle of honey, pinch of cinnamon, sprinkle of chia seeds.",
+        "Macros: ~430 calories, 15g protein, 58g carbs, 16g fat"
+      ],
+      "mistakes": [
+        "Peanut butter with added sugar and palm oil - choose natural (ingredients: peanuts + salt only)",
+        "Eating this within 30 minutes of heavy training - better 60-90 min before",
+        "Using white bread - less fibre, faster blood sugar spike and crash"
+      ],
+      "tips": [
+        "Pro Tip: Freeze banana slices overnight and place on toast while still cold - they soften to a creamy, almost ice cream-like texture.",
+        "Pro Tip: Almond butter is equally effective and has slightly more vitamin E and magnesium.",
+        "Pro Tip: Add a glass of milk for an additional 8g protein."
+      ],
+      "video": "https://www.youtube.com/watch?v=C4IiS_pv0Xw",
+      "video_title": "Pre-Workout Toast Recipe",
+      "related": [
+        "R01",
+        "R03",
+        "N16",
+        "N05"
+      ]
+    },
+    {
+      "id": "R05",
+      "title": "Scrambled Eggs and Avocado on Whole Grain Toast",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Eggs are one of the most complete, bioavailable protein sources available - containing all nine essential amino acids and high leucine for muscle protein synthesis.",
+        "Combined with avocado's healthy monounsaturated fats and whole grain toast's complex carbohydrates, this makes a well-balanced gym breakfast.",
+        "Scrambled eggs take 3-4 minutes to cook. The key is medium-low heat - high heat creates dry, rubbery eggs."
+      ],
+      "benefits": [
+        "3 whole eggs provide 18-21g complete protein with all essential amino acids",
+        "Avocado adds monounsaturated fats, potassium and folate",
+        "Choline in eggs supports brain function and muscle nerve signalling",
+        "Vitamin D in eggs and yolks supports testosterone and bone health",
+        "Omega-3 eggs (from pastured hens) provide DHA for recovery"
+      ],
+      "how_to": [
+        "Ingredients: 3 large eggs, 1/2 avocado, 2 slices whole grain toast, salt, pepper, olive oil",
+        "Whisk eggs with a pinch of salt.",
+        "Heat pan on medium-low. Add small amount of oil or butter.",
+        "Pour in eggs and gently fold continuously with a spatula - remove from heat when just set.",
+        "Toast bread. Mash avocado with salt, pepper and lemon.",
+        "Assemble: avocado on toast, scrambled eggs on top. Season well.",
+        "Macros: ~490 calories, 24g protein, 38g carbs, 28g fat"
+      ],
+      "mistakes": [
+        "High heat - creates dry rubbery eggs; medium-low and continuous movement is the key",
+        "Overcooking - remove from heat while eggs look slightly underdone; residual heat finishes them",
+        "Skipping the salt in the egg mix - under-seasoned eggs are the most common cooking mistake"
+      ],
+      "tips": [
+        "Pro Tip: Add smoked salmon for an additional 10g protein and omega-3s.",
+        "Pro Tip: A squeeze of lemon on the avocado prevents browning and adds brightness.",
+        "Pro Tip: Sprinkle chilli flakes on top for a metabolic boost and flavour upgrade."
+      ],
+      "video": "https://www.youtube.com/watch?v=VSlbAoJeJD0",
+      "video_title": "Scrambled Eggs and Avocado Toast",
+      "related": [
+        "R04",
+        "R01",
+        "N05",
+        "N16"
+      ]
+    },
+    {
+      "id": "R06",
+      "title": "Classic Chicken Rice Bowl (Meal Prep)",
+      "sub": "Lunch",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "The chicken rice bowl is the foundation of gym nutrition globally - providing lean complete protein, easily digestible complex carbohydrates and a natural platform for any vegetables and flavours you enjoy.",
+        "This recipe is designed for meal prep - cook 4-5 portions in under 40 minutes and have ready-to-eat lunches for the entire week.",
+        "Flavour is the key reason people abandon meal prep. This recipe uses a simple but effective marinade that makes batch-cooked chicken genuinely enjoyable."
+      ],
+      "benefits": [
+        "40-45g protein per serving from chicken breast",
+        "Complex carbohydrates from rice restore glycogen after morning training",
+        "5-serving batch prep in one session - saves 4+ hours of weekly cooking time",
+        "Adaptable to any cuisine flavour profile: teriyaki, Mediterranean, Indian, Mexican",
+        "Provides macro clarity - consistent portions make tracking simple"
+      ],
+      "how_to": [
+        "Ingredients (5 portions): 1kg chicken breast, 500g dry rice, 500g broccoli, olive oil, salt, garlic powder, paprika, lemon",
+        "Marinade: olive oil + salt + garlic powder + paprika + lemon juice. Coat chicken.",
+        "Grill or bake at 200 degrees C for 20-25 minutes until internal temp reaches 75 degrees C.",
+        "Cook rice using 1:1.5 ratio rice:water. Rest 10 minutes off heat.",
+        "Steam or roast broccoli.",
+        "Divide into 5 equal portions in meal prep containers. Refrigerate.",
+        "Macros per portion: ~520 calories, 43g protein, 65g carbs, 8g fat"
+      ],
+      "mistakes": [
+        "Cooking chicken from cold - room temperature chicken cooks more evenly",
+        "Overcooked dry chicken - use a meat thermometer; 75 degrees C internal temp is the target",
+        "No flavour on the chicken - bland food kills meal prep adherence; season aggressively"
+      ],
+      "tips": [
+        "Pro Tip: Slice chicken before storing - faster reheating and easier eating from containers.",
+        "Pro Tip: Add different sauces each day (sriracha, teriyaki, tahini) to the same base for variety.",
+        "Pro Tip: Sweet potato instead of rice increases fibre and micronutrient density with similar macros."
+      ],
+      "video": "https://www.youtube.com/watch?v=OuSIqFR3mhE",
+      "video_title": "Chicken Rice Bowl Meal Prep",
+      "related": [
+        "R07",
+        "R11",
+        "N11",
+        "N13"
+      ]
+    },
+    {
+      "id": "R07",
+      "title": "High Protein Burrito Bowl",
+      "sub": "Lunch",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A burrito bowl brings together lean protein, complex carbohydrates, fibre-rich legumes and healthy fats in one satisfying meal. It is inherently flexible.",
+        "This version is built around grilled chicken and black beans for a combined protein hit, with brown rice or cauliflower rice depending on your calorie targets.",
+        "Great for post-workout lunches when glycogen replenishment and protein intake are both priorities."
+      ],
+      "benefits": [
+        "50g+ protein from combined chicken and black beans",
+        "Black beans add 15g protein AND 15g fibre per cup for outstanding satiety",
+        "Avocado provides healthy fats and potassium for muscle function",
+        "High fibre keeps you full for 4-5 hours - ideal for fat loss phases",
+        "Complete amino acid profile from the chicken + legume combination"
+      ],
+      "how_to": [
+        "Ingredients: 150g grilled chicken, 100g cooked black beans, 150g brown rice, 1/2 avocado, salsa, Greek yogurt, lime, coriander",
+        "Cook rice. Season with salt and lime.",
+        "Grill chicken with cumin, garlic, paprika. Slice.",
+        "Layer in bowl: rice, beans, chicken, avocado, salsa, yogurt, lime, coriander.",
+        "Macros: ~620 calories, 52g protein, 68g carbs, 14g fat"
+      ],
+      "mistakes": [
+        "Store-bought salsa with high sugar content - make a simple fresh salsa or choose low-sugar varieties",
+        "Not using Greek yogurt as a sour cream substitute - identical texture with twice the protein",
+        "Under-seasoning the rice - rice should be flavourful, not a neutral filler"
+      ],
+      "tips": [
+        "Pro Tip: Cauliflower rice reduces carbs by 60% with similar volume - useful during a cut.",
+        "Pro Tip: Pre-cook large batches of black beans from dried - 4x cheaper and no added sodium.",
+        "Pro Tip: The more toppings you add (salsa, hot sauce, lime, coriander), the more satisfying the meal."
+      ],
+      "video": "https://www.youtube.com/watch?v=OuSIqFR3mhE",
+      "video_title": "High Protein Burrito Bowl",
+      "related": [
+        "R06",
+        "R08",
+        "N11",
+        "N07"
+      ]
+    },
+    {
+      "id": "R08",
+      "title": "Turkey and Avocado Wrap",
+      "sub": "Lunch",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A turkey avocado wrap is a lean, portable, high-protein lunch that takes under 5 minutes to assemble. Turkey breast provides roughly 30g protein per 100g with minimal fat.",
+        "This wrap travels well in a gym bag without needing refrigeration for 2-3 hours. It works as both a pre-workout lunch and a post-workout meal.",
+        "The avocado provides satiating healthy fats and creamy texture that eliminates the need for calorie-dense sauces."
+      ],
+      "benefits": [
+        "35-40g protein from turkey breast and Greek yogurt spread",
+        "Avocado provides healthy fats, potassium and exceptional flavour",
+        "Portable and no utensils required - ideal for busy schedules",
+        "Wholegrain wrap provides fibre and slow-release carbohydrates",
+        "Naturally lower in sodium than deli meats - prefer freshly roasted or grilled turkey breast"
+      ],
+      "how_to": [
+        "Ingredients: 1 large wholegrain wrap, 120g sliced turkey breast, 1/2 avocado, 2 tbsp Greek yogurt, lettuce, tomato, mustard, salt, pepper",
+        "Mash avocado with salt, pepper and a squeeze of lemon.",
+        "Spread Greek yogurt on the wrap as a base.",
+        "Layer: avocado spread, lettuce, turkey, tomato, mustard.",
+        "Roll tightly, cut diagonally.",
+        "Macros: ~450 calories, 38g protein, 42g carbs, 12g fat"
+      ],
+      "mistakes": [
+        "Over-filling the wrap - leads to structural failure; less is more in the wrapping phase",
+        "Commercial deli turkey with high sodium - prefer freshly roasted or grilled turkey breast",
+        "No acidity - a squeeze of lemon or a little mustard cuts the richness of avocado"
+      ],
+      "tips": [
+        "Pro Tip: Warm the wrap briefly in a pan before filling - it becomes more pliable and less likely to tear.",
+        "Pro Tip: Add sliced cucumber for crunch and volume with zero calories.",
+        "Pro Tip: Prepare the night before and refrigerate - avocado prevents browning when wrapped tightly."
+      ],
+      "video": "https://www.youtube.com/watch?v=OuSIqFR3mhE",
+      "video_title": "Turkey Avocado Wrap Recipe",
+      "related": [
+        "R07",
+        "R09",
+        "N08",
+        "N07"
+      ]
+    },
+    {
+      "id": "R09",
+      "title": "Quinoa Power Bowl with Chickpeas and Tahini",
+      "sub": "Lunch",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Quinoa is the only plant food that is a complete protein - containing all nine essential amino acids. Combined with roasted chickpeas and a tahini dressing, this bowl becomes a nutritionally complete plant-based gym meal.",
+        "This recipe is ideal for vegetarian and vegan gym members who want to hit protein targets without animal products.",
+        "The tahini dressing adds healthy fats, calcium and a rich flavour that makes this bowl genuinely satisfying."
+      ],
+      "benefits": [
+        "Quinoa is a complete plant protein - 8g protein per 100g cooked, all essential amino acids present",
+        "Chickpeas add 15g protein and 12g fibre per cup for outstanding satiety",
+        "Tahini provides calcium, healthy fats and a rich nutty flavour with 5g protein per 2 tbsp",
+        "High iron content from chickpeas and spinach - important for gym members",
+        "Naturally gluten-free and suitable for most dietary restrictions"
+      ],
+      "how_to": [
+        "Ingredients: 150g cooked quinoa, 100g roasted chickpeas, 50g spinach, 1/2 cucumber, cherry tomatoes, 2 tbsp tahini, lemon, garlic, salt",
+        "Roast chickpeas: toss with olive oil, cumin, paprika, salt. Bake at 200 degrees C for 25 minutes until crispy.",
+        "Make dressing: tahini + lemon juice + 1 clove garlic + water to loosen + salt.",
+        "Assemble: quinoa base, spinach, cucumber, tomatoes, chickpeas, dressing.",
+        "Macros: ~520 calories, 22g protein, 62g carbs, 18g fat"
+      ],
+      "mistakes": [
+        "Not roasting chickpeas until crispy - soft chickpeas lack the texture that makes this bowl exciting",
+        "Underdressing the bowl - tahini dressing is the hero; be generous",
+        "Not rinsing quinoa before cooking - the natural saponin coating creates a bitter flavour"
+      ],
+      "tips": [
+        "Pro Tip: Make a large batch of roasted chickpeas and use as a high-protein snack throughout the week.",
+        "Pro Tip: Add a soft-boiled egg on top for an additional 7g complete protein if not strictly vegan.",
+        "Pro Tip: Quinoa doubles in volume when cooked - cook 75g dry quinoa for a 150g cooked serving."
+      ],
+      "video": "https://www.youtube.com/watch?v=4pIc9UvB7iE",
+      "video_title": "Quinoa Power Bowl Recipe",
+      "related": [
+        "R10",
+        "R23",
+        "N01",
+        "N08"
+      ]
+    },
+    {
+      "id": "R10",
+      "title": "Salmon and Sweet Potato Plate",
+      "sub": "Lunch",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Salmon is arguably the most nutritionally complete single food for gym members - providing 25-30g high-quality protein, abundant omega-3 fatty acids, vitamin D, B vitamins and selenium in one serving.",
+        "Sweet potato provides a dense, nutritious carbohydrate source with beta-carotene, potassium and fibre.",
+        "This plate is designed as a post-workout meal when the muscle-building and anti-inflammatory properties of salmon are most relevant."
+      ],
+      "benefits": [
+        "25-30g protein per salmon fillet - complete with all essential amino acids",
+        "2-3g EPA+DHA per 150g serving - effectively covers daily omega-3 needs from food alone",
+        "Sweet potato provides 1g potassium per medium potato - critical electrolyte for muscle function",
+        "Vitamin D from salmon supports testosterone, bone health and muscle function",
+        "Anti-inflammatory omega-3s in salmon reduce post-exercise muscle damage"
+      ],
+      "how_to": [
+        "Ingredients: 150g salmon fillet, 200g sweet potato, 100g asparagus or green beans, olive oil, lemon, garlic, salt, herbs",
+        "Pierce sweet potato. Microwave 5 minutes or roast at 200 degrees C for 40 minutes.",
+        "Season salmon: olive oil + salt + garlic + lemon + dill or thyme.",
+        "Pan-fry salmon skin-side down for 4 minutes on medium-high. Flip, cook 3 more minutes.",
+        "Steam asparagus 3-4 minutes. Season with lemon and salt.",
+        "Macros: ~580 calories, 38g protein, 55g carbs, 18g fat"
+      ],
+      "mistakes": [
+        "Moving salmon too early - it will release from the pan naturally when the skin is crispy",
+        "Overcooked salmon - should be slightly opaque in the centre, not dry all the way through",
+        "Skipping the lemon - acidity brightens all the flavours and cuts the richness of the fish"
+      ],
+      "tips": [
+        "Pro Tip: Tinned salmon (wild caught) is 80% cheaper than fresh and nutritionally equivalent for omega-3 content.",
+        "Pro Tip: Skin-on salmon fillets are easier to cook and the skin provides collagen and additional omega-3s.",
+        "Pro Tip: Air fryer salmon at 200 degrees C for 10 minutes produces perfect, consistent results."
+      ],
+      "video": "https://www.youtube.com/watch?v=JGTjjCNjLz8",
+      "video_title": "Salmon Sweet Potato Recipe",
+      "related": [
+        "R06",
+        "R11",
+        "S06",
+        "N21"
+      ]
+    },
+    {
+      "id": "R11",
+      "title": "Lean Beef and Rice Bowl",
+      "sub": "Dinner",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Lean beef (95% mince) is one of the most nutritionally dense gym foods available - providing 25-28g protein per 100g alongside creatine, zinc, iron, B12 and carnosine.",
+        "Combined with white rice for fast glycogen replenishment and a simple flavour base, this bowl is the definition of effective performance nutrition.",
+        "This recipe uses 95% lean beef to keep fat content manageable while retaining the superior micronutrient profile."
+      ],
+      "benefits": [
+        "25-28g protein per 100g cooked lean beef mince - among the highest of any food",
+        "Natural dietary creatine in beef supplements your creatine stores",
+        "Rich in zinc for testosterone production and protein synthesis",
+        "Iron and B12 support energy production and red blood cell function",
+        "Carnosine in beef reduces muscle fatigue during high-intensity training"
+      ],
+      "how_to": [
+        "Ingredients: 200g 95% lean beef mince, 180g cooked rice, 1 onion, 2 cloves garlic, 1 tbsp soy sauce, 1 tsp sesame oil, chilli flakes, spring onions",
+        "Brown beef in hot pan, breaking apart. Season with salt.",
+        "Add diced onion and garlic. Cook 3-4 minutes.",
+        "Add soy sauce, chilli flakes, sesame oil. Stir well.",
+        "Serve over rice. Top with spring onions and sesame seeds.",
+        "Macros: ~580 calories, 47g protein, 62g carbs, 12g fat"
+      ],
+      "mistakes": [
+        "Using full-fat (80/20) mince - adds 150-200 unnecessary calories from fat; use 95% lean",
+        "Not draining fat after browning - excess fat pools make the dish greasy",
+        "Under-seasoning - soy sauce is the foundation; taste and adjust throughout cooking"
+      ],
+      "tips": [
+        "Pro Tip: Korean-style beef bowl: add 1 tbsp gochujang + sesame seeds + fried egg on top.",
+        "Pro Tip: Swap rice for cauliflower rice to cut 200 calories during a fat loss phase.",
+        "Pro Tip: Batch cook the beef component and store in fridge for 4 days."
+      ],
+      "video": "https://www.youtube.com/watch?v=OuSIqFR3mhE",
+      "video_title": "Lean Beef Rice Bowl",
+      "related": [
+        "R06",
+        "R12",
+        "N12",
+        "N11"
+      ]
+    },
+    {
+      "id": "R12",
+      "title": "Chicken Stir-Fry with Vegetables and Brown Rice",
+      "sub": "Dinner",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A chicken stir-fry is one of the fastest, most versatile high-protein dinners available. Ready in under 20 minutes, it provides lean protein, a wide variety of micronutrient-rich vegetables and complex carbohydrates in a single pan.",
+        "The key to a great stir-fry is high heat and not overcrowding the pan - both conditions ensure the chicken sears properly and vegetables retain their texture.",
+        "This recipe is infinitely adaptable to whatever vegetables are available."
+      ],
+      "benefits": [
+        "35-40g protein per serving from chicken breast",
+        "Broad micronutrient coverage from colourful vegetable variety",
+        "Quick cooking preserves more heat-sensitive vitamins than longer cooking methods",
+        "High satiety from the protein and fibre combination",
+        "Versatile base recipe adaptable to any Asian cuisine flavour profile"
+      ],
+      "how_to": [
+        "Ingredients: 200g chicken breast (sliced thin), 300g mixed vegetables (broccoli, peppers, snap peas, carrots), 160g cooked brown rice, 2 tbsp soy sauce, 1 tbsp oyster sauce, garlic, ginger, sesame oil",
+        "Slice chicken thinly across the grain. Season with salt, garlic.",
+        "Wok or large pan on maximum heat. Add oil.",
+        "Cook chicken until golden, 3-4 minutes. Remove from pan.",
+        "Add vegetables - cook on high heat 2-3 minutes, moving constantly.",
+        "Return chicken. Add sauces. Toss 1 minute. Serve over rice.",
+        "Macros: ~550 calories, 42g protein, 62g carbs, 10g fat"
+      ],
+      "mistakes": [
+        "Low heat - this is the number one stir-fry mistake; maximum heat is non-negotiable",
+        "Wet vegetables - dry all veg thoroughly before adding to the wok to prevent steaming",
+        "Cutting chicken too thick - thin slices cook faster and more evenly"
+      ],
+      "tips": [
+        "Pro Tip: Freeze chicken for 20 minutes before slicing - slightly frozen meat is dramatically easier to slice thinly.",
+        "Pro Tip: Velvet the chicken: marinate in 1 tsp baking soda + water for 15 minutes for silky, tender texture.",
+        "Pro Tip: A good wok retains heat better than any pan - worth investing in for frequent stir-frying."
+      ],
+      "video": "https://www.youtube.com/watch?v=UE-l5tN2Mcc",
+      "video_title": "Chicken Stir-Fry Recipe",
+      "related": [
+        "R06",
+        "R11",
+        "N11",
+        "N13"
+      ]
+    },
+    {
+      "id": "R13",
+      "title": "High-Protein Pasta with Lean Beef Sauce",
+      "sub": "Dinner",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Pasta is a performance staple - it provides a dense, slow-release carbohydrate that fuels training sessions and restores glycogen effectively. With lean beef added to the sauce and cottage cheese blended in for creaminess, this dish hits 50g+ protein per serving.",
+        "The cottage cheese blended into the sauce is the secret ingredient - it adds extraordinary creaminess with a fraction of the calories and 14g extra protein.",
+        "This recipe proves that gym nutrition does not have to be boring or restrictive."
+      ],
+      "benefits": [
+        "50g+ protein per serving from lean beef and cottage cheese",
+        "Complex carbohydrates from pasta support glycogen storage before or after training",
+        "Cottage cheese provides casein protein for sustained amino acid release",
+        "Lycopene from tomatoes is an antioxidant that supports cardiovascular health",
+        "Iron from beef supports energy and oxygen transport"
+      ],
+      "how_to": [
+        "Ingredients: 250g pasta (cooked), 200g 95% lean beef mince, 200g cottage cheese, 1 tin chopped tomatoes, 1 onion, 3 cloves garlic, mixed herbs, salt, pepper",
+        "Brown beef with onion and garlic. Season well.",
+        "Add tomatoes + herbs. Simmer 15 minutes.",
+        "Off heat, stir in cottage cheese - blends into creamy sauce.",
+        "Serve over pasta. Top with fresh basil and optional parmesan.",
+        "Macros: ~680 calories, 52g protein, 78g carbs, 12g fat"
+      ],
+      "mistakes": [
+        "Boiling pasta without salt - pasta water should taste like the sea",
+        "Adding cottage cheese to boiling sauce - it separates; always add off the heat",
+        "Under-cooking the beef sauce - simmering 15 minutes concentrates flavour significantly"
+      ],
+      "tips": [
+        "Pro Tip: High protein pasta (from lentil or chickpea flour) increases protein by an additional 15-20g per serving.",
+        "Pro Tip: Blend cottage cheese smooth before adding for the most seamless creamy sauce texture.",
+        "Pro Tip: This freezes excellently - make double and freeze portions for easy weeknight meals."
+      ],
+      "video": "https://www.youtube.com/watch?v=UE-l5tN2Mcc",
+      "video_title": "High Protein Pasta Recipe",
+      "related": [
+        "R11",
+        "R12",
+        "N11",
+        "N13"
+      ]
+    },
+    {
+      "id": "R14",
+      "title": "Cottage Cheese and Fruit Bowl (Pre-Bed Snack)",
+      "sub": "Snacks",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Cottage cheese is primarily casein protein - the slow-digesting milk protein that releases amino acids over 5-7 hours. This makes it the ideal pre-bed snack for gym members.",
+        "Research confirmed that 40g casein before sleep increases overnight muscle protein synthesis by 22% and improves whole-body protein balance.",
+        "This recipe keeps it simple and delicious - fruit adds natural sweetness and antioxidants."
+      ],
+      "benefits": [
+        "25-30g slow-release casein protein per serving - ideal for overnight muscle repair",
+        "Research-backed: pre-bed casein increases overnight muscle protein synthesis by 22%",
+        "Low calorie density - high protein with relatively low calorie count",
+        "Fruit provides fibre and antioxidants with minimal calorie addition",
+        "Zero cooking required - 2-minute preparation before bed"
+      ],
+      "how_to": [
+        "Ingredients: 200g low-fat cottage cheese, 100g mixed berries or sliced fruit, 1 tsp honey, 1 tbsp pumpkin seeds",
+        "Place cottage cheese in bowl.",
+        "Top with berries, seeds and a light honey drizzle.",
+        "Optional: blend cottage cheese smooth for a yogurt-like texture.",
+        "Macros: ~250 calories, 26g protein, 20g carbs, 7g fat"
+      ],
+      "mistakes": [
+        "Full-fat cottage cheese if tracking calories carefully - low-fat provides same protein at fewer calories",
+        "Too much fruit - this is a snack, not a meal; 80-100g fruit is sufficient",
+        "Expecting it to taste like yogurt - the texture is different; blend if preferred smooth"
+      ],
+      "tips": [
+        "Pro Tip: Blend 200g cottage cheese with a scoop of casein protein and freeze for 20 minutes for a protein ice cream.",
+        "Pro Tip: Mix in cinnamon - flavour enhancement and some evidence for blood sugar regulation.",
+        "Pro Tip: Pair with a handful of almonds for additional healthy fats and slow digestion."
+      ],
+      "video": "https://www.youtube.com/watch?v=aQN9Zp0LDRI",
+      "video_title": "Pre-Bed Protein Snack",
+      "related": [
+        "S03",
+        "R03",
+        "N15",
+        "N05"
+      ]
+    },
+    {
+      "id": "R15",
+      "title": "Energy Balls with Oats, Peanut Butter and Honey",
+      "sub": "Snacks",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Energy balls are no-bake, portable protein-rich snacks that take 10 minutes to prepare and last 1 week in the fridge. They provide a balanced blend of carbohydrates, protein and healthy fats.",
+        "The combination of oats (slow-release carbs), peanut butter (protein + fat) and protein powder creates a macro-balanced bite that genuinely satisfies hunger.",
+        "Make a batch of 12-15 balls in one session and you have ready-to-grab pre-workout snacks for the entire week."
+      ],
+      "benefits": [
+        "10-12g protein per ball when made with protein powder",
+        "Portable, no refrigeration required for 4-6 hours - ideal for gym bags",
+        "No baking, no cooking - mixed and rolled in 10 minutes",
+        "Natural sweetness from honey without refined sugar",
+        "Oats provide beta-glucan fibre and slow-release energy"
+      ],
+      "how_to": [
+        "Ingredients (12 balls): 150g oats, 120g peanut butter, 2 scoops whey protein, 3 tbsp honey, 50g dark chocolate chips, 2 tbsp chia seeds, 2-4 tbsp milk to bind",
+        "Mix all dry ingredients in a bowl.",
+        "Add peanut butter and honey. Mix well.",
+        "Add milk tablespoon by tablespoon until the mixture holds together when squeezed.",
+        "Roll into 12 equal balls. Refrigerate 30 minutes before eating.",
+        "Macros per ball: ~120 calories, 8g protein, 12g carbs, 5g fat"
+      ],
+      "mistakes": [
+        "Too much milk - mixture becomes too wet to roll; add very gradually",
+        "Not chilling before eating - they hold their shape much better when cold",
+        "Skipping the salt - a pinch of salt balances the sweetness significantly"
+      ],
+      "tips": [
+        "Pro Tip: Roll in desiccated coconut or cocoa powder for different varieties.",
+        "Pro Tip: Freeze individually and take out 30 minutes before eating - lasts 2 months in the freezer.",
+        "Pro Tip: Use almond butter for a different flavour profile with slightly more vitamin E and magnesium."
+      ],
+      "video": "https://www.youtube.com/watch?v=C4IiS_pv0Xw",
+      "video_title": "Protein Energy Balls Recipe",
+      "related": [
+        "R04",
+        "R01",
+        "N16",
+        "N05"
+      ]
+    },
+    {
+      "id": "R16",
+      "title": "Post-Workout Protein Smoothie",
+      "sub": "Snacks",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A protein smoothie is the fastest, most convenient post-workout nutrition option available. It can be prepared in 3 minutes and delivers 40-50g protein alongside fast-acting carbohydrates for glycogen replenishment.",
+        "The key to a great post-workout smoothie is the carbohydrate source. Banana provides fast glucose and fructose for glycogen restoration. Oats add slow-release carbs.",
+        "This recipe is optimised for post-workout recovery - high protein, moderate-high carbohydrate and low fat for fast digestion."
+      ],
+      "benefits": [
+        "40-50g protein in one drinkable form - maximum convenience post-training",
+        "Banana provides potassium and fast carbohydrates for post-workout recovery",
+        "Liquid form absorbs faster than solid food - particularly useful if appetite is suppressed after training",
+        "Creatine can be added seamlessly - no taste impact",
+        "Infinitely customisable with different fruits and flavour combinations"
+      ],
+      "how_to": [
+        "Ingredients: 2 scoops whey protein, 1 banana, 250ml whole milk, 40g oats, 1 tbsp peanut butter, 1 tsp honey, 5g creatine monohydrate (optional)",
+        "Add all ingredients to blender.",
+        "Blend on high for 30-45 seconds.",
+        "Consume within 30 minutes of blending.",
+        "Macros: ~620 calories, 48g protein, 72g carbs, 14g fat",
+        "Lighter version (without oats/peanut butter): ~400 cal, 42g protein"
+      ],
+      "mistakes": [
+        "Blending on low speed - oats need high speed to fully blend; low speed leaves chalky texture",
+        "Using flavoured protein with clashing fruit - vanilla protein with banana works perfectly",
+        "Adding ice if using frozen banana - frozen banana already makes the smoothie thick and cold"
+      ],
+      "tips": [
+        "Pro Tip: Freeze bananas when they ripen - they become sweeter and create a naturally thicker, colder smoothie.",
+        "Pro Tip: Blend oats first into a flour before adding other ingredients for a silkier texture.",
+        "Pro Tip: Add a handful of spinach - zero flavour impact but adds iron, vitamin K and folate."
+      ],
+      "video": "https://www.youtube.com/watch?v=9xt36pLbxQM",
+      "video_title": "Post-Workout Smoothie Recipe",
+      "related": [
+        "S02",
+        "R15",
+        "N13",
+        "N16"
+      ]
+    },
+    {
+      "id": "R17",
+      "title": "Paneer and Vegetable Power Bowl",
+      "sub": "Vegetarian",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Paneer is the most protein-dense dairy product used in Indian cuisine - providing 18-20g protein per 100g alongside calcium and healthy fats.",
+        "For vegetarian gym members, paneer is a cornerstone protein source. This bowl pairs it with chickpeas for additional plant protein, brown rice for carbohydrates and a broad vegetable base for micronutrients.",
+        "This recipe uses simple Indian-inspired spicing that makes nutritious food genuinely enjoyable."
+      ],
+      "benefits": [
+        "35-40g protein from paneer + chickpeas combination per serving",
+        "Calcium from paneer supports bone density under the stress of resistance training",
+        "Chickpeas add dietary fibre for satiety and gut health",
+        "Conjugated linoleic acid (CLA) in paneer may support body composition",
+        "Iron from chickpeas and spinach supports energy and oxygen transport"
+      ],
+      "how_to": [
+        "Ingredients: 150g paneer, 100g cooked chickpeas, 150g brown rice, 100g spinach, 1 tomato, cumin, turmeric, garam masala, ghee or oil, salt, lemon",
+        "Cube paneer. Pan-fry in 1 tsp ghee until golden on all sides. Remove.",
+        "In same pan, cook onion + garlic. Add tomato + spices. Cook 5 minutes.",
+        "Add chickpeas and spinach. Stir until wilted.",
+        "Add paneer back. Stir gently.",
+        "Serve over rice with a squeeze of lemon.",
+        "Macros: ~590 calories, 38g protein, 65g carbs, 18g fat"
+      ],
+      "mistakes": [
+        "Cold paneer from fridge - room temperature paneer browns more evenly",
+        "High heat for too long - paneer becomes rubbery; medium-high heat, short time",
+        "Not salting the chickpeas - season every component for best flavour"
+      ],
+      "tips": [
+        "Pro Tip: Soak paneer in warm water for 10 minutes before cooking - keeps it soft inside while crispy outside.",
+        "Pro Tip: Low-fat paneer provides more protein per calorie if tracking macros carefully.",
+        "Pro Tip: Leftover curry sauce works perfectly as a flavour base here."
+      ],
+      "video": "https://www.youtube.com/watch?v=4pIc9UvB7iE",
+      "video_title": "Paneer Power Bowl Recipe",
+      "related": [
+        "R09",
+        "R23",
+        "N01",
+        "N02"
+      ]
+    },
+    {
+      "id": "R18",
+      "title": "Lentil and Brown Rice Bowl (Dal Rice)",
+      "sub": "Vegetarian",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Lentils and rice form one of the oldest and most nutritionally complete food combinations. Lentils provide protein and essential amino acids that rice is deficient in (lysine), while rice provides amino acids that lentils lack - creating a complete protein when combined.",
+        "Dal rice is the original Indian performance food - providing 20-25g plant protein per serving, complex carbohydrates and an exceptional range of B vitamins, iron and folate at very low cost.",
+        "For vegetarian gym members who want affordable, nutritious, high-protein meals."
+      ],
+      "benefits": [
+        "Complete protein from lentil + rice combination - all essential amino acids present",
+        "20-25g protein per large serving entirely from plant sources",
+        "Exceptional iron content from lentils - critical for vegetarian athletes",
+        "Rich in folate, B vitamins and potassium for energy metabolism and muscle function",
+        "Extremely affordable - cost per gram of protein is among the lowest of any food"
+      ],
+      "how_to": [
+        "Ingredients: 150g red or masoor dal, 150g brown rice, 1 onion, 2 tomatoes, 3 garlic cloves, 1 tsp cumin, 1 tsp turmeric, 1/2 tsp garam masala, ghee, salt, coriander",
+        "Wash and soak dal 30 minutes. Pressure cook or boil until soft.",
+        "Temper: heat ghee, add cumin seeds until they splutter.",
+        "Add onion, garlic. Cook until golden. Add tomatoes and spices. Cook 5 minutes.",
+        "Combine with dal. Simmer 10 minutes. Adjust consistency with water.",
+        "Serve over brown rice with fresh coriander.",
+        "Macros: ~520 calories, 24g protein, 85g carbs, 8g fat"
+      ],
+      "mistakes": [
+        "Not washing dal - removes dust, debris and excess surface starch",
+        "Not seasoning during cooking - salt added at the end cannot penetrate the dal",
+        "Thin dal - simmer uncovered to concentrate flavour and thicken naturally"
+      ],
+      "tips": [
+        "Pro Tip: Add 100g spinach in the last 5 minutes of cooking - wilts into the dal invisibly and adds iron and vitamin K.",
+        "Pro Tip: A squeeze of lemon just before serving dramatically brightens the flavour.",
+        "Pro Tip: Pair with a glass of lassi (yogurt + water + salt) for additional protein and probiotics."
+      ],
+      "video": "https://www.youtube.com/watch?v=4pIc9UvB7iE",
+      "video_title": "Dal Rice Power Bowl",
+      "related": [
+        "R09",
+        "R17",
+        "R23",
+        "N01"
+      ]
+    },
+    {
+      "id": "R19",
+      "title": "Tofu Stir-Fry with Brown Rice",
+      "sub": "Vegetarian",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Tofu is a soy-based complete protein - providing all essential amino acids in a plant form. Extra-firm tofu contains 15-17g protein per 100g and, when pressed and cooked correctly, develops a crispy exterior.",
+        "The key to great tofu is pressing out moisture before cooking. Wet tofu steams rather than fries, resulting in the soft, spongy texture that puts people off.",
+        "This recipe is designed for vegetarian and vegan gym members who want a genuinely enjoyable, high-protein dinner."
+      ],
+      "benefits": [
+        "Soy is a complete plant protein - all essential amino acids including leucine for muscle synthesis",
+        "Phytoestrogens in soy do not lower testosterone in men at normal dietary consumption levels - a common myth",
+        "Rich in calcium - supports bone density",
+        "Isoflavones have cardiovascular and antioxidant properties",
+        "Extremely versatile - absorbs any flavour profile it is marinated or sauced with"
+      ],
+      "how_to": [
+        "Ingredients: 200g extra-firm tofu, 200g mixed vegetables, 160g brown rice, 2 tbsp soy sauce, 1 tbsp sesame oil, 1 tbsp rice vinegar, garlic, ginger, chilli",
+        "Press tofu: wrap in towel, place weight on top for 20-30 minutes.",
+        "Cut into cubes. Pan-fry in hot oil until golden and crispy on all sides (8-10 minutes total).",
+        "Remove tofu. Stir-fry vegetables on high heat 3 minutes.",
+        "Return tofu. Add sauce. Toss.",
+        "Serve over rice. Top with sesame seeds and spring onions.",
+        "Macros: ~520 calories, 26g protein, 72g carbs, 14g fat"
+      ],
+      "mistakes": [
+        "Not pressing tofu - unpressed tofu will not crisp; this step is non-negotiable",
+        "Crowding the pan - tofu needs space between pieces to fry, not steam",
+        "Moving tofu too frequently - leave undisturbed for 2-3 minutes per side to develop a crust"
+      ],
+      "tips": [
+        "Pro Tip: Freeze tofu, then thaw completely - this changes the texture to a chewier, more meat-like consistency.",
+        "Pro Tip: Cornstarch coating before frying creates an extra-crispy exterior.",
+        "Pro Tip: Air-fry pressed tofu at 200 degrees C for 15 minutes - easiest way to achieve perfect crispiness."
+      ],
+      "video": "https://www.youtube.com/watch?v=UE-l5tN2Mcc",
+      "video_title": "Crispy Tofu Stir-Fry",
+      "related": [
+        "R17",
+        "R09",
+        "R23",
+        "N01"
+      ]
+    },
+    {
+      "id": "R20",
+      "title": "Chickpea Salad with Lemon-Tahini Dressing",
+      "sub": "Vegetarian",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "This chickpea salad delivers 20-25g protein entirely from plant sources and is one of the most fibre-rich meals in this guide.",
+        "The lemon-tahini dressing is the centrepiece - nutty, tangy and rich, it transforms a simple salad into something genuinely craveable.",
+        "This salad works as a light pre-workout lunch, a high-volume fat loss meal or a standalone vegetarian protein source."
+      ],
+      "benefits": [
+        "20g+ plant protein from chickpeas per serving",
+        "18-22g dietary fibre - outstanding for satiety and gut health",
+        "Tahini provides calcium essential for bone health under training stress",
+        "Low glycaemic index - sustained energy without blood sugar spikes",
+        "Zero cooking required if using tinned chickpeas - 10-minute assembly"
+      ],
+      "how_to": [
+        "Ingredients: 200g cooked chickpeas, 1/2 cucumber, 100g cherry tomatoes, 50g spinach or rocket, red onion, tahini, lemon juice, garlic, olive oil, salt, cumin",
+        "Rinse and drain chickpeas.",
+        "Chop cucumber, halve tomatoes, thinly slice red onion.",
+        "Dressing: 2 tbsp tahini + juice of 1 lemon + 1 clove garlic (grated) + 2 tbsp water + pinch cumin + salt. Whisk.",
+        "Combine all salad ingredients. Pour over dressing and toss.",
+        "Macros: ~420 calories, 20g protein, 48g carbs, 16g fat"
+      ],
+      "mistakes": [
+        "Underdressing - tahini dressing is the flavour and fat source; be generous",
+        "Not rinsing tinned chickpeas - rinse removes excess sodium from the canning liquid",
+        "Dressing too thick - add water tablespoon by tablespoon for a pourable consistency"
+      ],
+      "tips": [
+        "Pro Tip: Toast chickpeas in a dry pan with cumin for 5 minutes before adding - transforms their texture and flavour.",
+        "Pro Tip: Make double the tahini dressing - it keeps in the fridge for 1 week and elevates any meal it touches.",
+        "Pro Tip: Add a soft-boiled egg on top for an additional 7g complete protein if not strictly plant-based."
+      ],
+      "video": "https://www.youtube.com/watch?v=4pIc9UvB7iE",
+      "video_title": "Chickpea Tahini Salad",
+      "related": [
+        "R09",
+        "R17",
+        "R18",
+        "N01"
+      ]
+    },
+    {
+      "id": "R21",
+      "title": "Vegan Protein Smoothie (Banana, Spinach, Plant Protein)",
+      "sub": "Vegetarian",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "A vegan protein smoothie that does not taste like grass. With the right combination of plant protein, frozen banana, peanut butter and soy milk, this smoothie rivals whey-based versions in protein content.",
+        "Pea protein or soy protein are the most complete plant protein sources for smoothies - both contain all essential amino acids.",
+        "Perfect as a post-workout recovery shake or a high-protein breakfast for vegetarian and vegan gym members."
+      ],
+      "benefits": [
+        "35-40g plant protein from pea/soy protein powder and peanut butter",
+        "Spinach provides iron, folate and vitamin K - completely undetectable in flavour",
+        "Banana provides fast carbohydrates and potassium for post-workout recovery",
+        "Soy milk provides protein and calcium alongside the plant protein powder",
+        "Naturally dairy-free and suitable for all dietary restrictions"
+      ],
+      "how_to": [
+        "Ingredients: 2 scoops pea or soy protein powder, 1 frozen banana, large handful spinach, 250ml soy milk, 2 tbsp peanut butter, 1 tsp chia seeds, 1 tsp honey",
+        "Add soy milk to blender first.",
+        "Add all other ingredients.",
+        "Blend on high 45-60 seconds until completely smooth.",
+        "Taste - adjust with more honey if needed.",
+        "Macros: ~540 calories, 38g protein, 55g carbs, 18g fat"
+      ],
+      "mistakes": [
+        "Adding hot liquid - always use cold milk with frozen banana for the right texture",
+        "Cheap pea protein with harsh flavour - invest in a good quality product; pea protein quality varies enormously",
+        "Not using frozen banana - room temperature banana produces a thin, watery smoothie"
+      ],
+      "tips": [
+        "Pro Tip: A blend of pea + rice protein creates a more complete amino acid profile than either alone.",
+        "Pro Tip: Cacao powder (1 tbsp) creates a chocolate smoothie that masks any earthy protein flavour.",
+        "Pro Tip: Add frozen mango instead of banana for a tropical version with additional vitamin C."
+      ],
+      "video": "https://www.youtube.com/watch?v=9xt36pLbxQM",
+      "video_title": "Vegan Protein Smoothie",
+      "related": [
+        "R16",
+        "R09",
+        "N01",
+        "N02"
+      ]
+    },
+    {
+      "id": "R22",
+      "title": "Homemade Electrolyte Drink",
+      "sub": "Snacks",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Commercial sports drinks are expensive and often contain more sugar than necessary. A homemade electrolyte drink provides the essential sodium, potassium and carbohydrates your body needs at a fraction of the cost.",
+        "This recipe replicates the key electrolyte profile of commercial sports drinks using simple pantry ingredients. It costs under 5 rupees per 500ml serving.",
+        "Best used during or after training sessions exceeding 60 minutes."
+      ],
+      "benefits": [
+        "Sodium: primary electrolyte lost in sweat, essential for fluid balance and muscle function",
+        "Potassium from lemon juice supports nerve signalling and muscle contraction",
+        "Glucose from honey provides fast energy during long sessions",
+        "Zero artificial colours, flavours or sweeteners",
+        "Cost: approximately 4-5 rupees per serving vs 80-150 for commercial products"
+      ],
+      "how_to": [
+        "Ingredients (500ml): 500ml water, 1/4 tsp salt, juice of half a lemon, 1 tbsp honey",
+        "Dissolve salt and honey in small amount of warm water first.",
+        "Add lemon juice.",
+        "Top up to 500ml with cool water.",
+        "Mix well. Store in fridge up to 24 hours.",
+        "Macros: ~45 calories, 0g protein, 12g carbs, 0g fat"
+      ],
+      "mistakes": [
+        "Too much salt - 1/4 tsp per 500ml is the maximum; more than this is unpleasant and unnecessary",
+        "Using table salt substitutes entirely - some are pure potassium chloride which at high doses has cardiac effects",
+        "Trusting commercial electrolyte drinks for all-day hydration - these are designed for during/after exercise"
+      ],
+      "tips": [
+        "Pro Tip: Add a small amount of orange juice for vitamin C and a more palatable flavour.",
+        "Pro Tip: Himalayan pink salt contains trace minerals including magnesium.",
+        "Pro Tip: Coconut water (200ml) + 300ml water + pinch of salt makes a natural, whole-food alternative."
+      ],
+      "video": "https://www.youtube.com/watch?v=vmRlEsjFVxE",
+      "video_title": "DIY Electrolyte Drink",
+      "related": [
+        "N17",
+        "N06",
+        "S10",
+        "N19"
+      ]
+    },
+    {
+      "id": "R23",
+      "title": "Overnight Protein Oats with Berries and Chia",
+      "sub": "Breakfast",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Overnight oats are prepared the night before and require zero morning effort. They provide a cold, creamy, high-protein breakfast that is genuinely enjoyable and covers carbohydrates, protein and healthy fats.",
+        "Chia seeds absorb the milk and oat liquid overnight, creating a thick, pudding-like texture. They also add 5g protein, 10g fibre and omega-3 ALA fatty acids per 2 tablespoons.",
+        "Designed for the morning gym-goer who cannot face cooking breakfast or the office worker who needs a grab-and-go meal."
+      ],
+      "benefits": [
+        "35-40g protein when made with whey and Greek yogurt combination",
+        "Beta-glucan fibre from oats supports blood sugar stability and sustained energy",
+        "Chia seeds add omega-3 ALA, fibre and an excellent pudding texture",
+        "Zero morning preparation - made entirely the night before",
+        "Berries provide antioxidants for post-workout muscle recovery support"
+      ],
+      "how_to": [
+        "Ingredients: 80g oats, 1 scoop whey protein, 150g Greek yogurt, 250ml milk, 2 tbsp chia seeds, 100g berries, 1 tsp honey",
+        "Mix oats + chia seeds + whey in a jar.",
+        "Add milk and yogurt. Stir well.",
+        "Seal jar. Refrigerate overnight minimum 6 hours (up to 3 days).",
+        "In the morning: top with berries and honey. Eat cold.",
+        "Macros: ~580 calories, 42g protein, 72g carbs, 12g fat"
+      ],
+      "mistakes": [
+        "Not enough liquid - oats and chia absorb a lot; 250ml minimum per 80g oats",
+        "Eating before 6 hours - oats need minimum 6 hours to soften properly",
+        "Sweetening before soaking - add honey and fruit only when serving"
+      ],
+      "tips": [
+        "Pro Tip: Make 5 jars Sunday evening for the entire working week.",
+        "Pro Tip: Add a tablespoon of peanut butter on top in the morning for healthy fats and additional protein.",
+        "Pro Tip: Mango, banana or peach work as well as berries - use whatever fruit is in season."
+      ],
+      "video": "https://www.youtube.com/watch?v=C4IiS_pv0Xw",
+      "video_title": "Overnight Oats Recipe",
+      "related": [
+        "R01",
+        "R03",
+        "N05",
+        "N15"
+      ]
+    },
+    {
+      "id": "R24",
+      "title": "Grilled Fish Plate with Roasted Vegetables",
+      "sub": "Dinner",
+      "date": "June 2025",
+      "read": "3 min read",
+      "tag": "Recipes",
+      "overview": [
+        "White fish - tilapia, cod, rohu or basa - is one of the leanest, most protein-dense foods available. With 20-25g protein per 100g and virtually zero fat, it allows gym members in a calorie deficit to hit protein targets efficiently.",
+        "Paired with roasted vegetables and sweet potato or rice, this plate provides protein, micronutrients and carbohydrate for recovery with minimal effort.",
+        "Designed for evenings when time is limited but nutritional quality cannot be compromised."
+      ],
+      "benefits": [
+        "White fish: 20-25g protein per 100g at only 85-100 calories - elite protein-to-calorie ratio",
+        "Roasted vegetables retain 80%+ of their vitamins compared to boiling",
+        "Extremely low in fat - ideal for preserving calorie budget during a cut",
+        "Quick to prepare - oven does the work, active preparation under 10 minutes",
+        "Omega-3s in oily fish variants (salmon, mackerel) add recovery benefits"
+      ],
+      "how_to": [
+        "Ingredients: 200g white fish fillet, 300g mixed vegetables (courgette, peppers, cherry tomatoes, broccoli), sweet potato or brown rice, olive oil, lemon, garlic, herbs",
+        "Preheat oven to 200 degrees C.",
+        "Chop vegetables into even sizes. Toss with olive oil, salt, garlic. Roast 20-25 minutes.",
+        "Season fish: olive oil + salt + lemon + thyme or dill.",
+        "Pan-fry fish 3-4 minutes per side.",
+        "Plate with rice or sweet potato and roasted vegetables.",
+        "Macros: ~450 calories, 42g protein, 40g carbs, 10g fat"
+      ],
+      "mistakes": [
+        "Cooking fish from cold straight from the fridge - room temperature fish cooks more evenly",
+        "Moving fish too early - it will release from the pan when the crust forms",
+        "Not drying the fish before cooking - moisture prevents browning"
+      ],
+      "tips": [
+        "Pro Tip: Tilapia and basa are among the most affordable white fish options with excellent protein content.",
+        "Pro Tip: Roasting vegetables in a single layer on a large tray ensures caramelisation rather than steaming.",
+        "Pro Tip: A simple garlic-herb butter placed on fish at the end of cooking elevates this dish significantly."
+      ],
+      "video": "https://www.youtube.com/watch?v=JGTjjCNjLz8",
+      "video_title": "Grilled Fish and Roasted Veg",
+      "related": [
+        "R10",
+        "R12",
+        "N08",
+        "N13"
+      ]
+    },
+    {
+      "id": "R25",
+      "title": "Banana Protein Shake (3-Ingredient)",
+      "sub": "Snacks",
+      "date": "June 2025",
+      "read": "2 min read",
+      "tag": "Recipes",
+      "overview": [
+        "Sometimes the most effective nutrition is the simplest. A 3-ingredient protein shake - banana, whey protein and milk - provides 35-40g protein, fast and slow carbohydrates and takes under 90 seconds to prepare.",
+        "This is the single most commonly consumed post-workout shake globally - for good reason. It works, it tastes good, it is inexpensive and it requires no preparation beyond a shaker bottle or blender.",
+        "Perfect for when you have finished training, are hungry and want an effective recovery meal with zero effort."
+      ],
+      "benefits": [
+        "35-40g complete protein from whey - optimal dose for post-workout muscle protein synthesis",
+        "Banana provides 25-30g fast carbohydrates for rapid glycogen replenishment",
+        "Milk provides casein protein for extended amino acid release and calcium",
+        "Under 90 seconds to prepare - no barriers between you and post-workout nutrition",
+        "Cost: approximately 30-50 rupees per serving"
+      ],
+      "how_to": [
+        "Ingredients: 2 scoops whey protein, 1 large banana, 300ml whole milk (or soy milk)",
+        "Peel and slice banana into blender or shaker.",
+        "Add whey protein and milk.",
+        "Blender: blend 30 seconds. Shaker: mash banana first with a fork, then shake vigorously.",
+        "Consume within 30 minutes.",
+        "Macros: ~500 calories, 42g protein, 58g carbs, 10g fat"
+      ],
+      "mistakes": [
+        "Using non-ripe banana - ripe banana (with spots) is sweeter and more carbohydrate-available",
+        "Skipping milk for water - milk adds 8g protein plus casein; use water only if lactose intolerant",
+        "Not consuming post-workout - this is designed as recovery nutrition, not a general snack"
+      ],
+      "tips": [
+        "Pro Tip: Freeze the banana for a thicker, colder, more satisfying smoothie.",
+        "Pro Tip: Add 5g creatine monohydrate - zero flavour impact, maximum performance benefit.",
+        "Pro Tip: Chocolate whey + banana + milk = essentially a healthy chocolate milkshake. Enjoy it."
+      ],
+      "video": "https://www.youtube.com/watch?v=9xt36pLbxQM",
+      "video_title": "Simple Protein Shake Recipe",
+      "related": [
+        "R16",
+        "S02",
+        "N13",
+        "R01"
+      ]
+    }
+  ]
+}
