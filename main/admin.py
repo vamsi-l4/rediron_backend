@@ -1,7 +1,8 @@
 from django.contrib import admin
+from django.utils.html import format_html
 from .models import (
     Equipment, ContactMessage,
-    NutritionArticle, WorkoutArticle,
+    NutritionArticle, WorkoutArticle, FitnessArticle, WorkoutTip,
     MuscleGroup, Exercise, Workout, WorkoutExercise
 )
 
@@ -39,6 +40,61 @@ class WorkoutArticleAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at", "reading_time")
     prepopulated_fields = {"slug": ("title",)}
     ordering = ("-featured", "-published_at")
+
+
+@admin.register(FitnessArticle)
+class FitnessArticleAdmin(admin.ModelAdmin):
+    list_display = ("code", "title", "category", "is_published", "published_at", "preview_image")
+    list_filter = ("category", "is_published", "published_at", "created_at")
+    search_fields = ("code", "title", "overview", "coach_insight")
+    readonly_fields = ("created_at", "updated_at", "reading_time", "preview_image")
+    prepopulated_fields = {"slug": ("title",)}
+    ordering = ("-published_at", "title")
+    filter_horizontal = ()
+    fieldsets = (
+        ("Article", {
+            "fields": ("code", "title", "slug", "category", "author", "published_at", "is_published", "reading_time")
+        }),
+        ("Featured Media", {
+            "fields": ("featured_image", "featured_image_url", "preview_image", "video_title", "youtube_url")
+        }),
+        ("Content", {
+            "fields": (
+                "overview", "core_concepts", "why_it_matters", "science_explained",
+                "practical_application", "common_myths", "coach_insight", "key_takeaways",
+            )
+        }),
+        ("Related", {
+            "fields": ("related_articles",)
+        }),
+        ("Timestamps", {
+            "fields": ("created_at", "updated_at")
+        }),
+    )
+
+    def preview_image(self, obj):
+        url = ""
+        if obj.featured_image and hasattr(obj.featured_image, "url"):
+            url = obj.featured_image.url
+        elif obj.featured_image_url:
+            url = obj.featured_image_url
+        if not url:
+            return "No image"
+        return format_html(
+            '<img src="{}" style="width: 180px; height: 102px; object-fit: cover; border-radius: 8px; border: 1px solid #991b1b;" />',
+            url,
+        )
+    preview_image.short_description = "Preview image"
+
+
+@admin.register(WorkoutTip)
+class WorkoutTipAdmin(admin.ModelAdmin):
+    list_display = ("code", "title", "category", "is_published", "published_at", "reading_time")
+    list_filter = ("category", "is_published", "published_at")
+    search_fields = ("code", "title", "overview", "coach_tip")
+    readonly_fields = ("created_at", "updated_at", "reading_time")
+    prepopulated_fields = {"slug": ("title",)}
+    ordering = ("category", "title")
 
 
 class WorkoutExerciseInline(admin.TabularInline):

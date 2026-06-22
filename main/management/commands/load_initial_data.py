@@ -44,4 +44,16 @@ class Command(BaseCommand):
             self.stdout.write(self.style.WARNING("Nutrition articles may still be stale if the refresh failed."))
             return
 
+        self.stdout.write("")
+        self.stdout.write(self.style.WARNING("🏋️ Phase 3: Updating Workout Tips..."))
+
+        try:
+            self.stdout.write("Refreshing workout tips from Workout_Tips.json...")
+            call_command('refresh_workout_tips')
+            self.stdout.write(self.style.SUCCESS("✔ Workout tips refreshed from structured fixture."))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"✖ Error refreshing workout tips: {str(e)}"))
+            self.stdout.write(self.style.WARNING("Workout tips may still be stale if the refresh failed."))
+            return
+
         self.stdout.write(self.style.SUCCESS("🎉 All specified data loaded perfectly!"))

@@ -171,6 +171,149 @@ class WorkoutArticle(models.Model):
         return self.title if self.title else f"Article {self.pk}"
 
 
+# ---------- FITNESS ARTICLES ----------
+class FitnessArticle(models.Model):
+    CATEGORY_CHOICES = [
+        ("Beginner", "Beginner"),
+        ("Intermediate", "Intermediate"),
+        ("Advanced", "Advanced"),
+        ("Strength Training", "Strength Training"),
+        ("Fat Loss", "Fat Loss"),
+        ("Recovery", "Recovery"),
+        ("Mobility", "Mobility"),
+        ("Nutrition", "Nutrition"),
+    ]
+
+    code = models.CharField(max_length=20, unique=True, help_text="Stable fixture ID, e.g. FA01")
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=260, unique=True, blank=True)
+    category = models.CharField(max_length=60, choices=CATEGORY_CHOICES, default="Beginner", db_index=True)
+    featured_image = models.ImageField(upload_to="fitness_articles/", null=True, blank=True)
+    featured_image_url = models.URLField(blank=True, help_text="Optional remote image URL")
+    author = models.CharField(max_length=120, default="RedIron Team")
+    overview = models.TextField(blank=True)
+    core_concepts = models.JSONField(default=list, blank=True)
+    why_it_matters = models.JSONField(default=list, blank=True)
+    science_explained = models.JSONField(default=list, blank=True)
+    practical_application = models.JSONField(default=list, blank=True)
+    common_myths = models.JSONField(default=list, blank=True)
+    coach_insight = models.TextField(blank=True)
+    key_takeaways = models.JSONField(default=list, blank=True)
+    video_title = models.CharField(max_length=250, blank=True)
+    youtube_url = models.URLField(blank=True)
+    related_articles = models.JSONField(default=list, blank=True, help_text="List of related FitnessArticle codes")
+    published_at = models.DateTimeField(default=timezone.now, db_index=True)
+    is_published = models.BooleanField(default=True, db_index=True)
+    reading_time = models.PositiveSmallIntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["-published_at", "title"]
+        indexes = [
+            models.Index(fields=["category", "is_published"]),
+            models.Index(fields=["slug"]),
+        ]
+
+    def _word_count(self):
+        parts = [
+            self.overview,
+            self.coach_insight,
+            " ".join(self.core_concepts or []),
+            " ".join(self.why_it_matters or []),
+            " ".join(self.science_explained or []),
+            " ".join(self.practical_application or []),
+            " ".join(self.common_myths or []),
+            " ".join(self.key_takeaways or []),
+        ]
+        return len(re.findall(r"\w+", " ".join(parts)))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            base = slugify(self.title or self.code or "fitness-article")[:240]
+            existing = FitnessArticle.objects.filter(slug__startswith=base).exclude(pk=self.pk).values_list("slug", flat=True)
+            existing_set = set(existing)
+            if base not in existing_set:
+                slug = base
+            else:
+                max_n = 0
+                pattern = re.compile(r"^" + re.escape(base) + r"-(\d+)$")
+                for value in existing_set:
+                    match = pattern.match(value)
+                    if match:
+                        try:
+                            max_n = max(max_n, int(match.group(1)))
+                        except ValueError:
+                            pass
+                slug = f"{base}-{max_n + 1}"
+            self.slug = slug
+        wc = self._word_count()
+        self.reading_time = max(1, math.ceil(wc / 200)) if wc else 1
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+
+
+# ---------- WORKOUT TIPS ----------
+class WorkoutTip(models.Model):
+    CATEGORY_CHOICES = [
+        ("Beginner", "Beginner"),
+        ("Form", "Form"),
+        ("Recovery", "Recovery"),
+        ("Strength", "Strength"),
+        ("Advanced", "Advanced"),
+    ]
+
+    code = models.CharField(max_length=20, unique=True, help_text="Stable fixture ID, e.g. WT01")
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=260, unique=True, blank=True)
+    thumbnail = models.CharField(max_length=500, blank=True)
+    youtube_url = models.URLField(blank=True, help_text="YouTube watch URL used for embedded demo video")
+    category = models.CharField(max_length=40, choices=CATEGORY_CHOICES, db_index=True)
+    overview = models.TextField(blank=True)
+    why_it_matters = models.JSONField(default=list, blank=True)
+    step_by_step_guide = models.JSONField(default=list, blank=True)
+    common_mistakes = models.JSONField(default=list, blank=True)
+    coach_tip = models.TextField(blank=True)
+    key_takeaways = models.JSONField(default=list, blank=True)
+    related_articles = models.JSONField(default=list, blank=True, help_text="List of related WorkoutTip codes")
+    author = models.CharField(max_length=120, default="RedIron Team")
+    published_at = models.DateTimeField(default=timezone.now, db_index=True)
+    is_published = models.BooleanField(default=True, db_index=True)
+    reading_time = models.PositiveSmallIntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["category", "title"]
+        indexes = [
+            models.Index(fields=["category", "is_published"]),
+            models.Index(fields=["slug"]),
+        ]
+
+    def _word_count(self):
+        parts = [
+            self.overview,
+            self.coach_tip,
+            " ".join(self.why_it_matters or []),
+            " ".join(self.step_by_step_guide or []),
+            " ".join(self.common_mistakes or []),
+            " ".join(self.key_takeaways or []),
+        ]
+        return len(re.findall(r"\w+", " ".join(parts)))
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title or self.code)[:240]
+        wc = self._word_count()
+        self.reading_time = max(1, math.ceil(wc / 200)) if wc else 1
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.code} - {self.title}"
+
+
 # ---------- MUSCLES ----------
 class MuscleGroup(models.Model):
     name = models.CharField(max_length=100, unique=True)

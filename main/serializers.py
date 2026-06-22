@@ -6,7 +6,7 @@ from django.db import transaction
 
 from .models import (
     Equipment, ContactMessage, NutritionArticle, WorkoutArticle,
-    Workout, WorkoutExercise, Exercise, MuscleGroup
+    FitnessArticle, WorkoutTip, Workout, WorkoutExercise, Exercise, MuscleGroup
 )
 
 # ---------- BASE SERIALIZER FOR REUSABLE LOGIC ----------
@@ -243,6 +243,92 @@ class WorkoutArticleSerializer(serializers.ModelSerializer):
         if obj.featured_image_url:
             return obj.featured_image_url
         return None
+
+
+# ---------- FITNESS ARTICLE ----------
+class FitnessArticleSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(source="code", read_only=True)
+    image_url = serializers.SerializerMethodField()
+    featuredImage = serializers.SerializerMethodField()
+    coreConcepts = serializers.JSONField(source="core_concepts")
+    whyItMatters = serializers.JSONField(source="why_it_matters")
+    scienceExplained = serializers.JSONField(source="science_explained")
+    practicalApplication = serializers.JSONField(source="practical_application")
+    commonMyths = serializers.JSONField(source="common_myths")
+    coachInsight = serializers.CharField(source="coach_insight", allow_blank=True)
+    keyTakeaways = serializers.JSONField(source="key_takeaways")
+    videoTitle = serializers.CharField(source="video_title", allow_blank=True)
+    youtubeUrl = serializers.URLField(source="youtube_url", allow_blank=True)
+    relatedArticles = serializers.JSONField(source="related_articles")
+    excerpt = serializers.SerializerMethodField()
+    reading_time = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = FitnessArticle
+        fields = (
+            "id", "title", "slug", "category", "image_url", "featuredImage",
+            "featured_image_url", "author", "overview", "excerpt", "coreConcepts",
+            "whyItMatters", "scienceExplained", "practicalApplication", "commonMyths",
+            "coachInsight", "keyTakeaways", "videoTitle", "youtubeUrl", "relatedArticles",
+            "published_at", "reading_time", "is_published", "created_at", "updated_at",
+        )
+        read_only_fields = ("created_at", "updated_at", "reading_time")
+
+    def _absolute_url(self, request, url_path):
+        if not url_path:
+            return None
+        if request:
+            return request.build_absolute_uri(url_path)
+        return url_path
+
+    def get_image_url(self, obj):
+        request = self.context.get("request", None)
+        if obj.featured_image and hasattr(obj.featured_image, "url"):
+            return self._absolute_url(request, obj.featured_image.url)
+        if obj.featured_image_url:
+            return obj.featured_image_url
+        return None
+
+    def get_featuredImage(self, obj):
+        return {
+            "imageFile": obj.featured_image.url if obj.featured_image and hasattr(obj.featured_image, "url") else "",
+            "imageUrl": self.get_image_url(obj) or "",
+        }
+
+    def get_excerpt(self, obj):
+        if not obj.overview:
+            return ""
+        clean = " ".join(str(obj.overview).split())
+        return clean[:180] + "..." if len(clean) > 180 else clean
+
+
+# ---------- WORKOUT TIP ----------
+class WorkoutTipSerializer(serializers.ModelSerializer):
+    id = serializers.CharField(source="code", read_only=True)
+    youtubeUrl = serializers.URLField(source="youtube_url", required=False, allow_blank=True)
+    whyItMatters = serializers.JSONField(source="why_it_matters")
+    stepByStepGuide = serializers.JSONField(source="step_by_step_guide")
+    commonMistakes = serializers.JSONField(source="common_mistakes")
+    coachTip = serializers.CharField(source="coach_tip", allow_blank=True)
+    keyTakeaways = serializers.JSONField(source="key_takeaways")
+    relatedArticles = serializers.JSONField(source="related_articles")
+    excerpt = serializers.SerializerMethodField()
+
+    class Meta:
+        model = WorkoutTip
+        fields = (
+            "id", "title", "slug", "thumbnail", "youtubeUrl", "category",
+            "overview", "whyItMatters", "stepByStepGuide", "commonMistakes",
+            "coachTip", "keyTakeaways", "relatedArticles", "excerpt",
+            "author", "published_at", "reading_time", "is_published",
+            "created_at", "updated_at",
+        )
+        read_only_fields = ("created_at", "updated_at", "reading_time")
+
+    def get_excerpt(self, obj):
+        if not obj.overview:
+            return ""
+        return obj.overview[:156] + "..." if len(obj.overview) > 156 else obj.overview
 
 
 # ---------- SUPPORTING SERIALIZERS ----------

@@ -1,4 +1,6 @@
 # main/views.py
+import json
+import os
 from rest_framework import viewsets, status, filters, permissions
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.response import Response
@@ -6,13 +8,14 @@ from rest_framework.pagination import PageNumberPagination
 from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db import models
 from .models import (
     Equipment, ContactMessage, NutritionArticle, WorkoutArticle,
-    Workout, Exercise, MuscleGroup
+    FitnessArticle, WorkoutTip, Workout, Exercise, MuscleGroup
 )
 from .serializers import (
     EquipmentSerializer, ContactMessageSerializer, NutritionArticleSerializer,
-    WorkoutArticleSerializer, WorkoutSerializer, ExerciseSerializer, MuscleGroupSerializer,
+    WorkoutArticleSerializer, FitnessArticleSerializer, WorkoutTipSerializer, WorkoutSerializer, ExerciseSerializer, MuscleGroupSerializer,
 )
 from rest_framework.throttling import AnonRateThrottle
 from django.db.models import Prefetch
@@ -31,6 +34,58 @@ class ExercisePagination(PageNumberPagination):
     page_size = 16
     page_size_query_param = "page_size"
     max_page_size = 200
+
+
+WORKOUT_TIP_CATEGORIES = ["Beginner", "Form", "Recovery", "Strength", "Advanced"]
+
+
+def _workout_tips_fixture_path():
+    return os.path.join(settings.BASE_DIR, "main", "fixtures", "Workout_Tips.json")
+
+
+def _load_workout_tips():
+    try:
+        with open(_workout_tips_fixture_path(), "r", encoding="utf-8") as fixture:
+            raw_tips = json.load(fixture)
+    except Exception:
+        logger.exception("Failed to load Workout_Tips.json")
+        return []
+
+    tips = []
+    for index, tip in enumerate(raw_tips):
+        slug = tip.get("slug") or str(tip.get("title", f"workout-tip-{index + 1}")).lower().replace(" ", "-")
+        overview = tip.get("overview", "")
+        normalized = {
+            **tip,
+            "id": tip.get("id") or f"WT{index + 1:02d}",
+            "slug": slug,
+            "thumbnail": tip.get("thumbnail") or f"/assets/workout-tips/{slug}.jpg",
+            "youtubeUrl": tip.get("youtubeUrl") or "",
+            "excerpt": tip.get("excerpt") or (overview[:156] + "..." if len(overview) > 156 else overview),
+            "author": tip.get("author") or "RedIron Team",
+            "published_at": tip.get("published_at") or tip.get("date") or "2026-01-01T00:00:00Z",
+        }
+        legacy_youtube_key = "youtube" + "SearchKeyword"
+        normalized.pop(legacy_youtube_key, None)
+        tips.append(normalized)
+    return tips
+
+
+def _filter_workout_tips(request):
+    tips = WorkoutTip.objects.filter(is_published=True).order_by("category", "title")
+    category = request.GET.get("category")
+    search = request.GET.get("search")
+
+    if category and category.lower() != "all":
+        tips = tips.filter(category__iexact=category)
+
+    if search:
+        tips = tips.filter(
+            models.Q(title__icontains=search) |
+            models.Q(overview__icontains=search) |
+            models.Q(category__icontains=search)
+        )
+    return tips
 
 
 # ---------------- UTIL: async send email ----------------
@@ -149,6 +204,20 @@ class WorkoutArticleViewSet(viewsets.ReadOnlyModelViewSet):
     ordering = ["-featured", "-published_at"]
 
 
+# ---------------- FITNESS ARTICLES ----------------
+class FitnessArticleViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = FitnessArticle.objects.filter(is_published=True).order_by("-published_at", "title")
+    serializer_class = FitnessArticleSerializer
+    permission_classes = [permissions.AllowAny]
+    pagination_class = StandardResultsSetPagination
+    lookup_field = "slug"
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ["category"]
+    search_fields = ["title", "overview", "coach_insight"]
+    ordering_fields = ["published_at", "title", "category"]
+    ordering = ["-published_at", "title"]
+
+
 # ---------------- WORKOUT PROGRAMS ----------------
 class WorkoutViewSet(viewsets.ModelViewSet):
     queryset = Workout.objects.all().prefetch_related("workout_exercises__exercise", "muscle_groups", "equipment").order_by("-created_at")
@@ -236,3 +305,141 @@ def workout_article_detail_api(request, slug):
         return Response(serializer.data)
     except WorkoutArticle.DoesNotExist:
         return Response({"error": "Article not found"}, status=status.HTTP_404_NOT_FOUND)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def fitness_articles_list_api(request):
+    articles = FitnessArticle.objects.filter(is_published=True).order_by("-published_at", "title")
+    category = request.GET.get("category")
+    search = request.GET.get("search")
+    if category and category.lower() != "all":
+        articles = articles.filter(category__iexact=category)
+    if search:
+        articles = articles.filter(
+            models.Q(title__icontains=search) |
+            models.Q(overview__icontains=search) |
+            models.Q(category__icontains=search)
+        )
+    serializer = FitnessArticleSerializer(articles, many=True, context={"request": request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def fitness_article_detail_api(request, slug):
+    try:
+        article = FitnessArticle.objects.get(slug=slug, is_published=True)
+    except FitnessArticle.DoesNotExist:
+        return Response({"error": "Fitness article not found"}, status=status.HTTP_404_NOT_FOUND)
+    serializer = FitnessArticleSerializer(article, context={"request": request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def fitness_articles_related_api(request, article_id):
+    current = FitnessArticle.objects.filter(code__iexact=article_id, is_published=True).first()
+    if not current and str(article_id).isdigit():
+        current = FitnessArticle.objects.filter(pk=article_id, is_published=True).first()
+    if not current:
+        return Response([], status=status.HTTP_200_OK)
+
+    related_codes = [str(code) for code in (current.related_articles or [])]
+    related = list(FitnessArticle.objects.filter(code__in=related_codes, is_published=True))
+    related.sort(key=lambda item: related_codes.index(item.code) if item.code in related_codes else 999)
+
+    if len(related) < 4:
+        related_ids = {item.id for item in related}
+        related.extend(list(
+            FitnessArticle.objects.filter(category=current.category, is_published=True)
+            .exclude(id=current.id)
+            .exclude(id__in=related_ids)
+            .order_by("-published_at")[:4 - len(related)]
+        ))
+
+    if len(related) < 4:
+        related_ids = {item.id for item in related}
+        related.extend(list(
+            FitnessArticle.objects.filter(is_published=True)
+            .exclude(id=current.id)
+            .exclude(id__in=related_ids)
+            .order_by("-published_at")[:4 - len(related)]
+        ))
+
+    serializer = FitnessArticleSerializer(related[:4], many=True, context={"request": request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def workout_tips_list_api(request):
+    """
+    Fixture-backed Workout Tips API.
+    Supports pagination, category filtering and search.
+    """
+    tips = _filter_workout_tips(request)
+    paginator = StandardResultsSetPagination()
+    page = paginator.paginate_queryset(tips, request)
+    serializer_context = {"request": request}
+    if page is not None:
+        serializer = WorkoutTipSerializer(page, many=True, context=serializer_context)
+        return paginator.get_paginated_response(serializer.data)
+    serializer = WorkoutTipSerializer(tips, many=True, context=serializer_context)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def workout_tips_categories_api(request):
+    discovered = list(
+        WorkoutTip.objects.filter(is_published=True)
+        .exclude(category="")
+        .order_by()
+        .values_list("category", flat=True)
+        .distinct()
+    )
+    ordered = [cat for cat in WORKOUT_TIP_CATEGORIES if cat in discovered]
+    ordered.extend(cat for cat in discovered if cat not in ordered)
+    return Response(["All", *ordered])
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def workout_tip_detail_api(request, slug):
+    try:
+        tip = WorkoutTip.objects.get(slug=slug, is_published=True)
+    except WorkoutTip.DoesNotExist:
+        return Response({"error": "Workout tip not found"}, status=status.HTTP_404_NOT_FOUND)
+    serializer = WorkoutTipSerializer(tip, context={"request": request})
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes([permissions.AllowAny])
+def workout_tips_related_api(request, tip_id):
+    current = WorkoutTip.objects.filter(code__iexact=tip_id, is_published=True).first()
+    if not current and str(tip_id).isdigit():
+        current = WorkoutTip.objects.filter(pk=tip_id, is_published=True).first()
+    if not current:
+        return Response([], status=status.HTTP_200_OK)
+
+    related_codes = [str(code) for code in (current.related_articles or [])]
+    related = list(WorkoutTip.objects.filter(code__in=related_codes, is_published=True))
+    related.sort(key=lambda item: related_codes.index(item.code) if item.code in related_codes else 999)
+
+    if len(related) < 4:
+        related_ids = {item.id for item in related}
+        related.extend(list(
+            WorkoutTip.objects.filter(category=current.category, is_published=True)
+            .exclude(id=current.id)
+            .exclude(id__in=related_ids)
+            .order_by("title")[:4 - len(related)]
+        ))
+
+    serializer = WorkoutTipSerializer(
+        related[:4],
+        many=True,
+        context={"request": request}
+        )
+    return Response(serializer.data)
