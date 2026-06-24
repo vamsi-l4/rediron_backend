@@ -545,10 +545,24 @@ def sync_user_after_signup(request):
     user = request.user
     
     try:
-        # Ensure user activity data exists
+        # Get or create the main user profile and activity data
+        UserProfile.objects.get_or_create(user=user)
         activity_data, created = UserActivityData.objects.get_or_create(user=user)
-        
-        logger.info(f'✅ User synced after signup: {user.clerk_user_id} ({user.email})')
+
+        # Ensure shop-related models are also created
+        try:
+            from rediron_shop.models import Cart, Wishlist as ShopWishlist
+            Cart.objects.get_or_create(user=user)
+            ShopWishlist.objects.get_or_create(user=user)
+        except Exception as shop_error:
+            # This might fail if the shop app is not installed. We can log a warning
+            # but we shouldn't fail the entire request.
+            logger.warning(
+                f'Could not ensure shop models for {user.clerk_user_id}: {str(shop_error)}'
+            )
+
+
+        logger.info(f'✅ User synced and profile initialized after signup: {user.clerk_user_id} ({user.email})')
         
         return Response({
             'success': True,
