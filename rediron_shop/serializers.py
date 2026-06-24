@@ -101,6 +101,23 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = CartItem
         fields = ['id', 'cart', 'product_variant', 'product_variant_id', 'product', 'product_id', 'quantity']
 
+    def to_internal_value(self, data):
+        mutable = data.copy()
+        if 'cart_id' in mutable and 'cart' not in mutable:
+            mutable['cart'] = mutable.get('cart_id')
+        if 'product' in mutable and 'product_id' not in mutable:
+            mutable['product_id'] = mutable.get('product')
+        if 'product_variant' in mutable and 'product_variant_id' not in mutable:
+            mutable['product_variant_id'] = mutable.get('product_variant')
+        return super().to_internal_value(mutable)
+
+    def validate(self, attrs):
+        if not attrs.get('product') and not attrs.get('product_variant'):
+            raise serializers.ValidationError("Either product_id or product_variant_id is required.")
+        if attrs.get('product_variant') and not attrs.get('product'):
+            attrs['product'] = attrs['product_variant'].product
+        return attrs
+
     def get_product_variant(self, obj):
         if obj.product_variant:
             return ProductVariantSerializer(obj.product_variant, context=self.context).data

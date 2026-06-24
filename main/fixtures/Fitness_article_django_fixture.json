@@ -5,11 +5,8 @@
       "category": "Beginner",
       "title": "Beginner's Guide to Strength Training",
       "slug": "beginners-guide-strength-training",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80"
-      },
-      "publishDate": "2026-01-01",
+      "featured_image_url": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80",
+      "published_at": "2026-01-01T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Strength training is the foundation of any effective fitness program. Whether your goal is to build muscle, lose fat, improve athletic performance, or simply get healthier, lifting weights consistently delivers results that cardio alone cannot match. Many beginners avoid the weights section because it feels complicated or intimidating, but the principles behind effective strength training are straightforward once you understand them.\n\nThis guide covers everything a beginner needs to start training with confidence. You will learn how to structure your workouts, choose the right exercises, manage your effort levels, and build habits that lead to long-term progress. Starting with the basics and applying them consistently will produce better results than jumping into advanced programs before your body is ready.",
       "coreConcepts": [
@@ -83,11 +80,8 @@
       "category": "Intermediate",
       "title": "How Muscles Grow: Hypertrophy Explained",
       "slug": "how-muscles-grow-hypertrophy-explained",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1200&q=80"
-      },
-      "publishDate": "2026-01-02",
+      "featured_image_url": "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1200&q=80",
+      "published_at": "2026-01-02T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Muscle hypertrophy is the process by which muscle fibers increase in size in response to resistance training. Understanding how this process works gives you a significant advantage when designing your workouts, because every variable you manipulate, including weight selection, rep ranges, rest periods, and exercise choice, either supports or undermines the conditions needed for growth.\n\nMany gym members train for years without a clear picture of what is actually happening inside their muscles. This article breaks down the biology of hypertrophy in practical terms so you can make smarter decisions about your training and stop wasting time on approaches that do not move the needle.",
       "coreConcepts": [
@@ -161,11 +155,8 @@
       "category": "Intermediate",
       "title": "Strength vs Hypertrophy Training",
       "slug": "strength-vs-hypertrophy-training",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1200&q=80"
-      },
-      "publishDate": "2026-01-03",
+      "featured_image_url": "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1200&q=80",
+      "published_at": "2026-01-03T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Strength training and hypertrophy training are closely related but they are not the same thing. Both involve lifting weights and both produce adaptations in the muscle, but the specific variables you manipulate determine which outcome you get. Understanding the difference allows you to program your training based on your actual goal rather than following a generic routine that partially achieves both without fully delivering either.\n\nThe overlap between the two is significant. Building muscle tends to improve strength, and getting stronger tends to build muscle. But when you zoom in on the specific adaptations each approach targets, the differences in training structure become clear and practically important.",
       "coreConcepts": [
@@ -238,11 +229,8 @@
       "category": "Beginner",
       "title": "Progressive Overload Explained",
       "slug": "progressive-overload-explained",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&q=80"
-      },
-      "publishDate": "2026-01-04",
+      "featured_image_url": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&q=80",
+      "published_at": "2026-01-04T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Progressive overload is the most important principle in all of strength and muscle training. It is the mechanism behind every result you will ever achieve in the gym. Without it, your body has no reason to adapt, and without adaptation, there is no progress. Understanding this concept and applying it correctly separates people who get results from those who spend years in the gym with little to show for it.\n\nThe core idea is simple: to continue improving, you must consistently challenge your body with more than it is currently adapted to handle. When you repeat the same workout with the same weight and reps week after week, your body has already adapted to that demand. Adding a small, manageable increase in workload forces a new adaptation, and that cycle of stress and adaptation is what drives all muscle growth and strength gain.",
       "coreConcepts": [
@@ -315,11 +303,8 @@
       "category": "Beginner",
       "title": "Training Frequency: How Often Should You Train",
       "slug": "training-frequency-how-often-should-you-train",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80"
-      },
-      "publishDate": "2026-01-05",
+      "featured_image_url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80",
+      "published_at": "2026-01-05T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Training frequency refers to how many times per week you train either your whole body or individual muscle groups. It is one of the most discussed variables in program design, and it is also one of the most misunderstood. Many beginners train too infrequently while some intermediate lifters train so often they never fully recover. Getting frequency right depends on your goal, experience level, total training volume, and recovery capacity.\n\nThe research on training frequency has become much clearer over the past decade. It shows that for muscle growth, frequency per muscle group matters more than people previously thought, and that most people would benefit from training each muscle group at least twice per week rather than hitting everything once in a classic bodybuilder-style split.",
       "coreConcepts": [
@@ -392,11 +377,8 @@
       "category": "Beginner",
       "title": "The Truth About Fat Loss",
       "slug": "the-truth-about-fat-loss",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80"
-      },
-      "publishDate": "2026-01-06",
+      "featured_image_url": "https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?w=1200&q=80",
+      "published_at": "2026-01-06T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Fat loss is one of the most pursued fitness goals and also one of the most misunderstood. The internet is saturated with conflicting advice about detox diets, fat-burning foods, metabolism-boosting supplements, and training protocols that promise dramatic results with minimal effort. Most of it is either exaggerated, misleading, or based on a fundamental misunderstanding of how the body loses fat.\n\nThe biology of fat loss is actually well-established in sports and nutritional science. It comes down to energy balance, hormonal signaling, and the type of deficit you create. When you understand the real mechanisms behind fat loss, you can stop chasing fads and start making consistent progress toward a leaner physique.",
       "coreConcepts": [
@@ -470,11 +452,8 @@
       "category": "Intermediate",
       "title": "Can You Build Muscle and Lose Fat Together",
       "slug": "can-you-build-muscle-and-lose-fat-together",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80"
-      },
-      "publishDate": "2026-01-07",
+      "featured_image_url": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=80",
+      "published_at": "2026-01-07T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Body recomposition, the simultaneous process of building muscle and losing fat, is one of the most debated topics in fitness. For many years, the conventional wisdom held that you could only do one or the other. Bulking phases prioritized muscle gain with a calorie surplus, while cutting phases prioritized fat loss with a calorie deficit. The idea of doing both at once was often dismissed as physiologically impossible.\n\nCurrent research and practical coaching experience tell a different story. Body recomposition is genuinely possible under specific conditions, though the rate at which it occurs is slower than pursuing each goal individually. Understanding who can achieve it, and how to optimize for it, helps you set realistic expectations and design a training and nutrition approach that matches your situation.",
       "coreConcepts": [
@@ -545,11 +524,8 @@
       "category": "Beginner",
       "title": "Understanding Calorie Deficits",
       "slug": "understanding-calorie-deficits",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80"
-      },
-      "publishDate": "2026-01-08",
+      "featured_image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80",
+      "published_at": "2026-01-08T00:00:00Z",
       "author": "RedIron Team",
       "overview": "A calorie deficit is the foundation of fat loss. Without it, the body has no reason to tap into stored body fat for energy. Yet despite being the most fundamental concept in weight management, calorie deficits are poorly understood and often misapplied. People either create deficits that are too extreme and undermine their health and muscle mass, or they think they are in a deficit while actually eating at maintenance without realizing it.\n\nThis article explains exactly what a calorie deficit is, how to calculate one that supports steady fat loss, how to adjust it over time, and how to avoid the common pitfalls that derail most fat loss attempts.",
       "coreConcepts": [
@@ -622,11 +598,8 @@
       "category": "Beginner",
       "title": "Cardio vs Weight Training for Fat Loss",
       "slug": "cardio-vs-weight-training-for-fat-loss",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=1200&q=80"
-      },
-      "publishDate": "2026-01-09",
+      "featured_image_url": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=1200&q=80",
+      "published_at": "2026-01-09T00:00:00Z",
       "author": "RedIron Team",
       "overview": "When the goal is fat loss, most people default to cardio. They hop on a treadmill, bike, or elliptical for 45 to 60 minutes and expect the fat to melt away. Meanwhile, the weights section is often seen as the domain of those trying to get bigger, not leaner. This assumption leads millions of people to choose the less effective tool for their primary goal.\n\nThe research on cardio versus weight training for fat loss is now comprehensive, and it consistently shows that resistance training produces superior long-term body composition outcomes. This does not mean cardio is useless. It means the two modalities work differently and combining them intelligently produces the best results. Understanding the difference helps you allocate your limited gym time where it delivers the most value.",
       "coreConcepts": [
@@ -698,11 +671,8 @@
       "category": "Beginner",
       "title": "Why Spot Reduction Doesn't Work",
       "slug": "why-spot-reduction-doesnt-work",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80"
-      },
-      "publishDate": "2026-01-10",
+      "featured_image_url": "https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1200&q=80",
+      "published_at": "2026-01-10T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Spot reduction is the idea that you can lose fat from a specific area of your body by exercising that area directly. It is one of the most persistent myths in fitness and the reason millions of people perform hundreds of crunches daily hoping to reveal a flat stomach, or do tricep kickbacks trying to slim their arms. Unfortunately, the physiology of fat metabolism makes this approach impossible.\n\nFat loss does not work locally. Your body stores and mobilizes fat globally according to hormonal signals and genetic predisposition, not based on which muscles are currently being used. Understanding why this is the case will save you time and redirect your effort toward approaches that actually produce the visible results you are after.",
       "coreConcepts": [
@@ -773,11 +743,8 @@
       "category": "Intermediate",
       "title": "The Importance of Recovery",
       "slug": "the-importance-of-recovery",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80"
-      },
-      "publishDate": "2026-01-11",
+      "featured_image_url": "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80",
+      "published_at": "2026-01-11T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Training creates the stimulus for adaptation. Recovery is where the adaptation actually happens. This distinction is critical because many people treat rest and recovery as optional extras, when in reality they are as important as the training itself. Without adequate recovery, training becomes a source of cumulative fatigue rather than progressive adaptation, leading to stalled results, poor performance, and eventually injury or overtraining.\n\nRecovery is not simply the absence of training. It is an active biological process involving muscle repair, hormonal restoration, glycogen replenishment, and central nervous system recuperation. Understanding what recovery involves and how to support it will directly improve your results from every training session.",
       "coreConcepts": [
@@ -850,11 +817,8 @@
       "category": "Intermediate",
       "title": "Sleep and Muscle Growth",
       "slug": "sleep-and-muscle-growth",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=1200&q=80"
-      },
-      "publishDate": "2026-01-12",
+      "featured_image_url": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=1200&q=80",
+      "published_at": "2026-01-12T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Of all the factors that influence muscle growth and recovery, sleep is the one most consistently undervalued and most commonly neglected. Many people optimize their training programs and nutrition meticulously but treat sleep as optional, frequently cutting it short to fit in early workouts, late-night training sessions, or simply out of habit. The biological cost of this trade-off is substantial and directly undermines the results they are working toward.\n\nSleep is not just rest. It is the primary window during which the body performs the hormonal signaling, protein synthesis, and cellular repair processes that convert the training stimulus into actual muscle growth and strength improvements. Shortchanging sleep shortchanges every aspect of your adaptation to training.",
       "coreConcepts": [
@@ -926,11 +890,8 @@
       "category": "Intermediate",
       "title": "Deload Weeks Explained",
       "slug": "deload-weeks-explained",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80"
-      },
-      "publishDate": "2026-01-13",
+      "featured_image_url": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80",
+      "published_at": "2026-01-13T00:00:00Z",
       "author": "RedIron Team",
       "overview": "A deload week is a planned period of reduced training volume and intensity inserted into a program after a block of progressive training. Its purpose is to allow the body to dissipate accumulated fatigue, repair connective tissue, restore hormonal balance, and reset the nervous system, so that the next training block begins from a position of full recovery rather than a fatigued baseline.\n\nDeloads are often misunderstood or resisted by gym members who equate them with lost gains or missed progress. In reality, they are an essential component of any serious long-term training program. The accumulated fatigue from weeks of progressive overload masks how much you have actually adapted. A deload reveals that underlying fitness and allows you to continue progressing rather than grinding into a burnout wall.",
       "coreConcepts": [
@@ -1002,11 +963,8 @@
       "category": "Intermediate",
       "title": "Managing Training Fatigue",
       "slug": "managing-training-fatigue",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1517963879433-6ad2171bea93?w=1200&q=80"
-      },
-      "publishDate": "2026-01-14",
+      "featured_image_url": "https://images.unsplash.com/photo-1517963879433-6ad2171bea93?w=1200&q=80",
+      "published_at": "2026-01-14T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Training fatigue is unavoidable. Every hard workout creates some degree of fatigue in the muscles, nervous system, joints, and even mentally. The goal is not to eliminate fatigue but to manage it effectively so that it accumulates at a rate the body can recover from. When fatigue consistently outpaces recovery, performance declines, injury risk rises, and progress stalls.\n\nFatigue management is one of the most underappreciated skills in training. It requires understanding the different types of fatigue, how to monitor your status, and how to manipulate training variables to keep fatigue within a range that supports adaptation rather than undermining it.",
       "coreConcepts": [
@@ -1078,11 +1036,8 @@
       "category": "Intermediate",
       "title": "Breaking Through Strength Plateaus",
       "slug": "breaking-through-strength-plateaus",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=1200&q=80"
-      },
-      "publishDate": "2026-01-15",
+      "featured_image_url": "https://images.unsplash.com/photo-1534258936925-c58bed479fcb?w=1200&q=80",
+      "published_at": "2026-01-15T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Every person who trains seriously long enough will encounter a strength plateau. A lift that was progressing week after week suddenly stops moving. Attempts to add weight fail repeatedly. The frustration of stalling on a lift you have been working hard to improve is one of the most common experiences in strength training, and it is the point where many people make the wrong decision, whether that means giving up, drastically changing programs, or adding excessive volume.\n\nStrength plateaus have identifiable causes and reliable solutions. Understanding what is actually happening when progress stalls gives you the analytical tools to diagnose the problem and apply the appropriate fix rather than randomly adjusting your training and hoping something works.",
       "coreConcepts": [
@@ -1153,11 +1108,8 @@
       "category": "Intermediate",
       "title": "Volume vs Intensity",
       "slug": "volume-vs-intensity",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1605296867424-35fc25c9212a?w=1200&q=80"
-      },
-      "publishDate": "2026-01-16",
+      "featured_image_url": "https://images.unsplash.com/photo-1605296867424-35fc25c9212a?w=1200&q=80",
+      "published_at": "2026-01-16T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Volume and intensity are the two most fundamental variables in resistance training program design. They are often described as being in direct opposition: high volume means many sets and reps at moderate loads, while high intensity means heavy loads for fewer reps. But the relationship between the two is more nuanced than a simple trade-off, and understanding how they interact is essential for designing training that produces consistent progress over time.\n\nMost debates in strength training about the best approach come down to disagreements about the optimal ratio of volume to intensity for different goals and stages of training. Getting this relationship right is one of the key differences between programs that produce steady long-term results and those that either plateau quickly or produce overuse injuries.",
       "coreConcepts": [
@@ -1229,11 +1181,8 @@
       "category": "Intermediate",
       "title": "Training to Failure",
       "slug": "training-to-failure",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=1200&q=80"
-      },
-      "publishDate": "2026-01-17",
+      "featured_image_url": "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=1200&q=80",
+      "published_at": "2026-01-17T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Training to failure means completing repetitions until you cannot perform another rep with the required technique. It is both one of the most discussed training techniques and one of the most frequently misapplied. Some trainers advocate training to failure on every set of every exercise. Others avoid it entirely. Current research suggests the truth lies between these extremes, with failure being a useful but strategically deployed tool rather than a universal approach.\n\nUnderstanding when training to failure is beneficial, when it is counterproductive, and how to use it within a broader program allows you to leverage its advantages without the downsides of excessive fatigue, increased injury risk, and poor session-to-session recovery that come from indiscriminate use.",
       "coreConcepts": [
@@ -1305,11 +1254,8 @@
       "category": "Intermediate",
       "title": "Periodization Explained",
       "slug": "periodization-explained",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1200&q=80"
-      },
-      "publishDate": "2026-01-18",
+      "featured_image_url": "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=1200&q=80",
+      "published_at": "2026-01-18T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Periodization is the structured organization of training variables across time to optimize performance and manage fatigue. It is the framework used by coaches and athletes to ensure that training produces progressive adaptation over months and years rather than stagnating or leading to overtraining. In simple terms, it is the practice of planning your training in a deliberate, varied sequence rather than doing the same workout indefinitely.\n\nWhile periodization originated in elite sports preparation, its principles are directly applicable and highly valuable for recreational gym members seeking long-term progress in strength and physique. Understanding the basics of periodization allows you to look further ahead in your training, avoid the cycles of random program switching, and build toward specific performance targets systematically.",
       "coreConcepts": [
@@ -1381,11 +1327,8 @@
       "category": "Advanced",
       "title": "Muscle Protein Synthesis Explained",
       "slug": "muscle-protein-synthesis-explained",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1200&q=80"
-      },
-      "publishDate": "2026-01-19",
+      "featured_image_url": "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1200&q=80",
+      "published_at": "2026-01-19T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Muscle protein synthesis (MPS) is the biological process through which the body builds new muscle protein from dietary amino acids. It is the fundamental mechanism underlying all muscle growth and repair, and understanding it gives you a practical framework for making decisions about training timing, protein intake, meal frequency, and recovery strategies that are grounded in actual physiology rather than gym folklore.\n\nMPS does not operate at a constant rate. It is elevated in response to two main stimuli: resistance training and protein ingestion. The interaction between these two stimuli, their timing, and their magnitude determines the net change in muscle protein, which is ultimately what determines whether you gain, maintain, or lose muscle over time.",
       "coreConcepts": [
@@ -1458,11 +1401,8 @@
       "category": "Intermediate",
       "title": "Understanding Energy Systems in Exercise",
       "slug": "understanding-energy-systems-in-exercise",
-      "featuredImage": {
-        "imageFile": "",
-        "imageUrl": "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1200&q=80"
-      },
-      "publishDate": "2026-01-20",
+      "featured_image_url": "https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=1200&q=80",
+      "published_at": "2026-01-20T00:00:00Z",
       "author": "RedIron Team",
       "overview": "Every movement your body makes requires energy in the form of ATP (adenosine triphosphate). The body cannot store large amounts of ATP directly, so it continuously regenerates it through three distinct energy systems: the phosphagen system, the glycolytic system, and the oxidative system. Each operates under different conditions, produces ATP at different rates, and dominates during different types of exercise.\n\nUnderstanding how these systems work is directly applicable to how you structure your training, manage rest periods, choose exercise intensities, and develop different energy qualities. Whether your goal is to improve strength, build endurance, or enhance sport performance, knowing which energy system you are training in any given session gives you precise control over the adaptation you are targeting.",
       "coreConcepts": [

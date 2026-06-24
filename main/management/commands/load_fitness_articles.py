@@ -80,38 +80,39 @@ class Command(BaseCommand):
         updated_count = 0
 
         for index, item in enumerate(articles, start=1):
-            code = item.get("id") or item.get("code") or f"FA{index:02d}"
-            title = item.get("title") or code
-            featured = item.get("featuredImage") or {}
+            fields = item.get("fields", item)
+            code = fields.get("id") or fields.get("code") or f"FA{index:02d}"
+            title = fields.get("title") or code
+            featured = fields.get("featuredImage") or {}
             image_url = (
                 featured.get("imageUrl")
-                or item.get("featured_image_url")
-                or item.get("image_url")
+                or fields.get("featured_image_url")
+                or fields.get("image_url")
                 or ""
             )
-            slug = item.get("slug") or slugify(title)[:240]
+            slug = fields.get("slug") or slugify(title)[:240]
 
             obj, created = FitnessArticle.objects.update_or_create(
                 code=code,
                 defaults={
                     "title": title,
                     "slug": slug,
-                    "category": item.get("category") or "Beginner",
+                    "category": fields.get("category") or "Beginner",
                     "featured_image_url": image_url,
-                    "author": item.get("author") or "RedIron Team",
-                    "overview": item.get("overview") or "",
-                    "core_concepts": normalize_list(item.get("coreConcepts")),
-                    "why_it_matters": normalize_list(item.get("whyItMatters")),
-                    "science_explained": normalize_list(item.get("scienceExplained")),
-                    "practical_application": normalize_list(item.get("practicalApplication")),
-                    "common_myths": normalize_list(item.get("commonMyths")),
-                    "coach_insight": item.get("coachInsight") or "",
-                    "key_takeaways": normalize_list(item.get("keyTakeaways")),
-                    "video_title": item.get("videoTitle") or "",
-                    "youtube_url": item.get("youtubeUrl") or "",
-                    "related_articles": normalize_list(item.get("relatedArticles")),
-                    "published_at": parse_date(item.get("publishDate") or item.get("published_at")),
-                    "is_published": item.get("is_published", True),
+                    "author": fields.get("author") or "RedIron Team",
+                    "overview": fields.get("overview") or "",
+                    "coreConcepts": normalize_list(fields.get("coreConcepts")),
+                    "whyItMatters": normalize_list(fields.get("whyItMatters")),
+                    "scienceExplained": normalize_list(fields.get("scienceExplained")),
+                    "practicalApplication": normalize_list(fields.get("practicalApplication")),
+                    "commonMyths": normalize_list(fields.get("commonMyths")),
+                    "coachInsight": fields.get("coachInsight") or "",
+                    "keyTakeaways": normalize_list(fields.get("keyTakeaways")),
+                    "videoTitle": fields.get("videoTitle") or "",
+                    "youtubeUrl": fields.get("youtubeUrl") or "",
+                    "relatedArticles": normalize_list(fields.get("relatedArticles")),
+                    "published_at": parse_date(fields.get("publishDate") or fields.get("published_at")),
+                    "is_published": fields.get("is_published", True),
                 },
             )
             obj.save()

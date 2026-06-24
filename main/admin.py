@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from .models import (
     Equipment, ContactMessage,
     NutritionArticle, WorkoutArticle, FitnessArticle, WorkoutTip,
-    MuscleGroup, Exercise, Workout, WorkoutExercise
+    MuscleGroup, Exercise
 )
 
 
@@ -46,7 +46,7 @@ class WorkoutArticleAdmin(admin.ModelAdmin):
 class FitnessArticleAdmin(admin.ModelAdmin):
     list_display = ("code", "title", "category", "is_published", "published_at", "preview_image")
     list_filter = ("category", "is_published", "published_at", "created_at")
-    search_fields = ("code", "title", "overview", "coach_insight")
+    search_fields = ("code", "title", "overview", "coachInsight")
     readonly_fields = ("created_at", "updated_at", "reading_time", "preview_image")
     prepopulated_fields = {"slug": ("title",)}
     ordering = ("-published_at", "title")
@@ -56,16 +56,16 @@ class FitnessArticleAdmin(admin.ModelAdmin):
             "fields": ("code", "title", "slug", "category", "author", "published_at", "is_published", "reading_time")
         }),
         ("Featured Media", {
-            "fields": ("featured_image", "featured_image_url", "preview_image", "video_title", "youtube_url")
+            "fields": ("featured_image", "featured_image_url", "preview_image", "videoTitle", "youtubeUrl")
         }),
         ("Content", {
             "fields": (
-                "overview", "core_concepts", "why_it_matters", "science_explained",
-                "practical_application", "common_myths", "coach_insight", "key_takeaways",
+                "overview", "coreConcepts", "whyItMatters", "scienceExplained",
+                "practicalApplication", "commonMyths", "coachInsight", "keyTakeaways",
             )
         }),
         ("Related", {
-            "fields": ("related_articles",)
+            "fields": ("relatedArticles",)
         }),
         ("Timestamps", {
             "fields": ("created_at", "updated_at")
@@ -97,28 +97,13 @@ class WorkoutTipAdmin(admin.ModelAdmin):
     ordering = ("category", "title")
 
 
-class WorkoutExerciseInline(admin.TabularInline):
-    model = WorkoutExercise
-    extra = 1
-    autocomplete_fields = ("exercise",)
-
-
-@admin.register(Workout)
-class WorkoutAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"slug": ("title",)}
-    inlines = [WorkoutExerciseInline]
-    list_display = ("title", "difficulty", "duration_minutes", "published", "created_at")
-    list_filter = ("difficulty", "published", "muscle_groups")
-    search_fields = ("title", "description")
-
-
 @admin.register(Exercise)
 class ExerciseAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ("name", "skill_level", "exercise_type")
-    search_fields = ("name", "description")
+    list_display = ("name", "muscle_group", "subcategory", "skill_level", "exercise_type")
+    search_fields = ("code", "name", "description", "muscle_group", "subcategory", "equipment__name")
     filter_horizontal = ("primary_muscles", "secondary_muscles", "equipment")
-    list_filter = ("skill_level", "exercise_type")
+    list_filter = ("muscle_group", "subcategory", "skill_level", "exercise_type")
 
 
 @admin.register(MuscleGroup)

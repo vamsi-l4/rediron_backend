@@ -55,5 +55,15 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f"✖ Error refreshing workout tips: {str(e)}"))
             self.stdout.write(self.style.WARNING("Workout tips may still be stale if the refresh failed."))
             return
+            
+        self.stdout.write("")
+        self.stdout.write(self.style.WARNING("💪 Phase 4: Updating Fitness Articles..."))
+        try:
+            self.stdout.write("Loading fitness articles from fitness_articles.json...")
+            call_command('load_fitness_articles')
+            self.stdout.write(self.style.SUCCESS("✔ Fitness articles loaded successfully."))
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"✖ Error loading fitness articles: {str(e)}"))
+
 
         self.stdout.write(self.style.SUCCESS("🎉 All specified data loaded perfectly!"))

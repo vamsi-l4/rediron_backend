@@ -11,11 +11,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db import models
 from .models import (
     Equipment, ContactMessage, NutritionArticle, WorkoutArticle,
-    FitnessArticle, WorkoutTip, Workout, Exercise, MuscleGroup
+    FitnessArticle, WorkoutTip, Exercise, MuscleGroup
 )
 from .serializers import (
     EquipmentSerializer, ContactMessageSerializer, NutritionArticleSerializer,
-    WorkoutArticleSerializer, FitnessArticleSerializer, WorkoutTipSerializer, WorkoutSerializer, ExerciseSerializer, MuscleGroupSerializer,
+    WorkoutArticleSerializer, FitnessArticleSerializer, WorkoutTipSerializer, ExerciseSerializer, MuscleGroupSerializer,
 )
 from rest_framework.throttling import AnonRateThrottle
 from django.db.models import Prefetch
@@ -213,22 +213,9 @@ class FitnessArticleViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = "slug"
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ["category"]
-    search_fields = ["title", "overview", "coach_insight"]
+    search_fields = ["title", "overview", "coachInsight"]
     ordering_fields = ["published_at", "title", "category"]
     ordering = ["-published_at", "title"]
-
-
-# ---------------- WORKOUT PROGRAMS ----------------
-class WorkoutViewSet(viewsets.ModelViewSet):
-    queryset = Workout.objects.all().prefetch_related("workout_exercises__exercise", "muscle_groups", "equipment").order_by("-created_at")
-    serializer_class = WorkoutSerializer # permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    permission_classes = [permissions.AllowAny]
-    pagination_class = StandardResultsSetPagination
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ["difficulty", "muscle_groups__slug", "equipment__name", "published"]
-    search_fields = ["title", "description", "workout_exercises__exercise__name"]
-    ordering_fields = ["created_at", "duration_minutes"]
-    lookup_field = "slug"
 
 
 # ---------------- EXERCISES ----------------
@@ -238,8 +225,14 @@ class ExerciseViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     pagination_class = ExercisePagination
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ["slug", "skill_level", "exercise_type", "primary_muscles__slug", "equipment__name"]
-    search_fields = ["name", "description"]
+    filterset_fields = [
+        "slug", "skill_level", "exercise_type", "muscle_group", "subcategory",
+        "primary_muscles__slug", "secondary_muscles__slug", "equipment", "equipment__name",
+    ]
+    search_fields = [
+        "name", "code", "description", "muscle_group", "subcategory",
+        "primary_muscles__name", "secondary_muscles__name", "equipment__name",
+    ]
     ordering_fields = ["name"]
     lookup_field = "slug"
 
@@ -345,7 +338,7 @@ def fitness_articles_related_api(request, article_id):
     if not current:
         return Response([], status=status.HTTP_200_OK)
 
-    related_codes = [str(code) for code in (current.related_articles or [])]
+    related_codes = [str(code) for code in (current.relatedArticles or [])]
     related = list(FitnessArticle.objects.filter(code__in=related_codes, is_published=True))
     related.sort(key=lambda item: related_codes.index(item.code) if item.code in related_codes else 999)
 

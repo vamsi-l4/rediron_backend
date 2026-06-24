@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from .views import (
     EquipmentViewSet,
     NutritionArticleViewSet, WorkoutArticleViewSet, FitnessArticleViewSet,
-    WorkoutViewSet, ExerciseViewSet, MuscleGroupViewSet,
+    ExerciseViewSet, MuscleGroupViewSet,
     contact_message_api,
     nutrition_articles_list_api, nutrition_article_detail_api,
     workout_articles_list_api, workout_article_detail_api,
@@ -27,7 +27,6 @@ router.register(r"equipment", EquipmentViewSet, basename="equipment")
 router.register(r"nutrition-articles", NutritionArticleViewSet, basename="nutrition-articles")
 router.register(r"workout-articles", WorkoutArticleViewSet, basename="workout-articles")
 router.register(r"fitness-articles", FitnessArticleViewSet, basename="fitness-articles")
-router.register(r"workouts", WorkoutViewSet, basename="workouts")
 router.register(r"exercises", ExerciseViewSet, basename="exercises")
 router.register(r"muscle-groups", MuscleGroupViewSet, basename="muscle-groups")
 

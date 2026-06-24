@@ -6,7 +6,7 @@ from django.db import transaction
 
 from .models import (
     Equipment, ContactMessage, NutritionArticle, WorkoutArticle,
-    FitnessArticle, WorkoutTip, Workout, WorkoutExercise, Exercise, MuscleGroup
+    FitnessArticle, WorkoutTip, Exercise, MuscleGroup
 )
 
 # ---------- BASE SERIALIZER FOR REUSABLE LOGIC ----------
@@ -250,16 +250,9 @@ class FitnessArticleSerializer(serializers.ModelSerializer):
     id = serializers.CharField(source="code", read_only=True)
     image_url = serializers.SerializerMethodField()
     featuredImage = serializers.SerializerMethodField()
-    coreConcepts = serializers.JSONField(source="core_concepts")
-    whyItMatters = serializers.JSONField(source="why_it_matters")
-    scienceExplained = serializers.JSONField(source="science_explained")
-    practicalApplication = serializers.JSONField(source="practical_application")
-    commonMyths = serializers.JSONField(source="common_myths")
-    coachInsight = serializers.CharField(source="coach_insight", allow_blank=True)
-    keyTakeaways = serializers.JSONField(source="key_takeaways")
-    videoTitle = serializers.CharField(source="video_title", allow_blank=True)
-    youtubeUrl = serializers.URLField(source="youtube_url", allow_blank=True)
-    relatedArticles = serializers.JSONField(source="related_articles")
+    coachInsight = serializers.CharField(allow_blank=True)
+    videoTitle = serializers.CharField(allow_blank=True)
+    youtubeUrl = serializers.URLField(allow_blank=True)
     excerpt = serializers.SerializerMethodField()
     reading_time = serializers.IntegerField(read_only=True)
 
@@ -333,15 +326,46 @@ class WorkoutTipSerializer(serializers.ModelSerializer):
 
 # ---------- SUPPORTING SERIALIZERS ----------
 class MuscleGroupSerializer(serializers.ModelSerializer):
+    parent = serializers.SerializerMethodField()
+
     class Meta:
         model = MuscleGroup
-        fields = ["id", "name", "slug"]
+        fields = ["id", "name", "slug", "body_region", "parent"]
+
+    def get_parent(self, obj):
+        if not obj.parent:
+            return None
+        return {"id": obj.parent_id, "name": obj.parent.name, "slug": obj.parent.slug}
 
 
 class EquipmentSimpleSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    image1 = serializers.SerializerMethodField()
+    image_urls = serializers.SerializerMethodField()
+
     class Meta:
         model = Equipment
-        fields = ["id", "name"]
+        fields = ["id", "name", "category", "image", "image1", "image_urls"]
+
+    def _absolute_url(self, url_path):
+        if not url_path:
+            return None
+        request = self.context.get("request", None)
+        if request:
+            return request.build_absolute_uri(url_path)
+        return url_path
+
+    def get_image(self, obj):
+        if obj.image and hasattr(obj.image, "url"):
+            return self._absolute_url(obj.image.url)
+        return None
+
+    def get_image1(self, obj):
+        return self.get_image(obj)
+
+    def get_image_urls(self, obj):
+        image = self.get_image(obj)
+        return [image] if image else []
 
 
 # ---------- EXERCISE ----------
@@ -364,15 +388,22 @@ class ExerciseSerializer(serializers.ModelSerializer):
     )
 
     image = serializers.SerializerMethodField()
+    featured_image = serializers.SerializerMethodField()
     content = serializers.SerializerMethodField()
     video_url = serializers.URLField(required=False, allow_blank=True)
+    youtube_url = serializers.URLField(required=False, allow_blank=True)
+    difficulty = serializers.SerializerMethodField()
+    title = serializers.CharField(source="name", read_only=True)
 
     class Meta:
         model = Exercise
         fields = [
-            "id", "name", "slug", "description", "content",
+            "id", "code", "title", "name", "slug", "muscle_group", "subcategory",
+            "description", "content", "benefits", "how_to_perform", "variations",
+            "common_mistakes", "sample_30_day_challenge", "tips", "related_exercises",
             "primary_muscles", "secondary_muscles", "equipment",
-            "video_url", "image", "skill_level", "exercise_type",
+            "video_url", "youtube_url", "image", "featured_image", "featured_image_url",
+            "skill_level", "difficulty", "exercise_type",
             "primary_muscle_ids", "secondary_muscle_ids", "equipment_ids",
         ]
         read_only_fields = ("slug",)
@@ -391,7 +422,16 @@ class ExerciseSerializer(serializers.ModelSerializer):
             if image_path.startswith('/media/'):
                 return self._absolute_url(request, image_path)
             return self._absolute_url(request, obj.image.url)
+        if obj.featured_image_url:
+            return obj.featured_image_url
         return None
+
+    def get_featured_image(self, obj):
+        return self.get_image(obj)
+
+    def get_difficulty(self, obj):
+        return obj.get_skill_level_display() if obj.skill_level else ""
+
     def get_content(self, obj):
         return obj.content
 
@@ -423,90 +463,6 @@ class ExerciseSerializer(serializers.ModelSerializer):
             instance.equipment.set(equipment)
         return instance
 
-
-# ---------- WORKOUT EXERCISES ----------
-class WorkoutExerciseSerializer(serializers.ModelSerializer):
-    exercise = ExerciseSerializer(read_only=True)
-    exercise_id = serializers.PrimaryKeyRelatedField(
-        queryset=Exercise.objects.all(), source="exercise", write_only=True
-    )
-
-    class Meta:
-        model = WorkoutExercise
-        fields = ["id", "order", "exercise", "exercise_id", "sets", "reps", "rest_time"]
-
-
-# ---------- WORKOUT ----------
-class WorkoutSerializer(serializers.ModelSerializer):
-    workout_exercises = WorkoutExerciseSerializer(many=True, required=False)
-    muscle_groups = MuscleGroupSerializer(many=True, read_only=True)
-    equipment = EquipmentSimpleSerializer(many=True, read_only=True)
-    
-    muscle_group_ids = serializers.PrimaryKeyRelatedField(
-        queryset=MuscleGroup.objects.all(), many=True, write_only=True,
-        source="muscle_groups", required=False
-    )
-    equipment_ids = serializers.PrimaryKeyRelatedField(
-        queryset=Equipment.objects.all(), many=True, write_only=True,
-        source="equipment", required=False
-    )
-
-    featured_image = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Workout
-        fields = [
-            "id", "title", "slug", "description", "duration_minutes", "difficulty",
-            "muscle_groups", "equipment", "muscle_group_ids", "equipment_ids",
-            "featured_image", "published", "created_at", "updated_at", "workout_exercises",
-        ]
-        read_only_fields = ["created_at", "updated_at"]
-
-    def _absolute_url(self, request, url_path):
-        if not url_path:
-            return None
-        if request:
-            return request.build_absolute_uri(url_path)
-        return url_path
-
-    def get_featured_image(self, obj):
-        request = self.context.get("request", None)
-        if obj.featured_image and hasattr(obj.featured_image, 'url'):
-            image_path = str(obj.featured_image)
-            if image_path.startswith('/media/'):
-                return self._absolute_url(request, image_path)
-            return self._absolute_url(request, obj.featured_image.url)
-        return None
-    def create(self, validated_data):
-        items_data = validated_data.pop("workout_exercises", [])
-        muscle_groups = validated_data.pop("muscle_groups", [])
-        equipment = validated_data.pop("equipment", [])
-        with transaction.atomic():
-            workout = Workout.objects.create(**validated_data)
-            if muscle_groups:
-                workout.muscle_groups.set(muscle_groups)
-            if equipment:
-                workout.equipment.set(equipment)
-            for item in items_data:
-                WorkoutExercise.objects.create(workout=workout, **item)
-        return workout
-
-    def update(self, instance, validated_data):
-        items_data = validated_data.pop("workout_exercises", None)
-        muscle_groups = validated_data.pop("muscle_groups", None)
-        equipment = validated_data.pop("equipment", None)
-        for attr, val in validated_data.items():
-            setattr(instance, attr, val)
-        instance.save()
-        if muscle_groups is not None:
-            instance.muscle_groups.set(muscle_groups)
-        if equipment is not None:
-            instance.equipment.set(equipment)
-        if items_data is not None:
-            instance.workout_exercises.all().delete()
-            for item in items_data:
-                WorkoutExercise.objects.create(workout=instance, **item)
-        return instance
 
 # ============================================
 # REDIRON PERFORMANCE LAB - SERIALIZERS

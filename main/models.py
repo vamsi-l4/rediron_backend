@@ -51,6 +51,7 @@ class NutritionArticle(models.Model):
         ("Supplements", "Supplements"),
         ("Recipes", "Recipes"),
     ]
+    code = models.CharField(max_length=20, unique=True, null=True, blank=True, help_text="Stable fixture ID, e.g. N01")
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=260, unique=True, blank=True)
     author = models.CharField(max_length=120, default="RedIron Team")
@@ -192,16 +193,16 @@ class FitnessArticle(models.Model):
     featured_image_url = models.URLField(blank=True, help_text="Optional remote image URL")
     author = models.CharField(max_length=120, default="RedIron Team")
     overview = models.TextField(blank=True)
-    core_concepts = models.JSONField(default=list, blank=True)
-    why_it_matters = models.JSONField(default=list, blank=True)
-    science_explained = models.JSONField(default=list, blank=True)
-    practical_application = models.JSONField(default=list, blank=True)
-    common_myths = models.JSONField(default=list, blank=True)
-    coach_insight = models.TextField(blank=True)
-    key_takeaways = models.JSONField(default=list, blank=True)
-    video_title = models.CharField(max_length=250, blank=True)
-    youtube_url = models.URLField(blank=True)
-    related_articles = models.JSONField(default=list, blank=True, help_text="List of related FitnessArticle codes")
+    coreConcepts = models.JSONField(default=list, blank=True)
+    whyItMatters = models.JSONField(default=list, blank=True)
+    scienceExplained = models.JSONField(default=list, blank=True)
+    practicalApplication = models.JSONField(default=list, blank=True)
+    commonMyths = models.JSONField(default=list, blank=True)
+    coachInsight = models.TextField(blank=True)
+    keyTakeaways = models.JSONField(default=list, blank=True)
+    videoTitle = models.CharField(max_length=250, blank=True)
+    youtubeUrl = models.URLField(blank=True)
+    relatedArticles = models.JSONField(default=list, blank=True, help_text="List of related FitnessArticle codes")
     published_at = models.DateTimeField(default=timezone.now, db_index=True)
     is_published = models.BooleanField(default=True, db_index=True)
     reading_time = models.PositiveSmallIntegerField(null=True, blank=True)
@@ -218,17 +219,21 @@ class FitnessArticle(models.Model):
     def _word_count(self):
         parts = [
             self.overview,
-            self.coach_insight,
-            " ".join(self.core_concepts or []),
-            " ".join(self.why_it_matters or []),
-            " ".join(self.science_explained or []),
-            " ".join(self.practical_application or []),
-            " ".join(self.common_myths or []),
-            " ".join(self.key_takeaways or []),
+            self.coachInsight,
+            " ".join(self.coreConcepts or []),
+            " ".join(self.whyItMatters or []),
+            " ".join(self.scienceExplained or []),
+            " ".join(self.practicalApplication or []),
+            " ".join(self.commonMyths or []),
+            " ".join(self.keyTakeaways or []),
         ]
         return len(re.findall(r"\w+", " ".join(parts)))
 
     def save(self, *args, **kwargs):
+        if self.pk is None and self.code:
+            existing = FitnessArticle.objects.filter(code=self.code).only("pk").first()
+            if existing:
+                self.pk = existing.pk
         if not self.slug:
             base = slugify(self.title or self.code or "fitness-article")[:240]
             existing = FitnessArticle.objects.filter(slug__startswith=base).exclude(pk=self.pk).values_list("slug", flat=True)
@@ -316,20 +321,54 @@ class WorkoutTip(models.Model):
 
 # ---------- MUSCLES ----------
 class MuscleGroup(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(unique=True, blank=True)
+    BODY_REGION_CHOICES = [
+        ("chest", "Chest"),
+        ("back", "Back"),
+        ("shoulders", "Shoulders"),
+        ("legs", "Legs"),
+        ("biceps", "Biceps"),
+        ("triceps", "Triceps"),
+        ("forearms", "Forearms"),
+        ("abs", "Abs"),
+        ("cardio", "Cardio"),
+    ]
+
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True, db_index=True)
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
+    body_region = models.CharField(max_length=30, choices=BODY_REGION_CHOICES, blank=True, db_index=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            parent_prefix = f"{self.parent.slug}-" if self.parent and self.parent.slug else ""
+            self.slug = f"{parent_prefix}{slugify(self.name)}"[:120]
+        if not self.body_region:
+            self.body_region = self.parent.body_region if self.parent else slugify(self.name)
         super().save(*args, **kwargs)
 
+    class Meta:
+        ordering = ["parent__name", "name"]
+        constraints = [
+            models.UniqueConstraint(fields=["parent", "name"], name="unique_muscle_group_per_parent"),
+        ]
+
     def __str__(self):
-        return self.name
+        return f"{self.parent.name} / {self.name}" if self.parent else self.name
 
 
 # ---------- EXERCISES ----------
 class Exercise(models.Model):
+    MUSCLE_GROUP_CHOICES = [
+        ("Chest", "Chest"),
+        ("Back", "Back"),
+        ("Shoulders", "Shoulders"),
+        ("Legs", "Legs"),
+        ("Biceps", "Biceps"),
+        ("Triceps", "Triceps"),
+        ("Forearms", "Forearms"),
+        ("Abs", "Abs"),
+        ("Cardio", "Cardio"),
+    ]
     SKILL_CHOICES = [
         ("beginner", "Beginner"),
         ("intermediate", "Intermediate"),
@@ -337,22 +376,35 @@ class Exercise(models.Model):
     ]
     TYPE_CHOICES = [
         ("strength", "Strength"),
+        ("hypertrophy", "Hypertrophy"),
         ("cardio", "Cardio"),
         ("mobility", "Mobility"),
-        ("hiit", "HIIT"),
-        ("other", "Other"),
+        ("functional", "Functional"),
+        ("isolation", "Isolation"),
     ]
 
+    code = models.CharField(max_length=30, unique=True, null=True, blank=True, help_text="Stable exercise code, e.g. LG-CV-04")
     name = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(unique=True, blank=True)
+    muscle_group = models.CharField(max_length=30, choices=MUSCLE_GROUP_CHOICES, default="Chest", db_index=True)
+    subcategory = models.CharField(max_length=80, blank=True, db_index=True)
     description = models.TextField(blank=True, null=True)
     primary_muscles = models.ManyToManyField(MuscleGroup, related_name="primary_exercises")
     secondary_muscles = models.ManyToManyField(MuscleGroup, related_name="secondary_exercises", blank=True)
     equipment = models.ManyToManyField(Equipment, related_name="exercises", blank=True)
-    video_url = models.URLField(blank=True, null=True)
+    video_url = models.URLField(blank=True, null=True, help_text="Legacy video URL. New UI uses youtube_url first.")
+    youtube_url = models.URLField(blank=True, help_text="YouTube embed/watch URL for the demonstration video")
     image = models.ImageField(upload_to="exercises/", blank=True, null=True)
+    featured_image_url = models.URLField(blank=True, help_text="Optional remote/admin URL fallback for featured image")
     skill_level = models.CharField(max_length=20, choices=SKILL_CHOICES, default="beginner")
     exercise_type = models.CharField(max_length=20, choices=TYPE_CHOICES, default="strength")
+    benefits = models.JSONField(default=list, blank=True)
+    how_to_perform = models.JSONField(default=list, blank=True)
+    variations = models.JSONField(default=list, blank=True)
+    common_mistakes = models.JSONField(default=list, blank=True)
+    sample_30_day_challenge = models.JSONField(default=list, blank=True)
+    tips = models.JSONField(default=list, blank=True)
+    related_exercises = models.JSONField(default=list, blank=True, help_text="List of related Exercise codes or slugs")
     # Changed to JSONField for consistency with NutritionArticle content
     content = models.JSONField(blank=True, null=True, help_text="Structured JSON content for exercise details")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -386,71 +438,6 @@ class Exercise(models.Model):
 
     def __str__(self):
         return self.name
-
-
-# ---------- WORKOUTS ----------
-class Workout(models.Model):
-    DIFFICULTY_CHOICES = [
-        ("beginner", "Beginner"),
-        ("intermediate", "Intermediate"),
-        ("advanced", "Advanced"),
-    ]
-    title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-    description = models.TextField(blank=True, null=True)
-    duration_minutes = models.PositiveIntegerField(default=30)
-    difficulty = models.CharField(max_length=20, choices=DIFFICULTY_CHOICES)
-    muscle_groups = models.ManyToManyField(MuscleGroup, related_name="workouts", blank=True)
-    equipment = models.ManyToManyField(Equipment, related_name="workouts", blank=True)
-    featured_image = models.ImageField(upload_to="workouts/", blank=True, null=True)
-    published = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    # optional created_by to track author for audit
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="created_workouts")
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            base = slugify(self.title)[:240]
-            existing = Workout.objects.filter(slug__startswith=base).exclude(pk=self.pk).values_list('slug', flat=True)
-            existing_set = set(existing)
-            if base not in existing_set:
-                slug = base
-            else:
-                max_n = 0
-                pattern = re.compile(r'^' + re.escape(base) + r'-(\d+)$')
-                for s in existing_set:
-                    m = pattern.match(s)
-                    if m:
-                        try:
-                            n = int(m.group(1))
-                            if n > max_n:
-                                max_n = n
-                        except ValueError:
-                            pass
-                slug = f"{base}-{max_n+1}"
-            self.slug = slug
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.title
-
-
-# ---------- WORKOUT EXERCISES ----------
-class WorkoutExercise(models.Model):
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='workout_exercises')
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    sets = models.PositiveIntegerField(default=3)
-    reps = models.CharField(max_length=50, default='10')
-    rest_time = models.PositiveIntegerField(default=60, help_text='Rest time in seconds')
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        ordering = ['order']
-
-    def __str__(self):
-        return f"{self.workout.title} - {self.exercise.name}"
 
 # ============================================
 # REDIRON PERFORMANCE LAB - ANALYTICS MODELS
