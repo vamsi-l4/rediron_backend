@@ -116,7 +116,29 @@ class CartItemSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Either product_id or product_variant_id is required.")
         if attrs.get('product_variant') and not attrs.get('product'):
             attrs['product'] = attrs['product_variant'].product
+        if attrs.get('cart') and self.context.get('request'):
+            request = self.context.get('request')
+            if request.user and request.user.is_authenticated and attrs['cart'].user_id and attrs['cart'].user_id != request.user.id:
+                raise serializers.ValidationError("Cart does not belong to the current user.")
         return attrs
+
+    def create(self, validated_data):
+        cart = validated_data["cart"]
+        product = validated_data.get("product")
+        product_variant = validated_data.get("product_variant")
+        quantity = validated_data.get("quantity") or 1
+
+        existing = CartItem.objects.filter(
+            cart=cart,
+            product=product,
+            product_variant=product_variant,
+        ).first()
+        if existing:
+            existing.quantity += quantity
+            existing.save(update_fields=["quantity"])
+            return existing
+
+        return super().create(validated_data)
 
     def get_product_variant(self, obj):
         if obj.product_variant:
