@@ -11,20 +11,28 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='categories/', blank=True)
+    image_url = models.URLField(blank=True)
 
     def __str__(self):
         return self.name
 
 class Product(models.Model):  
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
+    subcategory = models.ForeignKey('Subcategory', related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+    brand = models.ForeignKey('Brand', related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
+    product_type = models.CharField(max_length=40, blank=True, db_index=True)
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/', blank=True)
+    featured_image_url = models.URLField(blank=True)
     mrp = models.DecimalField(max_digits=10, decimal_places=2)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     discount_percent = models.PositiveIntegerField(default=0)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0)
+    stock = models.PositiveIntegerField(default=0)
+    sku = models.CharField(max_length=120, blank=True, db_index=True)
+    tags = models.JSONField(default=list, blank=True)
     is_active = models.BooleanField(default=True)
     date_added = models.DateTimeField(auto_now_add=True)
     
@@ -62,6 +70,12 @@ class Product(models.Model):
         blank=True,
         help_text="Additional stat cards. E.g., [{'label': 'Max Weight', 'value': '150 KG', 'icon': 'weight'}]"
     )
+
+    # Flexible ecommerce detail blocks. Only the block matching product_type/category is populated.
+    nutrition = models.JSONField(default=dict, blank=True)
+    clothing = models.JSONField(default=dict, blank=True)
+    footwear = models.JSONField(default=dict, blank=True)
+    accessory = models.JSONField(default=dict, blank=True)
 
     def __str__(self):
         return self.name
@@ -309,6 +323,7 @@ class Subcategory(models.Model):
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True)
+    image_url = models.URLField(blank=True)
 
     def __str__(self):
         return f"{self.category.name} - {self.name}"

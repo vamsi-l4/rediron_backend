@@ -1,31 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "🚀 Starting RedIron Backend Deployment..."
+echo "Starting RedIron Backend Deployment..."
 
 # Ensure required env vars exist for critical steps (non-blocking check)
 : "${DJANGO_SETTINGS_MODULE:=rediron_site.settings}"
 
 # Run migrations
-echo "📊 Applying database migrations..."
+echo "Applying database migrations..."
 python manage.py migrate --noinput
 
-# Load initial fixture data and refresh nutrition articles
-echo "📚 Loading fixture data and refreshing nutrition articles..."
-python manage.py load_initial_data
+if [[ "${LOAD_ALL_DATA:-false}" == "true" && -f "main/fixtures/all_data.json" ]]; then
+  echo "Loading exported RedIron data fixture..."
+  python manage.py loaddata main/fixtures/all_data.json
+fi
 
-# This automatically:
-# ✓ Loads master_db.json (equipment, base articles, etc.)
-# ✓ Deletes all old nutrition articles
-# ✓ Loads new premium nutrition articles from rediron_articles_complete_guide.json
-# ✓ Frontend automatically fetches fresh data from the API
+if [[ "${LOAD_INITIAL_DATA:-false}" == "true" ]]; then
+  echo "Loading initial seed fixtures..."
+  python manage.py load_initial_data
+fi
 
-# Create test user
-echo "👤 Setting up test user..."
-python manage.py create_test_user --email krishnavamsim04@gmail.com --password Krish@009 --name "Krishna Vamsi"
-
-echo "✅ Deployment complete! New nutrition data is live."
-echo "📱 Frontend will automatically display new articles when it refreshes."
+echo "Database setup complete."
 
 # Collect static files
 echo "Collecting static files..."

@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from django.conf import settings
 from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Count, Q
 from .models import (
     Category, Product, ProductVariant, ProductReview, ProductImage,
     Cart, CartItem, Coupon, RewardPoint, Order,
@@ -32,19 +33,171 @@ from .serializers import (
 # --- Category & Product ---
 
 class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all().order_by('name')
+    queryset = Category.objects.annotate(
+        product_count=Count('products', filter=Q(products__is_active=True))
+    ).filter(product_count__gt=0).order_by('name')
     serializer_class = CategorySerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ['slug']
     search_fields = ['name', 'slug']
 
 class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all().order_by('-date_added')
+    queryset = Product.objects.select_related('category', 'subcategory', 'brand').prefetch_related(
+        'variants', 'reviews', 'gallery_images'
+    ).all().order_by('-date_added')
     serializer_class = ProductSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['category', 'category__slug', 'is_active']
-    search_fields = ['name', 'description', 'category__name']
-    ordering_fields = ['price', 'mrp', 'discount_percent', 'rating', 'date_added']
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['name', 'description', 'category__name', 'subcategory__name', 'brand__name', 'sku']
+    ordering_fields = ['price', 'mrp', 'discount_percent', 'rating', 'date_added', 'stock']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        params = self.request.query_params
+
+        catalog = params.get('catalog') or params.get('product_catalog')
+        if catalog in ['shop', 'ecommerce', 'retail']:
+            queryset = queryset.filter(is_active=True)
+
+        category = params.get('category')
+        if category:
+            if str(category).isdigit():
+                queryset = queryset.filter(category_id=category)
+            else:
+                queryset = queryset.filter(category__slug=category)
+
+        subcategory = params.get('subcategory')
+        if subcategory:
+            if str(subcategory).isdigit():
+                queryset = queryset.filter(subcategory_id=subcategory)
+            else:
+                queryset = queryset.filter(subcategory__slug=subcategory)
+
+        brand = params.get('brand')
+        if brand:
+            if str(brand).isdigit():
+                queryset = queryset.filter(brand_id=brand)
+            else:
+                queryset = queryset.filter(brand__slug=brand)
+
+        product_type = params.get('product_type')
+        if product_type:
+            queryset = queryset.filter(product_type=product_type)
+
+        is_active = params.get('is_active')
+        if is_active is not None:
+            active = str(is_active).lower() in ['1', 'true', 'yes']
+            queryset = queryset.filter(is_active=active)
+
+        min_price = params.get('min_price') or params.get('price_min') or params.get('price__gte')
+        max_price = params.get('max_price') or params.get('price_max') or params.get('price__lte')
+        min_rating = params.get('rating') or params.get('min_rating') or params.get('rating__gte')
+        min_discount = params.get('discount') or params.get('discount_percent__gte')
+        stock = params.get('stock') or params.get('in_stock')
+        tags = params.get('tags') or params.get('tag')
+
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+        if min_rating:
+            queryset = queryset.filter(rating__gte=min_rating)
+        if min_discount:
+            queryset = queryset.filter(discount_percent__gte=min_discount)
+        if stock:
+            truthy = str(stock).lower() in ['1', 'true', 'yes', 'available', 'in_stock']
+            queryset = queryset.filter(stock__gt=0) if truthy else queryset.filter(stock=0)
+        if tags:
+            for tag in [part.strip() for part in str(tags).split(',') if part.strip()]:
+                queryset = queryset.filter(tags__icontains=tag)
+
+        sort_aliases = {
+            'newest': '-date_added',
+            'latest': '-date_added',
+            'price_low': 'price',
+            'price_high': '-price',
+            'top_rated': '-rating',
+            'popular': '-rating',
+            'discount': '-discount_percent',
+        }
+        sort = params.get('sort')
+        if sort in sort_aliases and 'ordering' not in params:
+            queryset = queryset.order_by(sort_aliases[sort])
+
+        return queryset.distinct()
+
+    def _active_products(self):
+        return self.filter_queryset(self.get_queryset().filter(is_active=True))
+
+    def _paginated_response(self, queryset):
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='featured')
+    def featured(self, request):
+        queryset = self._active_products().order_by('-rating', '-discount_percent', '-date_added')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='latest')
+    def latest(self, request):
+        queryset = self._active_products().order_by('-date_added')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='top-rated')
+    def top_rated(self, request):
+        queryset = self._active_products().order_by('-rating', '-date_added')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='discounts')
+    def discounts(self, request):
+        queryset = self._active_products().filter(discount_percent__gt=0).order_by('-discount_percent', '-rating')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='recommended')
+    def recommended(self, request):
+        queryset = self._active_products().filter(Q(rating__gte=4) | Q(discount_percent__gte=20)).order_by('-rating', '-stock')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='category/(?P<slug>[^/.]+)')
+    def category_products(self, request, slug=None):
+        queryset = self._active_products().filter(category__slug=slug).order_by('-rating', '-date_added')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='subcategory/(?P<slug>[^/.]+)')
+    def subcategory_products(self, request, slug=None):
+        queryset = self._active_products().filter(subcategory__slug=slug).order_by('-rating', '-date_added')
+        return self._paginated_response(queryset)
+
+    @action(detail=False, methods=['get'], url_path='search')
+    def search_products(self, request):
+        term = request.query_params.get('q') or request.query_params.get('search') or ''
+        queryset = self._active_products()
+        if term:
+            queryset = queryset.filter(
+                Q(name__icontains=term) |
+                Q(description__icontains=term) |
+                Q(category__name__icontains=term) |
+                Q(subcategory__name__icontains=term) |
+                Q(brand__name__icontains=term) |
+                Q(tags__icontains=term)
+            )
+        return self._paginated_response(queryset.order_by('-rating', '-date_added'))
+
+    @action(detail=True, methods=['get'], url_path='related')
+    def related(self, request, pk=None):
+        product = self.get_object()
+        queryset = Product.objects.select_related('category', 'subcategory', 'brand').filter(
+            is_active=True
+        ).exclude(pk=product.pk).filter(
+            Q(category=product.category) |
+            Q(subcategory=product.subcategory) |
+            Q(brand=product.brand)
+        ).order_by('-rating', '-date_added')
+        serializer = self.get_serializer(queryset[:8], many=True)
+        return Response(serializer.data)
 
 class ProductVariantViewSet(viewsets.ModelViewSet):
     queryset = ProductVariant.objects.all().order_by('product__name')
@@ -334,15 +487,20 @@ class AboutViewSet(viewsets.ModelViewSet):
 # ---------- Subcategory ----------
 
 class SubcategoryViewSet(viewsets.ModelViewSet):
-    queryset = Subcategory.objects.all().order_by('name')
+    queryset = Subcategory.objects.select_related('category').annotate(
+        product_count=Count('products', filter=Q(products__is_active=True))
+    ).filter(product_count__gt=0).order_by('name')
     serializer_class = SubcategorySerializer
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['category', 'category__slug', 'slug']
     search_fields = ['name']
 
 # ---------- Brand ----------
 
 class BrandViewSet(viewsets.ModelViewSet):
-    queryset = Brand.objects.all().order_by('name')
+    queryset = Brand.objects.annotate(
+        product_count=Count('products', filter=Q(products__is_active=True))
+    ).filter(product_count__gt=0).order_by('name')
     serializer_class = BrandSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name']

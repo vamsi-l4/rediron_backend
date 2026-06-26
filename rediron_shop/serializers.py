@@ -17,9 +17,30 @@ from accounts.models import UserProfile
 # ---------- Product Section ----------
 
 class CategorySerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    product_count = serializers.SerializerMethodField()
+
     class Meta:
         model = Category
         fields = '__all__'
+
+    def _absolute_url(self, request, url_path):
+        if not url_path:
+            return None
+        if request:
+            return request.build_absolute_uri(url_path)
+        return url_path
+
+    def get_image(self, obj):
+        request = self.context.get('request', None)
+        if obj.image_url:
+            return obj.image_url
+        if obj.image and hasattr(obj.image, 'url'):
+            return self._absolute_url(request, obj.image.url)
+        return None
+
+    def get_product_count(self, obj):
+        return getattr(obj, 'product_count', None) or obj.products.filter(is_active=True).count()
 
 class ProductImageSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
@@ -51,25 +72,77 @@ class ProductReviewSerializer(serializers.ModelSerializer):
         model = ProductReview
         fields = '__all__'
 
+class SubcategorySerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+    product_count = serializers.SerializerMethodField()
+    category_name = serializers.CharField(source='category.name', read_only=True)
+    category_slug = serializers.CharField(source='category.slug', read_only=True)
+
+    class Meta:
+        model = Subcategory
+        fields = '__all__'
+
+    def _absolute_url(self, request, url_path):
+        if not url_path:
+            return None
+        if request:
+            return request.build_absolute_uri(url_path)
+        return url_path
+
+    def get_image(self, obj):
+        request = self.context.get('request', None)
+        if obj.image_url:
+            return obj.image_url
+        if obj.image and hasattr(obj.image, 'url'):
+            return self._absolute_url(request, obj.image.url)
+        return None
+
+    def get_product_count(self, obj):
+        return getattr(obj, 'product_count', None) or obj.products.filter(is_active=True).count()
+
+class BrandSerializer(serializers.ModelSerializer):
+    product_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Brand
+        fields = '__all__'
+
+    def get_product_count(self, obj):
+        return getattr(obj, 'product_count', None) or obj.products.filter(is_active=True).count()
+
 class ProductSerializer(serializers.ModelSerializer):
     variants = ProductVariantSerializer(many=True, read_only=True)
     reviews = ProductReviewSerializer(many=True, read_only=True)
     gallery_images = ProductImageSerializer(many=True, read_only=True)
     category = CategorySerializer(read_only=True)
+    subcategory = SubcategorySerializer(read_only=True)
+    brand = BrandSerializer(read_only=True)
     category_id = serializers.PrimaryKeyRelatedField(
         queryset=Category.objects.all(), write_only=True, source='category'
     )
+    subcategory_id = serializers.PrimaryKeyRelatedField(
+        queryset=Subcategory.objects.all(), write_only=True, source='subcategory', required=False, allow_null=True
+    )
+    brand_id = serializers.PrimaryKeyRelatedField(
+        queryset=Brand.objects.all(), write_only=True, source='brand', required=False, allow_null=True
+    )
     image = serializers.SerializerMethodField()
+    short_description = serializers.SerializerMethodField()
+    in_stock = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = [
-            'id', 'category', 'category_id', 'name', 'slug', 'description',
-            'image', 'mrp', 'price', 'discount_percent', 'rating', 'is_active', 'date_added',
+            'id', 'category', 'category_id', 'subcategory', 'subcategory_id', 'brand', 'brand_id',
+            'product_type', 'name', 'slug', 'description', 'short_description',
+            'image', 'featured_image_url', 'mrp', 'price', 'discount_percent', 'rating',
+            'stock', 'sku', 'tags', 'in_stock', 'is_active', 'date_added',
             'variants', 'reviews', 'gallery_images',
             # New equipment detail fields
             'video_url', 'key_features', 'specifications', 'benefits', 
-            'perfect_for', 'additional_stats'
+            'perfect_for', 'additional_stats',
+            # Ecommerce type-specific fields
+            'nutrition', 'clothing', 'footwear', 'accessory'
         ]
 
     def _absolute_url(self, request, url_path):
@@ -81,9 +154,20 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get('request', None)
+        if obj.featured_image_url:
+            return obj.featured_image_url
         if obj.image and hasattr(obj.image, 'url'):
             return self._absolute_url(request, obj.image.url)
         return None
+
+    def get_short_description(self, obj):
+        if not obj.description:
+            return ""
+        text = " ".join(str(obj.description).split())
+        return text if len(text) <= 150 else f"{text[:147].rstrip()}..."
+
+    def get_in_stock(self, obj):
+        return obj.is_active and (obj.stock > 0 or obj.variants.filter(in_stock=True, inventory__gt=0).exists())
 
 # ---------- Cart, Orders, Coupon, Reward ----------
 
@@ -313,20 +397,6 @@ class RefundSerializer(serializers.ModelSerializer):
 class AboutSerializer(serializers.ModelSerializer):
     class Meta:
         model = About
-        fields = '__all__'
-
-# ---------- Subcategory ----------
-
-class SubcategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Subcategory
-        fields = '__all__'
-
-# ---------- Brand ----------
-
-class BrandSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Brand
         fields = '__all__'
 
 # ---------- Offer ----------

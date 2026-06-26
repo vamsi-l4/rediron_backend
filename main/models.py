@@ -334,7 +334,7 @@ class MuscleGroup(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    slug = models.SlugField(blank=True, db_index=True)
+    slug = models.SlugField(max_length=140, blank=True, db_index=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, null=True, blank=True, related_name="children")
     body_region = models.CharField(max_length=30, choices=BODY_REGION_CHOICES, blank=True, db_index=True)
 

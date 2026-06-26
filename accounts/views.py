@@ -2,6 +2,7 @@ import hmac
 import hashlib
 import json
 import logging
+from pathlib import Path
 from datetime import timedelta
 from django.utils import timezone
 from django.http import JsonResponse
@@ -31,6 +32,25 @@ from .utils import generate_otp, generate_access_token, generate_refresh_token_f
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
+
+ALLOWED_PROFILE_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp'}
+ALLOWED_PROFILE_IMAGE_CONTENT_TYPES = {'image/jpeg', 'image/png', 'image/webp'}
+
+
+def _profile_image_url(request, user, profile=None):
+    if user.profile_image:
+        return request.build_absolute_uri(user.profile_image.url)
+    if profile and profile.profile_image:
+        return request.build_absolute_uri(profile.profile_image.url)
+    return None
+
+
+def _validate_profile_image(uploaded_file):
+    suffix = Path(uploaded_file.name).suffix.lower()
+    content_type = getattr(uploaded_file, 'content_type', '')
+    if suffix not in ALLOWED_PROFILE_IMAGE_EXTENSIONS or content_type not in ALLOWED_PROFILE_IMAGE_CONTENT_TYPES:
+        return 'Only jpg, jpeg, png, and webp profile images are allowed.'
+    return None
 
 def send_otp_email(user_email, otp):
     # COMMENTED OUT: Old OTP email sending
@@ -683,37 +703,46 @@ def manage_profile(request):
             data = serializer.data
             data['name'] = user.name
             data['email'] = user.email
-            if user.profile_image:
-                data['profile_image'] = request.build_absolute_uri(user.profile_image.url)
+            data['phone'] = profile.phone_number
+            data['profile_image'] = _profile_image_url(request, user, profile)
             return Response(data, status=200)
         
         elif request.method == 'PATCH':
             from .serializers import UserProfileSerializer
-            serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+            profile_data = request.data.copy()
+            if 'phone' in profile_data and 'phone_number' not in profile_data:
+                profile_data['phone_number'] = profile_data.get('phone', '')
+            profile_data.pop('name', None)
+            profile_data.pop('email', None)
+            serializer = UserProfileSerializer(profile, data=profile_data, partial=True)
             if serializer.is_valid():
-                serializer.save()
+                profile = serializer.save()
                 
                 user_updated = False
                 if 'name' in request.data:
-                    user.name = request.data['name']
+                    user.name = request.data.get('name', '').strip() or user.name
                     user_updated = True
                     
                 if 'profile_image' in request.FILES:
+                    validation_error = _validate_profile_image(request.FILES['profile_image'])
+                    if validation_error:
+                        return Response({'profile_image': [validation_error]}, status=400)
                     if user.profile_image:
                         user.profile_image.delete(save=False) # Deletes the old image from the server!
                     user.profile_image = request.FILES['profile_image']
                     profile.profile_image = user.profile_image
-                    profile.save(update_fields=['profile_image'])
                     user_updated = True
                     
                 if user_updated:
                     user.save()
+
+                profile.save()
                     
                 data = serializer.data
                 data['name'] = user.name
                 data['email'] = user.email
-                if user.profile_image:
-                    data['profile_image'] = request.build_absolute_uri(user.profile_image.url)
+                data['phone'] = profile.phone_number
+                data['profile_image'] = _profile_image_url(request, user, profile)
                 return Response(data, status=200)
             return Response(serializer.errors, status=400)
     

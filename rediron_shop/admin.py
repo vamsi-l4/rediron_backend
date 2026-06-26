@@ -32,9 +32,9 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'category', 'price', 'mrp', 'discount_percent', 'rating', 'is_active', 'date_added')
-    list_filter = ('category', 'is_active')
-    search_fields = ('name', 'description', 'category__name')
+    list_display = ('name', 'category', 'subcategory', 'brand', 'product_type', 'price', 'stock', 'discount_percent', 'rating', 'is_active', 'date_added')
+    list_filter = ('category', 'subcategory', 'brand', 'product_type', 'is_active')
+    search_fields = ('name', 'description', 'category__name', 'subcategory__name', 'brand__name', 'sku')
     prepopulated_fields = {"slug": ("name",)}
     inlines = [ProductVariantInline, ProductReviewInline]
 
