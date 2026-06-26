@@ -28,6 +28,7 @@ urlpatterns = [
     path('profile/create/', views.create_profile, name='create-profile'),
     path('profile/update/', views.update_profile, name='update-profile'),
     path('sync-after-signup/', views.sync_user_after_signup, name='sync-after-signup'),
+    path('sync-user-after-signup/', views.sync_user_after_signup, name='sync-user-after-signup'),
     path('activity/', views.user_activity_data, name='user-activity-data'),
     path('user/payment-option/', views.set_payment_option, name='set_payment_option'),
     path('welcome/', views.welcome, name='welcome'),

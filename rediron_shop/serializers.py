@@ -212,6 +212,8 @@ class OrderSerializer(serializers.ModelSerializer):
     )
     order_items = OrderItemSerializer(source='items', many=True, read_only=True)
     items = OrderItemSerializer(many=True, read_only=True)
+    total_amount = serializers.SerializerMethodField()
+    grand_total = serializers.SerializerMethodField()
     coupon = CouponSerializer(read_only=True)
     coupon_id = serializers.PrimaryKeyRelatedField(
         queryset=Coupon.objects.all(), write_only=True, source='coupon', allow_null=True, required=False
@@ -221,8 +223,18 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'cart', 'cart_id', 'name', 'mobile', 'email', 'shipping_address',
-            'coupon', 'coupon_id', 'reward_points_used', 'status', 'placed_at', 'order_items', 'items'
+            'coupon', 'coupon_id', 'reward_points_used', 'status', 'placed_at',
+            'total_amount', 'grand_total', 'order_items', 'items'
         ]
+
+    def get_total_amount(self, obj):
+        return sum(item.price * item.quantity for item in obj.items.all())
+
+    def get_grand_total(self, obj):
+        total = self.get_total_amount(obj)
+        if obj.coupon and obj.coupon.discount_percent:
+            total = total - ((total * obj.coupon.discount_percent) / 100)
+        return max(total, 0)
 
     def create(self, validated_data):
         cart = validated_data.get('cart')
@@ -387,12 +399,36 @@ class WishlistSerializer(serializers.ModelSerializer):
 class WishlistItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
     product_id = serializers.PrimaryKeyRelatedField(
-        queryset=Product.objects.all(), write_only=True, source='product'
+        queryset=Product.objects.all(), write_only=True, source='product', required=False
     )
 
     class Meta:
         model = WishlistItem
         fields = ['id', 'wishlist', 'product', 'product_id', 'added_at']
+
+    def to_internal_value(self, data):
+        mutable = data.copy()
+        if 'product' in mutable and 'product_id' not in mutable:
+            mutable['product_id'] = mutable.get('product')
+        return super().to_internal_value(mutable)
+
+    def validate(self, attrs):
+        wishlist = attrs.get('wishlist')
+        product = attrs.get('product')
+        request = self.context.get('request')
+
+        if not product:
+            raise serializers.ValidationError("product_id is required.")
+        if request and request.user and request.user.is_authenticated and wishlist and wishlist.user_id and wishlist.user_id != request.user.id:
+            raise serializers.ValidationError("Wishlist does not belong to the current user.")
+        return attrs
+
+    def create(self, validated_data):
+        item, _ = WishlistItem.objects.get_or_create(
+            wishlist=validated_data["wishlist"],
+            product=validated_data["product"],
+        )
+        return item
 
 # ---------- UserProfile ----------
 

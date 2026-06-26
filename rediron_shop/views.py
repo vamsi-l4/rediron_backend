@@ -1,6 +1,8 @@
 # views.py
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, filters
+from django.conf import settings
+from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import (
     Category, Product, ProductVariant, ProductReview, ProductImage,
@@ -67,7 +69,7 @@ class CartViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
             return Cart.objects.filter(user=self.request.user).order_by('-created_at')
-        return Cart.objects.all().order_by('-created_at')
+        return Cart.objects.filter(user__isnull=True).order_by('-created_at')
 
     def create(self, request, *args, **kwargs):
         if request.user and request.user.is_authenticated:
@@ -77,8 +79,12 @@ class CartViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 class CartItemViewSet(viewsets.ModelViewSet):
-    queryset = CartItem.objects.all().order_by('cart__id')
     serializer_class = CartItemSerializer
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_authenticated:
+            return CartItem.objects.filter(cart__user=self.request.user).order_by('cart__id')
+        return CartItem.objects.filter(cart__user__isnull=True).order_by('cart__id')
 
 class CouponViewSet(viewsets.ModelViewSet):
     queryset = Coupon.objects.all().order_by('code')
@@ -114,6 +120,9 @@ class OrderViewSet(viewsets.ModelViewSet):
             cart = Cart.objects.get(id=cart_id)
         except Cart.DoesNotExist:
             return Response({'error': 'Cart not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if request.user and request.user.is_authenticated and cart.user_id and cart.user_id != request.user.id:
+            return Response({'error': 'Cart does not belong to the current user'}, status=status.HTTP_403_FORBIDDEN)
         
         # Check if cart has items
         if not cart.items.exists():
@@ -173,8 +182,40 @@ class OrderViewSet(viewsets.ModelViewSet):
         
         # Clear cart items after successful order
         cart.items.all().delete()
+
+        self.send_order_confirmation(order)
         
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def send_order_confirmation(self, order):
+        recipient = order.email or (order.user.email if order.user else "")
+        if not recipient:
+            return
+
+        item_lines = []
+        total = 0
+        for item in order.items.all():
+            name = item.product_variant.product.name if item.product_variant else (item.product.name if item.product else "Product")
+            line_total = item.price * item.quantity
+            total += line_total
+            item_lines.append(f"- {name} x {item.quantity}: ₹{line_total}")
+
+        subject = f"RedIron order #{order.id} confirmed"
+        message = (
+            f"Hi {order.name},\n\n"
+            f"Your RedIron order #{order.id} has been placed successfully.\n\n"
+            "Order items:\n"
+            f"{chr(10).join(item_lines) if item_lines else '- Order items confirmed'}\n\n"
+            f"Shipping address:\n{order.shipping_address}\n\n"
+            f"Order total: ₹{total}\n"
+            f"Status: {order.status}\n\n"
+            "Thank you for shopping with RedIron."
+        )
+        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
+        try:
+            send_mail(subject, message, from_email, [recipient], fail_silently=True)
+        except Exception:
+            pass
 
 # --- Blog & Dealer ---
 
@@ -305,14 +346,29 @@ class UserReviewViewSet(viewsets.ModelViewSet):
 # ---------- Wishlist ----------
 
 class WishlistViewSet(viewsets.ModelViewSet):
-    queryset = Wishlist.objects.all().order_by('-created_at')
     serializer_class = WishlistSerializer
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_authenticated:
+            return Wishlist.objects.filter(user=self.request.user).order_by('-created_at')
+        return Wishlist.objects.none()
+
+    def create(self, request, *args, **kwargs):
+        if request.user and request.user.is_authenticated:
+            wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+            serializer = self.get_serializer(wishlist)
+            return Response(serializer.data, status=201 if created else 200)
+        return Response({'error': 'Authentication is required for wishlist.'}, status=403)
 
 # ---------- WishlistItem ----------
 
 class WishlistItemViewSet(viewsets.ModelViewSet):
-    queryset = WishlistItem.objects.all().order_by('-added_at')
     serializer_class = WishlistItemSerializer
+
+    def get_queryset(self):
+        if self.request.user and self.request.user.is_authenticated:
+            return WishlistItem.objects.filter(wishlist__user=self.request.user).order_by('-added_at')
+        return WishlistItem.objects.none()
 
 # ---------- UserProfile ----------
 
