@@ -702,6 +702,8 @@ def manage_profile(request):
                     if user.profile_image:
                         user.profile_image.delete(save=False) # Deletes the old image from the server!
                     user.profile_image = request.FILES['profile_image']
+                    profile.profile_image = user.profile_image
+                    profile.save(update_fields=['profile_image'])
                     user_updated = True
                     
                 if user_updated:

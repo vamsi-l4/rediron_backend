@@ -1,6 +1,7 @@
 # views.py
 from rest_framework.response import Response
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, status
+from rest_framework.decorators import action
 from django.conf import settings
 from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
@@ -85,6 +86,65 @@ class CartItemViewSet(viewsets.ModelViewSet):
         if self.request.user and self.request.user.is_authenticated:
             return CartItem.objects.filter(cart__user=self.request.user).order_by('cart__id')
         return CartItem.objects.filter(cart__user__isnull=True).order_by('cart__id')
+
+    @action(detail=False, methods=['post'], url_path='add')
+    def add(self, request):
+        product_id = request.data.get('product_id') or request.data.get('product')
+        variant_id = request.data.get('product_variant_id') or request.data.get('product_variant')
+        quantity = int(request.data.get('quantity') or 1)
+
+        if quantity < 1:
+            return Response({'error': 'Quantity must be at least 1.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        product = None
+        product_variant = None
+        if variant_id:
+            try:
+                product_variant = ProductVariant.objects.select_related('product').get(id=variant_id)
+                product = product_variant.product
+            except ProductVariant.DoesNotExist:
+                return Response({'error': 'Product variant not found.'}, status=status.HTTP_404_NOT_FOUND)
+        elif product_id:
+            try:
+                product = Product.objects.get(id=product_id)
+            except Product.DoesNotExist:
+                return Response({'error': 'Product not found.'}, status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response({'error': 'product_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if product_variant:
+            if not product_variant.in_stock:
+                return Response({'error': 'Selected variant is out of stock.'}, status=status.HTTP_400_BAD_REQUEST)
+            if quantity > product_variant.inventory:
+                return Response({'error': 'Insufficient inventory.', 'available': product_variant.inventory}, status=status.HTTP_400_BAD_REQUEST)
+        elif not product.is_active:
+            return Response({'error': 'Product is not active.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if request.user and request.user.is_authenticated:
+            cart, _ = Cart.objects.get_or_create(user=request.user)
+        else:
+            cart_id = request.data.get('cart_id') or request.data.get('cart')
+            cart = Cart.objects.filter(id=cart_id, user__isnull=True).first() if cart_id else None
+            if not cart:
+                cart = Cart.objects.create()
+
+        item, created = CartItem.objects.get_or_create(
+            cart=cart,
+            product=product,
+            product_variant=product_variant,
+            defaults={'quantity': quantity},
+        )
+        if not created:
+            new_quantity = item.quantity + quantity
+            if product_variant and new_quantity > product_variant.inventory:
+                return Response({'error': 'Insufficient inventory.', 'available': product_variant.inventory}, status=status.HTTP_400_BAD_REQUEST)
+            item.quantity = new_quantity
+            item.save(update_fields=['quantity'])
+
+        return Response({
+            'cart': CartSerializer(cart, context={'request': request}).data,
+            'item': CartItemSerializer(item, context={'request': request}).data,
+        }, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
 class CouponViewSet(viewsets.ModelViewSet):
     queryset = Coupon.objects.all().order_by('code')
@@ -367,8 +427,36 @@ class WishlistItemViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
-            return WishlistItem.objects.filter(wishlist__user=self.request.user).order_by('-added_at')
+            queryset = WishlistItem.objects.filter(wishlist__user=self.request.user).order_by('-added_at')
+            product = self.request.query_params.get('product') or self.request.query_params.get('product_id')
+            wishlist = self.request.query_params.get('wishlist')
+            if product:
+                queryset = queryset.filter(product_id=product)
+            if wishlist:
+                queryset = queryset.filter(wishlist_id=wishlist)
+            return queryset
         return WishlistItem.objects.none()
+
+    @action(detail=False, methods=['post'], url_path='add')
+    def add(self, request):
+        if not (request.user and request.user.is_authenticated):
+            return Response({'error': 'Authentication is required for wishlist.'}, status=status.HTTP_403_FORBIDDEN)
+
+        product_id = request.data.get('product_id') or request.data.get('product')
+        if not product_id:
+            return Response({'error': 'product_id is required.'}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({'error': 'Product not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+        wishlist, _ = Wishlist.objects.get_or_create(user=request.user)
+        item, created = WishlistItem.objects.get_or_create(wishlist=wishlist, product=product)
+        return Response({
+            'wishlist': wishlist.id,
+            'item': WishlistItemSerializer(item, context={'request': request}).data,
+            'created': created,
+        }, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
 # ---------- UserProfile ----------
 
