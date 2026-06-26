@@ -199,7 +199,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # CLERK AUTHENTICATION (PRODUCTION-GRADE)
 # ============================================
 CLERK_SECRET_KEY = os.environ.get('CLERK_SECRET_KEY', '')
-CLERK_PUBLISH_KEY = os.environ.get('CLERK_PUBLISH_KEY', '')
+CLERK_PUBLISH_KEY = os.environ.get('CLERK_PUBLISH_KEY') or os.environ.get('CLERK_PUBLISHABLE_KEY', '')
 CLERK_ISSUER = os.environ.get('CLERK_ISSUER', '')
 CLERK_JWKS_URL = os.environ.get('CLERK_JWKS_URL', '')
 

@@ -8,7 +8,7 @@ import json
 
 class Category(models.Model):
     name = models.CharField(max_length=120, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=180, unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='categories/', blank=True)
     image_url = models.URLField(blank=True)
@@ -22,7 +22,7 @@ class Product(models.Model):
     brand = models.ForeignKey('Brand', related_name='products', on_delete=models.SET_NULL, null=True, blank=True)
     product_type = models.CharField(max_length=40, blank=True, db_index=True)
     name = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=180, unique=True)
     description = models.TextField()
     image = models.ImageField(upload_to='products/', blank=True)
     featured_image_url = models.URLField(blank=True)
@@ -228,7 +228,7 @@ class Order(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=180, unique=True)
     content = models.TextField()
     image = models.ImageField(upload_to='blogs/', blank=True)
     author = models.CharField(max_length=120)
@@ -320,7 +320,7 @@ class About(models.Model):
 class Subcategory(models.Model):
     category = models.ForeignKey(Category, related_name='subcategories', on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=180, unique=True)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='subcategories/', blank=True)
     image_url = models.URLField(blank=True)
@@ -332,7 +332,7 @@ class Subcategory(models.Model):
 
 class Brand(models.Model):
     name = models.CharField(max_length=120, unique=True)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(max_length=180, unique=True)
     description = models.TextField(blank=True)
     logo = models.ImageField(upload_to='brands/', blank=True)
     website = models.URLField(blank=True)
