@@ -16,6 +16,19 @@ from accounts.models import UserProfile
 
 # ---------- Product Section ----------
 
+CATEGORY_IMAGE_FALLBACKS = {
+    "accessories": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80",
+    "cardio": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80",
+    "core": "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80",
+    "footwear": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+    "gym-wear": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
+    "healthy-foods": "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80",
+    "proteins": "https://images.unsplash.com/photo-1612487529431-2da0571c87ef?w=600&q=80",
+    "strength": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80",
+    "supplements": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=600&q=80",
+    "vitamins": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80",
+}
+
 class CategorySerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     product_count = serializers.SerializerMethodField()
@@ -35,9 +48,9 @@ class CategorySerializer(serializers.ModelSerializer):
         request = self.context.get('request', None)
         if obj.image_url:
             return obj.image_url
-        if obj.image and hasattr(obj.image, 'url'):
+        if obj.image and hasattr(obj.image, 'path') and obj.image.storage.exists(obj.image.name):
             return self._absolute_url(request, obj.image.url)
-        return None
+        return CATEGORY_IMAGE_FALLBACKS.get(obj.slug)
 
     def get_product_count(self, obj):
         return getattr(obj, 'product_count', None) or obj.products.filter(is_active=True).count()

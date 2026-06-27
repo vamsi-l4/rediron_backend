@@ -9,6 +9,7 @@ echo "Starting RedIron Backend Deployment..."
 # Run migrations
 echo "Applying database migrations..."
 python manage.py migrate --noinput
+python manage.py repair_shop_categories
 
 if [[ "${LOAD_ALL_DATA:-false}" == "true" && -f "main/fixtures/all_data.json" ]]; then
   echo "Loading exported RedIron data fixture..."
