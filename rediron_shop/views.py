@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from django.conf import settings
 from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db import transaction
 from django.db.models import Count, Q
 from .models import (
     Category, Product, ProductVariant, ProductReview, ProductImage,
@@ -318,32 +319,29 @@ class OrderViewSet(viewsets.ModelViewSet):
             return Order.objects.filter(user=self.request.user).order_by('-placed_at')
         return Order.objects.none()
 
+    @transaction.atomic
     def create(self, request, *args, **kwargs):
         """
-        Create order from cart with inventory validation
+        Create order from cart with inventory validation.
         """
-        from rest_framework.response import Response
-        from rest_framework import status
-        
         cart_id = request.data.get('cart_id')
         if not cart_id:
             return Response({'error': 'cart_id is required'}, status=status.HTTP_400_BAD_REQUEST)
-        
+
         try:
-            cart = Cart.objects.get(id=cart_id)
+            cart = Cart.objects.select_for_update().get(id=cart_id)
         except Cart.DoesNotExist:
             return Response({'error': 'Cart not found'}, status=status.HTTP_404_NOT_FOUND)
 
         if request.user and request.user.is_authenticated and cart.user_id and cart.user_id != request.user.id:
             return Response({'error': 'Cart does not belong to the current user'}, status=status.HTTP_403_FORBIDDEN)
-        
-        # Check if cart has items
-        if not cart.items.exists():
+
+        cart_items = list(cart.items.select_related('product', 'product_variant__product').all())
+        if not cart_items:
             return Response({'error': 'Cart is empty'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Validate inventory for all items
+
         out_of_stock_items = []
-        for cart_item in cart.items.all():
+        for cart_item in cart_items:
             if cart_item.product_variant:
                 variant = cart_item.product_variant
                 if not variant.in_stock:
@@ -361,43 +359,38 @@ class OrderViewSet(viewsets.ModelViewSet):
                         'reason': 'insufficient_inventory',
                         'available': variant.inventory
                     })
-            elif cart_item.product:
-                if not cart_item.product.is_active:
-                    out_of_stock_items.append({
-                        'id': cart_item.id,
-                        'name': cart_item.product.name,
-                        'variant': 'N/A',
-                        'reason': 'out_of_stock'
-                    })
-        
+            elif cart_item.product and not cart_item.product.is_active:
+                out_of_stock_items.append({
+                    'id': cart_item.id,
+                    'name': cart_item.product.name,
+                    'variant': 'N/A',
+                    'reason': 'out_of_stock'
+                })
+
         if out_of_stock_items:
             return Response({
                 'error': 'Some items are out of stock',
                 'out_of_stock_items': out_of_stock_items
             }, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Create the order using serializer
+
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        # Add user if authenticated
+
         if request.user and request.user.is_authenticated:
             serializer.validated_data['user'] = request.user
-        
+
         order = serializer.save()
-        
-        # Decrease inventory for each ordered item
-        for cart_item in cart.items.all():
+
+        for cart_item in cart_items:
             if cart_item.product_variant:
                 variant = cart_item.product_variant
                 variant.inventory -= cart_item.quantity
-                variant.save()
-        
-        # Clear cart items after successful order
+                variant.save(update_fields=['inventory'])
+
         cart.items.all().delete()
 
-        self.send_order_confirmation(order)
-        
+        transaction.on_commit(lambda: self.send_order_confirmation(order))
+
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def send_order_confirmation(self, order):

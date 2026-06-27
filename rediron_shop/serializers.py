@@ -29,6 +29,32 @@ CATEGORY_IMAGE_FALLBACKS = {
     "vitamins": "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80",
 }
 
+PRODUCT_IMAGE_FALLBACKS = {
+    "nike-metcon-9-training-shoes-black-white": "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=900&q=80",
+    "adidas-ultraboost-5x-running-shoes-core-black": "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=900&q=80",
+    "nike-romaleos-4-weightlifting-shoes-black": "https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=900&q=80",
+    "nike-pegasus-41-running-shoes-wolf-grey": "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=900&q=80",
+    "adidas-solarglide-6-running-shoes-signal-orange": "https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=900&q=80",
+    "adidas-adipower-iii-weightlifting-shoes-black": "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=900&q=80",
+    "nike-free-metcon-6-training-shoes-dark-teal": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=900&q=80",
+    "nike-vomero-17-running-shoes-white-platinum": "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&q=80",
+    "myprotein-impact-whey-protein-chocolate-smooth": "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=900&q=80",
+    "optimum-nutrition-gold-standard-100-whey-double-rich-chocolate": "https://images.unsplash.com/photo-1622484211148-b2f5a3e3d90b?w=900&q=80",
+    "muscleblaze-biozyme-performance-whey-rich-chocolate": "https://images.unsplash.com/photo-1615485500834-bc10199bc727?w=900&q=80",
+    "gnc-pro-performance-100-whey-vanilla": "https://images.unsplash.com/photo-1579722820308-d74e571900a9?w=900&q=80",
+}
+
+FOOTWEAR_KEYWORD_IMAGES = (
+    ("ultraboost", "https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=900&q=80"),
+    ("romaleos", "https://images.unsplash.com/photo-1543508282-6319a3e2621f?w=900&q=80"),
+    ("pegasus", "https://images.unsplash.com/photo-1460353581641-37baddab0fa2?w=900&q=80"),
+    ("solarglide", "https://images.unsplash.com/photo-1605408499391-6368c628ef42?w=900&q=80"),
+    ("adipower", "https://images.unsplash.com/photo-1556906781-9a412961c28c?w=900&q=80"),
+    ("free metcon", "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=900&q=80"),
+    ("vomero", "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&q=80"),
+    ("metcon", "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=900&q=80"),
+)
+
 class CategorySerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
     product_count = serializers.SerializerMethodField()
@@ -167,6 +193,13 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_image(self, obj):
         request = self.context.get('request', None)
+        if obj.slug in PRODUCT_IMAGE_FALLBACKS:
+            return PRODUCT_IMAGE_FALLBACKS[obj.slug]
+        if obj.product_type == "footwear":
+            product_name = obj.name.lower()
+            for keyword, image_url in FOOTWEAR_KEYWORD_IMAGES:
+                if keyword in product_name:
+                    return image_url
         if obj.featured_image_url:
             return obj.featured_image_url
         if obj.image and hasattr(obj.image, 'url'):

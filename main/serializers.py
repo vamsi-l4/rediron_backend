@@ -9,6 +9,55 @@ from .models import (
     FitnessArticle, WorkoutTip, Exercise, MuscleGroup
 )
 
+NUTRITION_IMAGE_FALLBACKS = (
+    ("whey", "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=900&q=80"),
+    ("protein", "https://images.unsplash.com/photo-1622484211148-b2f5a3e3d90b?w=900&q=80"),
+    ("creatine", "https://images.unsplash.com/photo-1579722820308-d74e571900a9?w=900&q=80"),
+    ("supplement", "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=900&q=80"),
+    ("oats", "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=900&q=80"),
+    ("pancake", "https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=900&q=80"),
+    ("yogurt", "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=900&q=80"),
+    ("banana", "https://images.unsplash.com/photo-1528825871115-3581a5387919?w=900&q=80"),
+    ("egg", "https://images.unsplash.com/photo-1498654896293-37aacf113fd9?w=900&q=80"),
+    ("chicken", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=900&q=80"),
+    ("salmon", "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=900&q=80"),
+    ("smoothie", "https://images.unsplash.com/photo-1553530666-ba11a7da3888?w=900&q=80"),
+    ("electrolyte", "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=900&q=80"),
+    ("vitamin", "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=900&q=80"),
+    ("fat loss", "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80"),
+    ("bulking", "https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=80"),
+    ("meal", "https://images.unsplash.com/photo-1547592180-85f173990554?w=900&q=80"),
+)
+
+WORKOUT_TIP_IMAGE_FALLBACKS = (
+    ("warm-up", "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&q=80"),
+    ("right-weight", "https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?w=900&q=80"),
+    ("progressive-overload", "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=900&q=80"),
+    ("rest-days", "https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&q=80"),
+    ("rest-between-sets", "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=900&q=80"),
+    ("squat", "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=900&q=80"),
+    ("bench-press", "https://images.unsplash.com/photo-1532029837206-abbe2b7620e3?w=900&q=80"),
+    ("deadlift", "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=900&q=80"),
+    ("pull-up", "https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=900&q=80"),
+    ("sleep", "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=900&q=80"),
+    ("stretching", "https://images.unsplash.com/photo-1571019613576-2b22c76fd955?w=900&q=80"),
+    ("hydration", "https://images.unsplash.com/photo-1523362628745-0c100150b504?w=900&q=80"),
+    ("injuries", "https://images.unsplash.com/photo-1571019613914-85f342c6a11e?w=900&q=80"),
+    ("compound", "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=900&q=80"),
+    ("failure", "https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=900&q=80"),
+    ("tempo", "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80"),
+    ("deload", "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80"),
+    ("plateaus", "https://images.unsplash.com/photo-1546483875-ad9014c88eba?w=900&q=80"),
+)
+
+
+def matched_image_url(obj, mapping, default_url):
+    text = f"{getattr(obj, 'slug', '')} {getattr(obj, 'title', '')} {getattr(obj, 'category', '')}".lower()
+    for keyword, image_url in mapping:
+        if keyword in text:
+            return image_url
+    return default_url
+
 # ---------- BASE SERIALIZER FOR REUSABLE LOGIC ----------
 class BaseImageSerializer(serializers.ModelSerializer):
     """
@@ -207,7 +256,7 @@ class NutritionArticleSerializer(serializers.ModelSerializer):
 
         if obj.featured_image_url:
             return obj.featured_image_url
-        return None
+        return matched_image_url(obj, NUTRITION_IMAGE_FALLBACKS, "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=900&q=80")
 
 
 # ---------- WORKOUT ARTICLE ----------
@@ -280,7 +329,7 @@ class FitnessArticleSerializer(serializers.ModelSerializer):
             return self._absolute_url(request, obj.featured_image.url)
         if obj.featured_image_url:
             return obj.featured_image_url
-        return None
+        return matched_image_url(obj, WORKOUT_TIP_IMAGE_FALLBACKS, "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80")
 
     def get_featuredImage(self, obj):
         return {
@@ -298,6 +347,7 @@ class FitnessArticleSerializer(serializers.ModelSerializer):
 # ---------- WORKOUT TIP ----------
 class WorkoutTipSerializer(serializers.ModelSerializer):
     id = serializers.CharField(source="code", read_only=True)
+    thumbnail = serializers.SerializerMethodField()
     youtubeUrl = serializers.URLField(source="youtube_url", required=False, allow_blank=True)
     whyItMatters = serializers.JSONField(source="why_it_matters")
     stepByStepGuide = serializers.JSONField(source="step_by_step_guide")
@@ -322,6 +372,12 @@ class WorkoutTipSerializer(serializers.ModelSerializer):
         if not obj.overview:
             return ""
         return obj.overview[:156] + "..." if len(obj.overview) > 156 else obj.overview
+
+    def get_thumbnail(self, obj):
+        current = obj.thumbnail or ""
+        if current.startswith("http"):
+            return current
+        return matched_image_url(obj, WORKOUT_TIP_IMAGE_FALLBACKS, "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80")
 
 
 # ---------- SUPPORTING SERIALIZERS ----------
@@ -424,7 +480,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
             return self._absolute_url(request, obj.image.url)
         if obj.featured_image_url:
             return obj.featured_image_url
-        return None
+        return matched_image_url(obj, WORKOUT_TIP_IMAGE_FALLBACKS, "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80")
 
     def get_featured_image(self, obj):
         return self.get_image(obj)
