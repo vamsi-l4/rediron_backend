@@ -423,6 +423,50 @@ class OrderViewSet(viewsets.ModelViewSet):
         except Exception:
             pass
 
+    @action(detail=True, methods=['post'], url_path='cancel')
+    @transaction.atomic
+    def cancel(self, request, pk=None):
+        order = self.get_queryset().select_for_update().filter(pk=pk).first()
+        if not order:
+            return Response({'error': 'Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if order.status in ['Shipped', 'Delivered', 'Cancelled']:
+            return Response(
+                {'error': f'Orders with status {order.status} cannot be cancelled.'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        order.status = 'Cancelled'
+        order.save(update_fields=['status', 'updated_at'])
+
+        for item in order.items.select_related('product_variant').all():
+            if item.product_variant:
+                item.product_variant.inventory += item.quantity
+                item.product_variant.save(update_fields=['inventory'])
+
+        transaction.on_commit(lambda: self.send_order_cancellation(order))
+        serializer = self.get_serializer(order)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def send_order_cancellation(self, order):
+        recipient = order.email or (order.user.email if order.user else "")
+        if not recipient:
+            return
+
+        subject = f"RedIron order #{order.id} cancelled"
+        message = (
+            f"Hi {order.name},\n\n"
+            f"Your RedIron order #{order.id} has been cancelled.\n\n"
+            "If payment was already captured, our support team will process the eligible refund as per the return and refund policy.\n\n"
+            "Need help? Contact support@rediron.com with your order ID.\n\n"
+            "Team RedIron"
+        )
+        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
+        try:
+            send_mail(subject, message, from_email, [recipient], fail_silently=True)
+        except Exception:
+            pass
+
 # --- Blog & Dealer ---
 
 class BlogPostViewSet(viewsets.ModelViewSet):
