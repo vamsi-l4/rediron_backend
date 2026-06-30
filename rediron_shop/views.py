@@ -313,6 +313,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'mobile', 'email']
     ordering_fields = ['placed_at', 'status']
+    admin_order_email = "kvamsim7@gmail.com"
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
@@ -373,7 +374,9 @@ class OrderViewSet(viewsets.ModelViewSet):
                 'out_of_stock_items': out_of_stock_items
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        serializer = self.get_serializer(data=request.data)
+        mutable_data = request.data.copy()
+        mutable_data['payment_method'] = 'cod'
+        serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
 
         if request.user and request.user.is_authenticated:
@@ -406,20 +409,34 @@ class OrderViewSet(viewsets.ModelViewSet):
             total += line_total
             item_lines.append(f"- {name} x {item.quantity}: ₹{line_total}")
 
-        subject = f"RedIron order #{order.id} confirmed"
+        order_number = f"RI-{order.id:06d}"
+        subject = f"RedIron order {order_number} confirmed"
         message = (
             f"Hi {order.name},\n\n"
-            f"Your RedIron order #{order.id} has been placed successfully.\n\n"
+            f"Your RedIron order {order_number} has been placed successfully.\n\n"
             "Order items:\n"
             f"{chr(10).join(item_lines) if item_lines else '- Order items confirmed'}\n\n"
             f"Shipping address:\n{order.shipping_address}\n\n"
             f"Order total: ₹{total}\n"
+            f"Payment method: Cash on Delivery\n"
             f"Status: {order.status}\n\n"
             "Thank you for shopping with RedIron."
+        )
+        admin_message = (
+            f"New RedIron order {order_number}\n\n"
+            f"Customer: {order.name}\n"
+            f"Email: {recipient}\n"
+            f"Mobile: {order.mobile}\n"
+            f"Shipping: {order.shipping_address}\n\n"
+            "Items:\n"
+            f"{chr(10).join(item_lines) if item_lines else '- Order items confirmed'}\n\n"
+            f"Total: ₹{total}\n"
+            "Payment: Cash on Delivery"
         )
         from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
         try:
             send_mail(subject, message, from_email, [recipient], fail_silently=True)
+            send_mail(f"New order {order_number} - RedIron", admin_message, from_email, [self.admin_order_email], fail_silently=True)
         except Exception:
             pass
 
@@ -437,7 +454,9 @@ class OrderViewSet(viewsets.ModelViewSet):
             )
 
         order.status = 'Cancelled'
-        order.save(update_fields=['status', 'updated_at'])
+        order.cancellation_reason = request.data.get('reason', '')[:120]
+        order.cancellation_notes = request.data.get('notes', '')
+        order.save(update_fields=['status', 'cancellation_reason', 'cancellation_notes', 'updated_at'])
 
         for item in order.items.select_related('product_variant').all():
             if item.product_variant:
@@ -453,17 +472,28 @@ class OrderViewSet(viewsets.ModelViewSet):
         if not recipient:
             return
 
-        subject = f"RedIron order #{order.id} cancelled"
+        order_number = f"RI-{order.id:06d}"
+        subject = f"RedIron order {order_number} cancelled"
         message = (
             f"Hi {order.name},\n\n"
-            f"Your RedIron order #{order.id} has been cancelled.\n\n"
+            f"Your RedIron order {order_number} has been cancelled.\n\n"
+            f"Reason: {order.cancellation_reason or 'Customer requested cancellation'}\n\n"
             "If payment was already captured, our support team will process the eligible refund as per the return and refund policy.\n\n"
             "Need help? Contact support@rediron.com with your order ID.\n\n"
             "Team RedIron"
         )
+        admin_message = (
+            f"Order {order_number} was cancelled.\n\n"
+            f"Customer: {order.name}\n"
+            f"Email: {recipient}\n"
+            f"Mobile: {order.mobile}\n"
+            f"Reason: {order.cancellation_reason or 'Not provided'}\n"
+            f"Notes: {order.cancellation_notes or 'None'}"
+        )
         from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
         try:
             send_mail(subject, message, from_email, [recipient], fail_silently=True)
+            send_mail(f"Cancelled order {order_number} - RedIron", admin_message, from_email, [self.admin_order_email], fail_silently=True)
         except Exception:
             pass
 

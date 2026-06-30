@@ -325,12 +325,19 @@ class OrderItemSerializer(serializers.ModelSerializer):
     def get_product_image(self, obj):
         request = self.context.get('request')
         image_url = None
-        if obj.product_variant and hasattr(obj.product_variant, 'product') and obj.product_variant.product:
-            product = obj.product_variant.product
+        product = obj.product_variant.product if obj.product_variant and obj.product_variant.product else obj.product
+        if product:
+            if product.slug in PRODUCT_IMAGE_FALLBACKS:
+                return PRODUCT_IMAGE_FALLBACKS[product.slug]
+            if product.product_type == "footwear":
+                product_name = product.name.lower()
+                for keyword, fallback in FOOTWEAR_KEYWORD_IMAGES:
+                    if keyword in product_name:
+                        return fallback
+            if product.featured_image_url:
+                return product.featured_image_url
             if getattr(product, 'image', None) and hasattr(product.image, 'url'):
                 image_url = product.image.url
-        elif obj.product and hasattr(obj.product, 'image') and obj.product.image:
-            image_url = obj.product.image.url
         if image_url and request:
             return request.build_absolute_uri(image_url)
         return image_url
@@ -344,6 +351,7 @@ class OrderSerializer(serializers.ModelSerializer):
     items = OrderItemSerializer(many=True, read_only=True)
     total_amount = serializers.SerializerMethodField()
     grand_total = serializers.SerializerMethodField()
+    order_number = serializers.SerializerMethodField()
     coupon = CouponSerializer(read_only=True)
     coupon_id = serializers.PrimaryKeyRelatedField(
         queryset=Coupon.objects.all(), write_only=True, source='coupon', allow_null=True, required=False
@@ -353,8 +361,9 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = [
             'id', 'cart', 'cart_id', 'name', 'mobile', 'email', 'shipping_address',
+            'payment_method', 'cancellation_reason', 'cancellation_notes',
             'coupon', 'coupon_id', 'reward_points_used', 'status', 'placed_at',
-            'total_amount', 'grand_total', 'order_items', 'items'
+            'total_amount', 'grand_total', 'order_number', 'order_items', 'items'
         ]
 
     def get_total_amount(self, obj):
@@ -365,6 +374,9 @@ class OrderSerializer(serializers.ModelSerializer):
         if obj.coupon and obj.coupon.discount_percent:
             total = total - ((total * obj.coupon.discount_percent) / 100)
         return max(total, 0)
+
+    def get_order_number(self, obj):
+        return f"RI-{obj.id:06d}"
 
     def create(self, validated_data):
         cart = validated_data.get('cart')

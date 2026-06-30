@@ -206,6 +206,9 @@ class Order(models.Model):
     mobile = models.CharField(max_length=15)
     email = models.EmailField()
     shipping_address = models.TextField()
+    payment_method = models.CharField(max_length=40, default='cod', blank=True)
+    cancellation_reason = models.CharField(max_length=120, blank=True)
+    cancellation_notes = models.TextField(blank=True)
     
     # Coupon & Rewards
     coupon = models.ForeignKey(Coupon, blank=True, null=True, on_delete=models.SET_NULL)
