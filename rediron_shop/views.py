@@ -1,10 +1,11 @@
 # views.py
+import logging
 from rest_framework.response import Response
 from rest_framework import viewsets, permissions, filters, status
 from rest_framework.decorators import action
 from django.conf import settings
-from django.core.mail import send_mail
 from django_filters.rest_framework import DjangoFilterBackend
+from rediron_site.email_utils import send_email_message, EmailServiceError
 from django.db import transaction
 from django.db.models import Count, Q
 from .models import (
@@ -30,6 +31,19 @@ from .serializers import (
     SubscriptionSerializer, UserActivityDataSerializer, UserAddressSerializer, UserReviewSerializer,
     WishlistSerializer, WishlistItemSerializer, UserProfileSerializer
 )
+
+logger = logging.getLogger(__name__)
+
+
+def _shop_admin_email():
+    return getattr(settings, "SHOP_ADMIN_EMAIL", None) or getattr(settings, "ADMIN_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None) or "support@rediron.com"
+
+
+def _send_shop_mail(subject, message, recipients):
+    try:
+        return send_email_message(subject, message, recipients)
+    except EmailServiceError:
+        return False
 
 # --- Category & Product ---
 
@@ -313,7 +327,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'mobile', 'email']
     ordering_fields = ['placed_at', 'status']
-    admin_order_email = "kvamsim7@gmail.com"
+    admin_order_email = getattr(settings, "SHOP_ADMIN_EMAIL", None) or getattr(settings, "ADMIN_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None) or "support@rediron.com"
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
@@ -360,13 +374,22 @@ class OrderViewSet(viewsets.ModelViewSet):
                         'reason': 'insufficient_inventory',
                         'available': variant.inventory
                     })
-            elif cart_item.product and not cart_item.product.is_active:
-                out_of_stock_items.append({
-                    'id': cart_item.id,
-                    'name': cart_item.product.name,
-                    'variant': 'N/A',
-                    'reason': 'out_of_stock'
-                })
+            elif cart_item.product:
+                if not cart_item.product.is_active:
+                    out_of_stock_items.append({
+                        'id': cart_item.id,
+                        'name': cart_item.product.name,
+                        'variant': 'N/A',
+                        'reason': 'out_of_stock'
+                    })
+                elif cart_item.product.stock and cart_item.quantity > cart_item.product.stock:
+                    out_of_stock_items.append({
+                        'id': cart_item.id,
+                        'name': cart_item.product.name,
+                        'variant': 'N/A',
+                        'reason': 'insufficient_inventory',
+                        'available': cart_item.product.stock
+                    })
 
         if out_of_stock_items:
             return Response({
@@ -375,6 +398,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         mutable_data = request.data.copy()
+        mutable_data['cart_id'] = cart.id
         mutable_data['payment_method'] = 'cod'
         serializer = self.get_serializer(data=mutable_data)
         serializer.is_valid(raise_exception=True)
@@ -389,12 +413,17 @@ class OrderViewSet(viewsets.ModelViewSet):
                 variant = cart_item.product_variant
                 variant.inventory -= cart_item.quantity
                 variant.save(update_fields=['inventory'])
+            elif cart_item.product and cart_item.product.stock:
+                product = cart_item.product
+                product.stock = max(product.stock - cart_item.quantity, 0)
+                product.save(update_fields=['stock'])
 
         cart.items.all().delete()
 
         transaction.on_commit(lambda: self.send_order_confirmation(order))
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        response_serializer = self.get_serializer(order)
+        return Response(response_serializer.data, status=status.HTTP_201_CREATED)
 
     def send_order_confirmation(self, order):
         recipient = order.email or (order.user.email if order.user else "")
@@ -433,12 +462,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             f"Total: ₹{total}\n"
             "Payment: Cash on Delivery"
         )
-        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
-        try:
-            send_mail(subject, message, from_email, [recipient], fail_silently=True)
-            send_mail(f"New order {order_number} - RedIron", admin_message, from_email, [self.admin_order_email], fail_silently=True)
-        except Exception:
-            pass
+        _send_shop_mail(subject, message, [recipient])
+        _send_shop_mail(f"New order {order_number} - RedIron", admin_message, [getattr(settings, "SHOP_ADMIN_EMAIL", self.admin_order_email)])
 
     @action(detail=True, methods=['post'], url_path='cancel')
     @transaction.atomic
@@ -490,12 +515,8 @@ class OrderViewSet(viewsets.ModelViewSet):
             f"Reason: {order.cancellation_reason or 'Not provided'}\n"
             f"Notes: {order.cancellation_notes or 'None'}"
         )
-        from_email = getattr(settings, "DEFAULT_FROM_EMAIL", None) or getattr(settings, "EMAIL_HOST_USER", None)
-        try:
-            send_mail(subject, message, from_email, [recipient], fail_silently=True)
-            send_mail(f"Cancelled order {order_number} - RedIron", admin_message, from_email, [self.admin_order_email], fail_silently=True)
-        except Exception:
-            pass
+        _send_shop_mail(subject, message, [recipient])
+        _send_shop_mail(f"Cancelled order {order_number} - RedIron", admin_message, [getattr(settings, "SHOP_ADMIN_EMAIL", self.admin_order_email)])
 
 # --- Blog & Dealer ---
 
@@ -519,6 +540,24 @@ class BusinessInquiryViewSet(viewsets.ModelViewSet):
     queryset = BusinessInquiry.objects.all().order_by('-submitted_at')
     serializer_class = BusinessInquirySerializer
 
+    def perform_create(self, serializer):
+        inquiry = serializer.save()
+        admin_message = (
+            "New RedIron business inquiry\n\n"
+            f"Name: {inquiry.name}\n"
+            f"Email: {inquiry.email}\n"
+            f"Mobile: {inquiry.mobile}\n"
+            f"Company: {getattr(inquiry, 'company', '') or getattr(inquiry, 'country', '')}\n"
+            f"Inquiry details:\n{inquiry.details}"
+        )
+        user_message = (
+            f"Hi {inquiry.name},\n\n"
+            "We have saved your business inquiry. Our RedIron shop team will review your request and contact you soon.\n\n"
+            "Team RedIron"
+        )
+        transaction.on_commit(lambda: _send_shop_mail("New RedIron business inquiry", admin_message, [_shop_admin_email()]))
+        transaction.on_commit(lambda: _send_shop_mail("We received your RedIron business inquiry", user_message, [inquiry.email]))
+
 class FAQViewSet(viewsets.ModelViewSet):
     queryset = FAQ.objects.all().order_by('question')
     serializer_class = FAQSerializer
@@ -528,6 +567,24 @@ class FAQViewSet(viewsets.ModelViewSet):
 class ContactUsViewSet(viewsets.ModelViewSet):
     queryset = ContactUs.objects.all().order_by('-submitted_at')
     serializer_class = ContactUsSerializer
+
+    def perform_create(self, serializer):
+        contact = serializer.save()
+        admin_message = (
+            "New RedIron shop contact message\n\n"
+            f"Name: {contact.name}\n"
+            f"Email: {contact.email}\n"
+            f"Subject: {contact.subject}\n\n"
+            f"Message:\n{contact.message}\n\n"
+            f"Date: {contact.submitted_at.strftime('%Y-%m-%d %H:%M:%S')}"
+        )
+        user_message = (
+            f"Hi {contact.name},\n\n"
+            "We have saved your response. Our RedIron support team will get back to you soon.\n\n"
+            "Team RedIron"
+        )
+        transaction.on_commit(lambda: _send_shop_mail(f"Shop contact: {contact.subject}", admin_message, [_shop_admin_email()]))
+        transaction.on_commit(lambda: _send_shop_mail("We received your RedIron message", user_message, [contact.email]))
 
 class NewsletterSubscriptionViewSet(viewsets.ModelViewSet):
     queryset = NewsletterSubscription.objects.all().order_by('-subscribed_at')

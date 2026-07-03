@@ -5,8 +5,8 @@ from rest_framework import viewsets, status, filters, permissions
 from rest_framework.decorators import api_view, permission_classes, throttle_classes
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from django.core.mail import send_mail, BadHeaderError
 from django.conf import settings
+from rediron_site.email_utils import send_email_message, send_user_email, send_admin_notification, EmailServiceError
 from django_filters.rest_framework import DjangoFilterBackend
 from django.db import models
 from .models import (
@@ -52,14 +52,15 @@ def _load_workout_tips():
         return []
 
     tips = []
-    for index, tip in enumerate(raw_tips):
+    for index, row in enumerate(raw_tips):
+        tip = row.get("fields", row)
         slug = tip.get("slug") or str(tip.get("title", f"workout-tip-{index + 1}")).lower().replace(" ", "-")
         overview = tip.get("overview", "")
         normalized = {
             **tip,
-            "id": tip.get("id") or f"WT{index + 1:02d}",
+            "id": row.get("pk") or tip.get("id") or f"WT{index + 1:02d}",
             "slug": slug,
-            "thumbnail": tip.get("thumbnail") or f"/assets/workout-tips/{slug}.jpg",
+            "thumbnail": tip.get("thumbnail") or tip.get("featured_image_url") or f"/assets/workout-tips/{slug}.jpg",
             "youtubeUrl": tip.get("youtubeUrl") or "",
             "excerpt": tip.get("excerpt") or (overview[:156] + "..." if len(overview) > 156 else overview),
             "author": tip.get("author") or "RedIron Team",
@@ -92,16 +93,16 @@ def _filter_workout_tips(request):
 def send_email_async(subject, text_content, from_email, recipient_list, html_content=None, fail_silently=False):
     def _send():
         try:
-            send_mail(
+            send_email_message(
                 subject=subject,
                 message=text_content,
-                from_email=from_email,
                 recipient_list=recipient_list,
+                from_email=from_email,
                 html_message=html_content,
-                fail_silently=fail_silently
+                fail_silently=fail_silently,
             )
-        except Exception:
-            logger.exception("Async email sending failed.")
+        except EmailServiceError:
+            logger.exception("Async email sending failed for subject %s", subject)
     Thread(target=_send, daemon=True).start()
 
 
@@ -127,7 +128,12 @@ def contact_message_api(request):
     Saves contact message, sends admin email and auto-reply asynchronously,
     and returns success. Throttled for anonymous clients (configure rates in settings).
     """
-    serializer = ContactMessageSerializer(data=request.data, context={"request": request})
+    data = request.data.copy()
+    if getattr(request.user, "is_authenticated", False):
+        data["name"] = getattr(request.user, "name", "") or getattr(request.user, "email", "") or data.get("name", "")
+        data["email"] = getattr(request.user, "email", "") or data.get("email", "")
+
+    serializer = ContactMessageSerializer(data=data, context={"request": request})
     if serializer.is_valid():
         msg = serializer.save()
         try:
@@ -136,44 +142,42 @@ def contact_message_api(request):
                 f"Name: {msg.name}\n"
                 f"Email: {msg.email}\n"
                 f"Subject: {msg.subject}\n\n"
-                f"Message:\n{msg.message}"
+                f"Message:\n{msg.message}\n\n"
+                f"Date: {msg.created_at.strftime('%Y-%m-%d %H:%M:%S')}"
             )
-            admin_to = [settings.EMAIL_HOST_USER] if settings.EMAIL_HOST_USER else [settings.DEFAULT_FROM_EMAIL]
-            message_html = msg.message.replace('\n', '<br>')
+            admin_to = [getattr(settings, "ADMIN_EMAIL", None) or getattr(settings, "SITE_OWNER_EMAIL", None) or getattr(settings, "SHOP_ADMIN_EMAIL", None)]
             admin_html_message = f"""
             <html><body style="font-family: sans-serif;">
                 <h2 style="color: #c0392b;">New Contact Message</h2>
                 <p><strong>Name:</strong> {msg.name}</p>
                 <p><strong>Email:</strong> {msg.email}</p>
                 <p><strong>Subject:</strong> {msg.subject}</p>
+                <p><strong>Date:</strong> {msg.created_at.strftime('%Y-%m-%d %H:%M:%S')}</p>
                 <hr>
-                <p>{message_html}</p>
+                <p>{msg.message.replace(chr(10), '<br>')}</p>
             </body></html>
             """
-            send_email_async(subject_admin, message_plain_admin, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, admin_to, html_content=admin_html_message, fail_silently=True)
+            send_email_async(subject_admin, message_plain_admin, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [recipient for recipient in admin_to if recipient], html_content=admin_html_message, fail_silently=False)
 
-            # Auto reply to user (async)
-            subject_user = "✅ We received your message at RedIron Gym!"
+            subject_user = "✅ We received your message at RedIron Gym"
             auto_message_plain = (
                 f"Hi {msg.name},\n\n"
-                "Thanks for contacting us! We will get back to you shortly.\n\n"
-                "- RedIron Gym Team"
+                "Thank you for contacting RedIron. We received your message and our team will respond shortly.\n\n"
+                "Regards,\nRedIron Gym Team"
             )
             user_html_message = f"""
             <html><body style="font-family: sans-serif;">
                 <p>Hi {msg.name},</p>
-                <p>Thanks for contacting us! We have received your message and will get back to you shortly.</p>
-                <p><strong>- The RedIron Gym Team</strong></p>
+                <p>Thank you for contacting RedIron. We received your message and our team will respond shortly.</p>
+                <p><strong>Regards,</strong><br>The RedIron Gym Team</p>
             </body></html>
             """
-            send_email_async(subject_user, auto_message_plain, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [msg.email], html_content=user_html_message, fail_silently=True)
+            send_email_async(subject_user, auto_message_plain, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [msg.email], html_content=user_html_message, fail_silently=False)
 
             return Response({"success": "Message received"}, status=status.HTTP_201_CREATED)
-        except BadHeaderError:
-            return Response({"error": "Invalid header found."}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             logger.exception("Error while handling contact message")
-            return Response({"error": f"Error processing message: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"success": "Message received", "warning": f"Email notification failed: {e}"}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

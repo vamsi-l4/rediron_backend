@@ -61,13 +61,21 @@ class Command(BaseCommand):
         workout_tip_updates = 0
         for tip in WorkoutTip.objects.all():
             thumbnail = tip.thumbnail or ""
-            if not thumbnail.startswith("http") or thumbnail.startswith(MISSING_LOCAL_PREFIXES):
-                tip.thumbnail = matched_image_url(
+            featured_image_url = tip.featured_image_url or ""
+            if (
+                not featured_image_url.startswith("http")
+                or featured_image_url.startswith(MISSING_LOCAL_PREFIXES)
+                or not thumbnail.startswith("http")
+                or thumbnail.startswith(MISSING_LOCAL_PREFIXES)
+            ):
+                image_url = matched_image_url(
                     tip,
                     WORKOUT_TIP_IMAGE_FALLBACKS,
                     "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80",
                 )
-                tip.save(update_fields=["thumbnail"])
+                tip.featured_image_url = image_url
+                tip.thumbnail = image_url
+                tip.save(update_fields=["featured_image_url", "thumbnail"])
                 workout_tip_updates += 1
 
         self.stdout.write(self.style.SUCCESS(

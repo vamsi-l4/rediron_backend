@@ -274,6 +274,8 @@ class WorkoutTip(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=260, unique=True, blank=True)
     thumbnail = models.CharField(max_length=500, blank=True)
+    featured_image = models.ImageField(upload_to="workout_tips/", null=True, blank=True)
+    featured_image_url = models.URLField(blank=True, help_text="Optional remote/admin image URL")
     youtube_url = models.URLField(blank=True, help_text="YouTube watch URL used for embedded demo video")
     category = models.CharField(max_length=40, choices=CATEGORY_CHOICES, db_index=True)
     overview = models.TextField(blank=True)

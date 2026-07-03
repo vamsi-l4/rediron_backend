@@ -8,16 +8,17 @@ from jwt import PyJWTError
 from django.conf import settings
 import logging
 import requests
+logger = logging.getLogger(__name__)
+
 try:
     from cryptography.hazmat.primitives import serialization
     from cryptography.hazmat.backends import default_backend
     CRYPTO_AVAILABLE = True
 except ImportError:
-
-    logger.warning("Cryptography not available - JWT signature verification disabled (dev mode only)") 
+    CRYPTO_AVAILABLE = False
+    logger.warning("Cryptography not available - JWT signature verification disabled (dev mode only)")
 import base64
 
-logger = logging.getLogger(__name__)
 User = get_user_model()
 
 # ============================================
@@ -116,8 +117,12 @@ class ClerkAuthentication(BaseAuthentication):
                         algorithms=['RS256'],
                         options={"verify_aud": False},
                         issuer=issuer if issuer else None,
+                        leeway=getattr(settings, 'CLERK_JWT_LEEWAY_SECONDS', 60),
                     )
                     logger.info('[ClerkAuth] PRODUCTION: Token signature verified and decoded')
+                except jwt.ExpiredSignatureError:
+                    logger.info('[ClerkAuth] Clerk token expired')
+                    raise AuthenticationFailed('Clerk token expired')
                 except PyJWTError as e:
                     logger.exception(f'[ClerkAuth] JWT verification/decoding error: {e}')
                     raise AuthenticationFailed('Invalid Clerk token')
@@ -207,6 +212,8 @@ class ClerkAuthentication(BaseAuthentication):
             # Catch all other PyJWT errors and log details
             logger.exception(f'Clerk token invalid: {e}')
             raise AuthenticationFailed('Invalid Clerk token')
+        except AuthenticationFailed:
+            raise
         except Exception as e:
             # ============================================
             # FIX: HANDLE DB ERRORS GRACEFULLY

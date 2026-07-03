@@ -1,5 +1,6 @@
 import hmac
 import hashlib
+import base64
 import json
 import logging
 from pathlib import Path
@@ -9,8 +10,8 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.conf import settings
-from django.core.mail import send_mail, BadHeaderError
 from django.contrib.auth import get_user_model
+from rediron_site.email_utils import send_email_message, send_user_email, send_admin_notification, EmailServiceError
 from rest_framework.decorators import api_view, permission_classes, parser_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
@@ -19,13 +20,13 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import APIView
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 import random
 
 from .razorpay_client import client as razorpay_client
 from .models import (
     OTP, RefreshToken, UserActivityData, UserProfile, Address,
-    FitnessProgress, SavedItem, GymSubscription, PaymentTransaction
+    FitnessProgress, SavedItem, GymSubscription, PaymentTransaction, TrialSubscription
 )
 from .serializers import SignupSerializer, UserProfileSerializer, UserActivityDataSerializer
 from .utils import generate_otp, generate_access_token, generate_refresh_token_for_user, refresh_access_token_using_refresh_token
@@ -38,11 +39,21 @@ ALLOWED_PROFILE_IMAGE_CONTENT_TYPES = {'image/jpeg', 'image/png', 'image/webp'}
 
 
 def _profile_image_url(request, user, profile=None):
+    if profile and profile.profile_image_data:
+        return profile.profile_image_data
     if user.profile_image:
         return request.build_absolute_uri(user.profile_image.url)
     if profile and profile.profile_image:
         return request.build_absolute_uri(profile.profile_image.url)
     return None
+
+
+def _profile_image_data_url(uploaded_file):
+    uploaded_file.seek(0)
+    encoded = base64.b64encode(uploaded_file.read()).decode('ascii')
+    uploaded_file.seek(0)
+    mime = getattr(uploaded_file, 'content_type', '') or 'image/jpeg'
+    return f"data:{mime};base64,{encoded}", mime
 
 
 def _validate_profile_image(uploaded_file):
@@ -53,19 +64,51 @@ def _validate_profile_image(uploaded_file):
     return None
 
 def send_otp_email(user_email, otp):
-    # COMMENTED OUT: Old OTP email sending
-    # Replaced with Clerk's email verification system
-    # Clerk handles all email sending for verification codes
-    """
-    send_mail(
-        'Your OTP Code',
-        f'Your OTP is: {otp}',
-        settings.DEFAULT_FROM_EMAIL,
-        [user_email],
-        fail_silently=False,
+    """Send a password/verification OTP when the legacy flow is used."""
+    if not user_email:
+        logger.warning("OTP email skipped because user_email is empty")
+        return False
+
+    subject = "Your RedIron verification code"
+    message = f"Your RedIron verification code is: {otp}. It will expire in 10 minutes."
+    html_message = f"<p>Your RedIron verification code is: <strong>{otp}</strong>.</p><p>It will expire in 10 minutes.</p>"
+    try:
+        return send_email_message(subject, message, [user_email], html_message=html_message)
+    except EmailServiceError:
+        logger.exception("Failed to send OTP email to %s", user_email)
+        return False
+
+def send_trial_confirmation_email(user):
+    """Send a confirmation email when a user starts a free trial."""
+    if not user.email:
+        logger.warning("Trial confirmation email skipped because user_email is empty for user %s", user.id)
+        return False
+
+    subject = "Your RedIron 15-Day Free Trial Has Started!"
+    message = (
+        f"Hi {user.name},\n\n"
+        f"Welcome to RedIron! Your 15-day free trial has been successfully activated.\n\n"
+        "You now have access to our premium features, including:\n"
+        "- Exclusive workout programs\n"
+        "- Advanced performance tracking\n"
+        "- Personalized nutrition guides\n\n"
+        "Start exploring now and unlock your full potential.\n\n"
+        "Happy training,\n"
+        "The RedIron Team"
     )
-    """
-    logger.info(f"Email would be sent to {user_email} (Handled by Clerk)")
+    html_message = (
+        f"<p>Hi {user.name},</p>"
+        f"<p>Welcome to RedIron! Your <strong>15-day free trial</strong> has been successfully activated.</p>"
+        f"<p>You now have access to our premium features. Start exploring now and unlock your full potential.</p>"
+        f"<p>Happy training,<br/>The RedIron Team</p>"
+    )
+    try:
+        # FIX: Use send_user_email which correctly handles user objects
+        # The previous implementation was using a generic email sender. This is now corrected.
+        return send_user_email(user, subject, message, html_message=html_message)
+    except EmailServiceError:
+        logger.exception("Failed to send trial confirmation email to %s", user.email)
+        return False
 
 
 @csrf_exempt
@@ -710,10 +753,16 @@ def manage_profile(request):
         elif request.method == 'PATCH':
             from .serializers import UserProfileSerializer
             profile_data = request.data.copy()
+            remove_profile_image = str(profile_data.get('remove_profile_image', '')).lower() in {'1', 'true', 'yes'}
             if 'phone' in profile_data and 'phone_number' not in profile_data:
                 profile_data['phone_number'] = profile_data.get('phone', '')
             profile_data.pop('name', None)
             profile_data.pop('email', None)
+            profile_data.pop('remove_profile_image', None)
+            if 'profile_image' in request.FILES:
+                profile_data.pop('profile_image', None)
+            if remove_profile_image:
+                profile_data.pop('profile_image', None)
             serializer = UserProfileSerializer(profile, data=profile_data, partial=True)
             if serializer.is_valid():
                 profile = serializer.save()
@@ -724,19 +773,44 @@ def manage_profile(request):
                     user_updated = True
                     
                 if 'profile_image' in request.FILES:
-                    validation_error = _validate_profile_image(request.FILES['profile_image'])
+                    uploaded_image = request.FILES['profile_image']
+                    validation_error = _validate_profile_image(uploaded_image)
                     if validation_error:
                         return Response({'profile_image': [validation_error]}, status=400)
-                    if user.profile_image:
-                        user.profile_image.delete(save=False) # Deletes the old image from the server!
-                    user.profile_image = request.FILES['profile_image']
-                    profile.profile_image = user.profile_image
+
+                    if user.profile_image and user.profile_image.name:
+                        try:
+                            user.profile_image.delete(save=False)
+                        except Exception:
+                            logger.exception("Failed to delete previous user profile image")
+                    if profile.profile_image and profile.profile_image.name:
+                        try:
+                            profile.profile_image.delete(save=False)
+                        except Exception:
+                            logger.exception("Failed to delete previous profile image")
+
+                    image_data, image_mime = _profile_image_data_url(uploaded_image)
+                    profile.profile_image = uploaded_image
+                    profile.profile_image_data = image_data
+                    profile.profile_image_mime = image_mime
+                    user_updated = True
+                elif remove_profile_image:
+                    if user.profile_image and user.profile_image.name:
+                        user.profile_image.delete(save=False)
+                    if profile.profile_image and profile.profile_image.name:
+                        profile.profile_image.delete(save=False)
+                    user.profile_image = None
+                    profile.profile_image = None
+                    profile.profile_image_data = ''
+                    profile.profile_image_mime = ''
                     user_updated = True
                     
-                if user_updated:
-                    user.save()
-
                 profile.save()
+
+                if user_updated:
+                    if profile.profile_image and profile.profile_image.name:
+                        user.profile_image = profile.profile_image.name
+                    user.save()
                     
                 data = serializer.data
                 data['name'] = user.name
@@ -823,6 +897,39 @@ def manage_address_detail(request, address_id):
             'details': str(e)
         }, status=500)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def start_trial(request):
+    """
+    Starts a 15-day free trial for the authenticated user.
+    """
+    user = request.user
+    
+    # Check if the user already has an active subscription or trial
+    if GymSubscription.objects.filter(user=user, is_active=True).exists():
+        return Response({'error': 'You already have an active subscription or trial.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        # Create a 15-day trial subscription
+        start_date = timezone.now()
+        end_date = start_date + timedelta(days=15)
+        
+        subscription = GymSubscription.objects.create(
+            user=user,
+            plan='trial',
+            start_date=start_date,
+            end_date=end_date,
+            is_active=True,
+            auto_renew=request.data.get('auto_payment_enabled', False)
+        )
+        
+        # Send confirmation email
+        send_trial_confirmation_email(user)
+        
+        return Response({'success': True, 'message': '15-day trial started successfully.'}, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        logger.error(f"Error starting trial for user {user.email}: {str(e)}")
+        return Response({'error': 'Failed to start trial. Please try again later.'}, status=status.HTTP_500_BAD_REQUEST)
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -955,6 +1062,27 @@ def get_gym_subscription(request):
     user = request.user
     
     try:
+        trial = TrialSubscription.objects.filter(user=user).first()
+        if trial:
+            trial.mark_expired()
+            return Response({
+                'id': trial.id,
+                'plan': 'trial',
+                'status': 'Trial Active' if trial.status == 'active' else 'Trial Expired',
+                'subscription_status': trial.subscription_status,
+                'price': '0.00',
+                'start_date': trial.start_date,
+                'end_date': trial.end_date,
+                'trial_start_date': trial.start_date,
+                'trial_end_date': trial.end_date,
+                'trial_used': trial.trial_used,
+                'renewal_preference': trial.renewal_preference,
+                'auto_renewal': trial.renewal_preference == 'auto',
+                'payment_method': 'trial',
+                'is_active': trial.status == 'active' and not trial.is_expired(),
+                'days_remaining': trial.days_remaining(),
+            }, status=200)
+
         subscription = GymSubscription.objects.filter(user=user).first()
         if not subscription:
             return Response({

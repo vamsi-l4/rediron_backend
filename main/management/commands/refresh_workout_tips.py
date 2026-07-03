@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.dateparse import parse_datetime
 
 from main.models import WorkoutTip
+from main.serializers import WORKOUT_TIP_IMAGE_FALLBACKS, matched_image_url
 
 
 class Command(BaseCommand):
@@ -34,11 +35,13 @@ class Command(BaseCommand):
         created_count = 0
         updated_count = 0
 
-        for index, tip in enumerate(tips, start=1):
-            code = tip.get("id") or tip.get("code") or f"WT{index:02d}"
-            slug = tip.get("slug") or str(tip.get("title", code)).lower().replace(" ", "-")
-            youtube_url = tip.get("youtubeUrl") or ""
-            published_at = tip.get("published_at") or tip.get("date")
+        for index, row in enumerate(tips, start=1):
+            fields = row.get("fields", row)
+            code = row.get("pk") or fields.get("id") or fields.get("code") or f"WT{index:02d}"
+            slug = fields.get("slug") or str(fields.get("title", code)).lower().replace(" ", "-")
+            youtube_url = fields.get("youtubeUrl") or fields.get("youtube_url") or ""
+            featured_image_url = fields.get("featured_image_url") or fields.get("image_url") or fields.get("thumbnail") or ""
+            published_at = fields.get("published_at") or fields.get("date")
             if isinstance(published_at, str):
                 published_at = parse_datetime(published_at)
             if not published_at:
@@ -47,27 +50,35 @@ class Command(BaseCommand):
             obj, created = WorkoutTip.objects.update_or_create(
                 code=code,
                 defaults={
-                    "title": tip.get("title", code),
+                    "title": fields.get("title", code),
                     "slug": slug,
-                    "thumbnail": tip.get("thumbnail") or f"/assets/workout-tips/{slug}.jpg",
+                    "thumbnail": featured_image_url or f"/assets/workout-tips/{slug}.jpg",
+                    "featured_image_url": featured_image_url,
                     "youtube_url": youtube_url,
-                    "category": tip.get("category") or "Beginner",
-                    "overview": tip.get("overview") or "",
-                    "why_it_matters": tip.get("whyItMatters") or [],
-                    "step_by_step_guide": tip.get("stepByStepGuide") or [],
-                    "common_mistakes": tip.get("commonMistakes") or [],
-                    "coach_tip": tip.get("coachTip") or "",
-                    "key_takeaways": tip.get("keyTakeaways") or [],
-                    "related_articles": tip.get("relatedArticles") or [],
-                    "author": tip.get("author") or "RedIron Team",
+                    "category": fields.get("category") or "Beginner",
+                    "overview": fields.get("overview") or "",
+                    "why_it_matters": fields.get("whyItMatters") or fields.get("why_it_matters") or [],
+                    "step_by_step_guide": fields.get("stepByStepGuide") or fields.get("step_by_step_guide") or [],
+                    "common_mistakes": fields.get("commonMistakes") or fields.get("common_mistakes") or [],
+                    "coach_tip": fields.get("coachTip") or fields.get("coach_tip") or "",
+                    "key_takeaways": fields.get("keyTakeaways") or fields.get("key_takeaways") or [],
+                    "related_articles": fields.get("relatedArticles") or fields.get("related_articles") or [],
+                    "author": fields.get("author") or "RedIron Team",
                     "published_at": published_at,
-                    "is_published": tip.get("is_published", True),
+                    "is_published": fields.get("is_published", True),
                 },
             )
             if created:
                 created_count += 1
             else:
                 updated_count += 1
+            if not obj.featured_image_url or str(obj.featured_image_url).startswith(("/assets/workout-tips/", "assets/workout-tips/")):
+                obj.featured_image_url = matched_image_url(
+                    obj,
+                    WORKOUT_TIP_IMAGE_FALLBACKS,
+                    "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=900&q=80",
+                )
+                obj.thumbnail = obj.featured_image_url
             obj.save()
 
         self.stdout.write(

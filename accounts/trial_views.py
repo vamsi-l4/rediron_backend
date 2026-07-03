@@ -22,8 +22,49 @@ from rest_framework import status
 
 from .models import TrialSubscription, PaymentTransaction
 import logging
+from rediron_site.email_utils import send_user_email, EmailServiceError
 
 logger = logging.getLogger(__name__)
+
+
+def _trial_payload(trial):
+    trial.mark_expired()
+    return {
+        'trial_used': trial.trial_used,
+        'status': trial.status,
+        'subscription_status': trial.subscription_status,
+        'is_active': trial.is_active,
+        'trial_start_date': trial.start_date,
+        'trial_end_date': trial.end_date,
+        'start_date': trial.start_date,
+        'end_date': trial.end_date,
+        'days_remaining': trial.days_remaining(),
+        'is_expired': trial.is_expired(),
+        'renewal_preference': trial.renewal_preference,
+        'features': trial.features,
+    }
+
+
+def _send_trial_email(user, trial):
+    subject = "Your RedIron 15-Day Trial Has Started"
+    preference = "auto-renew after trial" if trial.renewal_preference == "auto" else "manual renewal only"
+    message = (
+        f"Hi {user.name or 'RedIron member'},\n\n"
+        f"Your 15-day RedIron trial is active until {trial.end_date.date()}.\n"
+        f"Billing preference after trial: {preference}.\n\n"
+        "You can view days remaining and renewal options from your profile.\n\n"
+        "The RedIron Team"
+    )
+    html_message = (
+        f"<p>Hi {user.name or 'RedIron member'},</p>"
+        f"<p>Your <strong>15-day RedIron trial</strong> is active until <strong>{trial.end_date.date()}</strong>.</p>"
+        f"<p>Billing preference after trial: <strong>{preference}</strong>.</p>"
+        "<p>You can view days remaining and renewal options from your profile.</p>"
+    )
+    try:
+        send_user_email(user, subject, message, html_message=html_message)
+    except EmailServiceError:
+        logger.exception("Trial start email failed for %s", user.email)
 
 
 @api_view(['GET'])
@@ -32,26 +73,17 @@ def get_trial_status(request):
     """Get current user's trial subscription status"""
     try:
         trial = TrialSubscription.objects.get(user=request.user)
-        trial.mark_expired()  # Update status if expired
         
         return Response({
             'status': 'success',
-            'trial': {
-                'status': trial.status,
-                'is_active': trial.is_active,
-                'start_date': trial.start_date,
-                'end_date': trial.end_date,
-                'days_remaining': trial.days_remaining(),
-                'is_expired': trial.is_expired(),
-                'features': trial.features,
-            }
+            'trial': _trial_payload(trial),
         })
     except TrialSubscription.DoesNotExist:
         return Response({
             'status': 'success',
             'trial': None,
             'message': 'No trial subscription found'
-        }, status=status.HTTP_404_NOT_FOUND)
+        }, status=status.HTTP_200_OK)
     except Exception as e:
         logger.error(f"Error getting trial status: {str(e)}")
         return Response(
@@ -65,49 +97,61 @@ def get_trial_status(request):
 def start_trial(request):
     """Start a new free trial for the user"""
     try:
-        # Check if trial already exists
         existing_trial = TrialSubscription.objects.filter(user=request.user).first()
-        if existing_trial and existing_trial.status == 'active':
+        if existing_trial:
             return Response(
-                {'error': 'User already has an active trial'},
+                {
+                    'error': 'You have already used your free trial.',
+                    'message': 'Free trial already used. Please purchase a membership plan.',
+                    'trial': _trial_payload(existing_trial),
+                },
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Default: 7-day trial
-        trial_days = request.data.get('days', 7)
+        trial_days = 15
+        renewal_preference = request.data.get('renewal_preference')
+        if not renewal_preference:
+            auto_payment = request.data.get('auto_payment_enabled')
+            renewal_preference = 'auto' if auto_payment is True or str(auto_payment).lower() == 'true' else 'manual'
+
+        if renewal_preference not in {'auto', 'manual'}:
+            return Response(
+                {'error': 'renewal_preference must be auto or manual'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
         features = request.data.get('features', [
             'articles',
             'workouts',
             'exercises',
-            'basic_nutrition'
+            'basic_nutrition',
+            'performance_lab'
         ])
         
+        start_date = timezone.now()
         end_date = timezone.now() + timedelta(days=trial_days)
         
-        # Create or update trial
-        trial, created = TrialSubscription.objects.update_or_create(
+        trial = TrialSubscription.objects.create(
             user=request.user,
-            defaults={
-                'status': 'active',
-                'is_active': True,
-                'end_date': end_date,
-                'features': features,
-            }
+            status='active',
+            is_active=True,
+            start_date=start_date,
+            end_date=end_date,
+            trial_used=True,
+            renewal_preference=renewal_preference,
+            subscription_status='trial_active',
+            features=features,
         )
+
+        _send_trial_email(request.user, trial)
         
-        action = "created" if created else "updated"
-        logger.info(f"Trial subscription {action} for user {request.user.email}")
+        logger.info(f"Trial subscription created for user {request.user.email}")
         
         return Response({
             'status': 'success',
-            'message': f'Trial subscription {action}',
-            'trial': {
-                'days': trial_days,
-                'start_date': trial.start_date,
-                'end_date': trial.end_date,
-                'features': trial.features,
-            }
-        }, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+            'message': '15-day trial started successfully.',
+            'trial': _trial_payload(trial),
+        }, status=status.HTTP_201_CREATED)
     
     except Exception as e:
         logger.error(f"Error starting trial: {str(e)}")

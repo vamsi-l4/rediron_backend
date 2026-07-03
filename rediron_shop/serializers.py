@@ -242,8 +242,16 @@ class CartItemSerializer(serializers.ModelSerializer):
         return super().to_internal_value(mutable)
 
     def validate(self, attrs):
+        if self.instance is not None and self.partial:
+            product = attrs.get('product', getattr(self.instance, 'product', None))
+            product_variant = attrs.get('product_variant', getattr(self.instance, 'product_variant', None))
+            attrs['product'] = product
+            attrs['product_variant'] = product_variant
         if not attrs.get('product') and not attrs.get('product_variant'):
             raise serializers.ValidationError("Either product_id or product_variant_id is required.")
+        quantity = attrs.get('quantity')
+        if quantity is not None and quantity < 1:
+            raise serializers.ValidationError({"quantity": "Quantity must be at least 1."})
         if attrs.get('product_variant') and not attrs.get('product'):
             attrs['product'] = attrs['product_variant'].product
         if attrs.get('cart') and self.context.get('request'):
@@ -312,6 +320,7 @@ class OrderItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = ['id', 'order', 'product_variant', 'product', 'product_name', 'product_image', 'quantity', 'price']
+        read_only_fields = ['order']
 
     def get_product_name(self, obj):
         if obj.product_variant:
@@ -384,10 +393,11 @@ class OrderSerializer(serializers.ModelSerializer):
         if cart is not None:
             for cart_item in cart.items.all():
                 price = cart_item.product_variant.price if cart_item.product_variant else (cart_item.product.price if cart_item.product else 0)
+                product = cart_item.product_variant.product if cart_item.product_variant and not cart_item.product else cart_item.product
                 OrderItem.objects.create(
                     order=order,
                     product_variant=cart_item.product_variant,
-                    product=cart_item.product,
+                    product=product,
                     quantity=cart_item.quantity,
                     price=price,
                 )
@@ -410,9 +420,32 @@ class DealerSerializer(serializers.ModelSerializer):
 # ---------- Business Inquiry ----------
 
 class BusinessInquirySerializer(serializers.ModelSerializer):
+    company = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    phone = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    message = serializers.CharField(write_only=True, required=False, allow_blank=True)
+
     class Meta:
         model = BusinessInquiry
-        fields = '__all__'
+        fields = ['id', 'name', 'country', 'mobile', 'email', 'details', 'submitted_at', 'company', 'phone', 'message']
+        read_only_fields = ['id', 'submitted_at']
+        extra_kwargs = {
+            'country': {'required': False, 'allow_blank': True},
+            'mobile': {'required': False, 'allow_blank': True},
+            'details': {'required': False, 'allow_blank': True},
+        }
+
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        company = attrs.pop('company', '')
+        phone = attrs.pop('phone', '')
+        message = attrs.pop('message', '')
+        if company and not attrs.get('country'):
+            attrs['country'] = company
+        if phone and not attrs.get('mobile'):
+            attrs['mobile'] = phone
+        if message and not attrs.get('details'):
+            attrs['details'] = message
+        return attrs
 
 # ---------- FAQ ----------
 

@@ -348,6 +348,7 @@ class FitnessArticleSerializer(serializers.ModelSerializer):
 class WorkoutTipSerializer(serializers.ModelSerializer):
     id = serializers.CharField(source="code", read_only=True)
     thumbnail = serializers.SerializerMethodField()
+    image_url = serializers.SerializerMethodField()
     youtubeUrl = serializers.URLField(source="youtube_url", required=False, allow_blank=True)
     whyItMatters = serializers.JSONField(source="why_it_matters")
     stepByStepGuide = serializers.JSONField(source="step_by_step_guide")
@@ -360,7 +361,7 @@ class WorkoutTipSerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkoutTip
         fields = (
-            "id", "title", "slug", "thumbnail", "youtubeUrl", "category",
+            "id", "title", "slug", "thumbnail", "image_url", "featured_image_url", "youtubeUrl", "category",
             "overview", "whyItMatters", "stepByStepGuide", "commonMistakes",
             "coachTip", "keyTakeaways", "relatedArticles", "excerpt",
             "author", "published_at", "reading_time", "is_published",
@@ -374,6 +375,15 @@ class WorkoutTipSerializer(serializers.ModelSerializer):
         return obj.overview[:156] + "..." if len(obj.overview) > 156 else obj.overview
 
     def get_thumbnail(self, obj):
+        return self.get_image_url(obj)
+
+    def get_image_url(self, obj):
+        request = self.context.get("request", None)
+        if obj.featured_image and hasattr(obj.featured_image, "url"):
+            url = obj.featured_image.url
+            return request.build_absolute_uri(url) if request else url
+        if obj.featured_image_url:
+            return obj.featured_image_url
         current = obj.thumbnail or ""
         if current.startswith("http"):
             return current

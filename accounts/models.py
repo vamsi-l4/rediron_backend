@@ -156,6 +156,10 @@ class TrialSubscription(models.Model):
         ('upgraded', 'Upgraded to Premium'),
         ('cancelled', 'Cancelled'),
     ]
+    RENEWAL_PREFERENCE_CHOICES = [
+        ('auto', 'Auto-renew after trial'),
+        ('manual', 'Manual renewal only'),
+    ]
     
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -167,6 +171,13 @@ class TrialSubscription(models.Model):
         choices=TRIAL_STATUS_CHOICES,
         default='active'
     )
+    trial_used = models.BooleanField(default=True)
+    renewal_preference = models.CharField(
+        max_length=20,
+        choices=RENEWAL_PREFERENCE_CHOICES,
+        default='manual'
+    )
+    subscription_status = models.CharField(max_length=20, default='trial_active', db_index=True)
     start_date = models.DateTimeField(auto_now_add=True)
     end_date = models.DateTimeField()
     is_active = models.BooleanField(default=True)
@@ -201,7 +212,8 @@ class TrialSubscription(models.Model):
         if self.is_expired() and self.status == 'active':
             self.status = 'expired'
             self.is_active = False
-            self.save()
+            self.subscription_status = 'trial_expired'
+            self.save(update_fields=['status', 'is_active', 'subscription_status', 'updated_at'])
 
 
 class PaymentTransaction(models.Model):
@@ -297,6 +309,11 @@ class UserProfile(models.Model):
         blank=True,
         help_text="User profile picture"
     )
+    profile_image_data = models.TextField(
+        blank=True,
+        help_text="Permanent data URL copy of the current profile picture"
+    )
+    profile_image_mime = models.CharField(max_length=80, blank=True)
     is_complete = models.BooleanField(default=False, help_text="Profile completion status")
     
     # Fitness Information

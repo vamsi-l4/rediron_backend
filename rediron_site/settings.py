@@ -3,10 +3,10 @@ from pathlib import Path
 import dj_database_url
 import dotenv
 
-# Load environment variables
-dotenv.load_dotenv()
-
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from the backend .env file, regardless of the current working directory
+dotenv.load_dotenv(BASE_DIR / ".env", override=False)
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-fallback-secret-key')
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
@@ -153,23 +153,23 @@ CSRF_TRUSTED_ORIGINS.extend([
 ])
 
 # ============================================
-# EMAIL CONFIGURATION (COMMENTED OUT - Clerk handles email verification)
+# BREVO SMTP CONFIGURATION
 # ============================================
-# Old email configuration for OTP and verification emails
-# Now Clerk handles all email verification and notifications
-# Keep these commented for backward compatibility during migration
-
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
-    'django.core.mail.backends.smtp.EmailBackend' if os.environ.get('EMAIL_HOST') else 'django.core.mail.backends.console.EmailBackend'
+    'django.core.mail.backends.smtp.EmailBackend'
 )
-EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
-EMAIL_PORT = int(os.environ.get('EMAIL_PORT', 587))
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'orders@rediron.com')
-EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', 10))
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER or 'noreply@rediron.com')
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', os.environ.get('SITE_OWNER_EMAIL', 'support@rediron.com'))
+SUPPORT_EMAIL = os.environ.get('SUPPORT_EMAIL', ADMIN_EMAIL)
+SITE_OWNER_EMAIL = ADMIN_EMAIL
+SHOP_ADMIN_EMAIL = os.environ.get('SHOP_ADMIN_EMAIL', ADMIN_EMAIL)
+EMAIL_TIMEOUT = int(os.environ.get('EMAIL_TIMEOUT', '10'))
 
 # JWT
 JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY', SECRET_KEY)

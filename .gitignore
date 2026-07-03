@@ -1,7 +1,49 @@
+# Django / Python
+*.py[cod]
+__pycache__/
+*.so
+*.egg-info/
+*.egg
+
+# Virtualenvs
 .venv/
 venv/
-__pycache__/
-staticfiles/
+ENV/
+env/
+
+# Django local settings / environment files
+*.env
 .env
+.env.*
+!.env.example
+
+# Databases
 *.sqlite3
-.env.example
+*.db
+
+# Static/media
+staticfiles/
+media/
+
+# Logs
+*.log
+logs/
+
+# Coverage
+htmlcov/
+.coverage
+.coverage.*
+*.gcda
+*.gcno
+
+# Build artifacts
+dist/
+build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.pid
+*.lock
