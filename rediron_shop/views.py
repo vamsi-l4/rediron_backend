@@ -237,6 +237,10 @@ class CartViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
+            if self.action in ['retrieve', 'partial_update', 'update', 'destroy']:
+                return Cart.objects.filter(
+                    Q(user=self.request.user) | Q(user__isnull=True)
+                ).order_by('-created_at')
             return Cart.objects.filter(user=self.request.user).order_by('-created_at')
         return Cart.objects.filter(user__isnull=True).order_by('-created_at')
 
@@ -260,6 +264,19 @@ class CartItemViewSet(viewsets.ModelViewSet):
         product_id = request.data.get('product_id') or request.data.get('product')
         variant_id = request.data.get('product_variant_id') or request.data.get('product_variant')
         quantity = int(request.data.get('quantity') or 1)
+        cart_id = request.data.get('cart_id') or request.data.get('cart')
+
+        if request.user and request.user.is_authenticated:
+            cart, _ = Cart.objects.get_or_create(user=request.user)
+            if cart_id:
+                guest_cart = Cart.objects.filter(id=cart_id, user__isnull=True).first()
+                if guest_cart and guest_cart != cart:
+                    for item in guest_cart.items.all():
+                        item.cart = cart
+                        item.save(update_fields=['cart'])
+                    guest_cart.delete()
+        else:
+            cart = Cart.objects.filter(id=cart_id, user__isnull=True).first() if cart_id else None
 
         if quantity < 1:
             return Response({'error': 'Quantity must be at least 1.'}, status=status.HTTP_400_BAD_REQUEST)
