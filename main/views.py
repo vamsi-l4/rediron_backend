@@ -101,7 +101,7 @@ def send_email_async(subject, text_content, from_email, recipient_list, html_con
                 html_message=html_content,
                 fail_silently=fail_silently,
             )
-        except EmailServiceError:
+        except Exception:
             logger.exception("Async email sending failed for subject %s", subject)
     Thread(target=_send, daemon=True).start()
 
@@ -157,7 +157,7 @@ def contact_message_api(request):
                 <p>{msg.message.replace(chr(10), '<br>')}</p>
             </body></html>
             """
-            send_email_async(subject_admin, message_plain_admin, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [recipient for recipient in admin_to if recipient], html_content=admin_html_message, fail_silently=False)
+            send_email_async(subject_admin, message_plain_admin, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [recipient for recipient in admin_to if recipient], html_content=admin_html_message, fail_silently=True)
 
             subject_user = "✅ We received your message at RedIron Gym"
             auto_message_plain = (
@@ -172,7 +172,7 @@ def contact_message_api(request):
                 <p><strong>Regards,</strong><br>The RedIron Gym Team</p>
             </body></html>
             """
-            send_email_async(subject_user, auto_message_plain, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [msg.email], html_content=user_html_message, fail_silently=False)
+            send_email_async(subject_user, auto_message_plain, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [msg.email], html_content=user_html_message, fail_silently=True)
 
             return Response({"success": "Message received"}, status=status.HTTP_201_CREATED)
         except Exception as e:

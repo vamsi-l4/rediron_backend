@@ -45,9 +45,13 @@ def send_email_message(
         )
     except BadHeaderError:
         logger.exception("Email failed due to invalid header for subject '%s'", subject)
+        if fail_silently:
+            return False
         raise EmailServiceError("Invalid email header")
     except Exception:
         logger.exception("Email sending failed for subject '%s'", subject)
+        if fail_silently:
+            return False
         raise EmailServiceError("Email delivery failed")
 
     if delivered is not None and int(delivered) < 1:
@@ -69,11 +73,23 @@ def send_admin_notification(subject: str, message: str, *, html_message: Optiona
         return False
 
 
-def send_user_email(subject: str, recipient: str, message: str, *, html_message: Optional[str] = None) -> bool:
+def send_user_email(subject: str, recipient: str | object, message: str, *, html_message: Optional[str] = None) -> bool:
     if not recipient:
         logger.warning("User email skipped because recipient is empty")
         return False
+
+    recipient_email = None
+    if hasattr(recipient, 'email'):
+        recipient_email = getattr(recipient, 'email')
+    elif isinstance(recipient, str):
+        recipient_email = recipient
+
+    if not recipient_email:
+        logger.warning("User email skipped because recipient email is empty")
+        return False
+
     try:
-        return send_email_message(subject, message, [recipient], html_message=html_message)
+        return send_email_message(subject, message, [recipient_email], html_message=html_message)
     except EmailServiceError:
+        logger.exception("Failed to send user email to %s", recipient_email)
         return False

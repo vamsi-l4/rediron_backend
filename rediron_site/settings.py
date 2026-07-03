@@ -128,11 +128,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = False
-CORS_ALLOWED_ORIGINS = [
+_cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
+CORS_ALLOWED_ORIGINS = [u.strip() for u in _cors_origins.split(',') if u.strip()]
+CORS_ALLOWED_ORIGINS.extend([
     'https://roaring-scone-cfda07.netlify.app',
     'http://localhost:3000',
     'https://localhost:3000',
-]
+])
+CORS_ALLOWED_ORIGINS = list(dict.fromkeys(CORS_ALLOWED_ORIGINS))
 CORS_ALLOW_CREDENTIALS = True
 
 from corsheaders.defaults import default_headers
@@ -151,6 +154,7 @@ CSRF_TRUSTED_ORIGINS.extend([
     'http://localhost:3000',
     'https://localhost:3000',
 ])
+CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(CSRF_TRUSTED_ORIGINS))
 
 # ============================================
 # BREVO SMTP CONFIGURATION

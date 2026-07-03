@@ -41,7 +41,7 @@ def _shop_admin_email():
 
 def _send_shop_mail(subject, message, recipients):
     try:
-        return send_email_message(subject, message, recipients)
+        return send_email_message(subject, message, recipients, fail_silently=True)
     except EmailServiceError:
         return False
 
