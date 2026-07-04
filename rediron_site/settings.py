@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'main',
     'accounts',
     'rediron_shop',
+    'coach',
 ]
 
 MIDDLEWARE = [
@@ -229,9 +230,13 @@ RAZORPAY_KEY_ID = os.environ.get('RAZORPAY_KEY_ID', '')
 RAZORPAY_KEY_SECRET = os.environ.get('RAZORPAY_KEY_SECRET', '')
 
 # ============================================
-# OPENAI CONFIGURATION (Performance Lab)
+# REDIRON COACH AI CONFIGURATION
 # ============================================
+COACH_AI_PROVIDER = os.environ.get('COACH_AI_PROVIDER', 'gemini')
+GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+GEMINI_MODEL = os.environ.get('GEMINI_MODEL', 'gemini-1.5-flash')
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY', '')
+OPENAI_MODEL = os.environ.get('OPENAI_MODEL', 'gpt-4o-mini')
 
 # Security (production)
 if not DEBUG:

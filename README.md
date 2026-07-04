@@ -13,7 +13,8 @@ Django REST Framework backend for RedIron Fitness. It powers gym content, exerci
 ## Project Structure
 
 - `accounts/` - Custom user model, Clerk-backed profile setup, profile image upload, activity data
-- `main/` - Equipment, exercises, nutrition articles, workout tips, fitness articles, performance lab models
+- `main/` - Equipment, exercises, nutrition articles, workout tips, and fitness articles
+- `coach/` - RedIron Coach AI plans, conversations, progress, reports, notifications, and provider adapters
 - `rediron_shop/` - Categories, products, variants, cart, wishlist, checkout orders, order cancellation
 - `rediron_site/` - Settings, URL routing, ASGI/WSGI configuration
 - `media/` - Uploaded and imported media files
@@ -47,6 +48,8 @@ EMAIL_HOST_USER=your-brevo-smtp-login
 EMAIL_HOST_PASSWORD=your-brevo-smtp-password
 RAZORPAY_KEY_ID=
 RAZORPAY_KEY_SECRET=
+COACH_AI_PROVIDER=gemini
+GEMINI_API_KEY=
 ```
 
 ## Local Development

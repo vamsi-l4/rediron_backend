@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/admin/', lambda request: redirect('/admin/', permanent=False)),
     path('', lambda request: redirect('api-root', permanent=False)),
     path('api/accounts/', include('accounts.urls')),
+    path('api/coach/', include('coach.urls')),
     path('api/', include('main.urls')),
     path('api/', include('rediron_shop.urls')),
 ]

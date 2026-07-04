@@ -125,7 +125,7 @@ def start_trial(request):
             'workouts',
             'exercises',
             'basic_nutrition',
-            'performance_lab'
+            'coach_ai'
         ])
         
         start_date = timezone.now()

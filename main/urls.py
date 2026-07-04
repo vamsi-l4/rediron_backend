@@ -13,14 +13,6 @@ from .views import (
     workout_tips_list_api, workout_tip_detail_api,
     workout_tips_categories_api, workout_tips_related_api,
 )
-from .performance_views import (
-    log_workout,
-    log_nutrition,
-    get_dashboard,
-    get_recommendations,
-    optimize_workout,
-    user_goal,
-)
 
 router = DefaultRouter()
 router.register(r"equipment", EquipmentViewSet, basename="equipment")
@@ -47,15 +39,6 @@ urlpatterns = [
     path("workout-tips/related/<str:tip_id>/", workout_tips_related_api, name="workout-tips-related"),
     path("workout-tips/<slug:slug>/", workout_tip_detail_api, name="workout-tip-detail"),
 
-    # ============================================
-    # REDIRON PERFORMANCE LAB - API ENDPOINTS
-    # ============================================
-    path("performance/log-workout/", log_workout, name="log-workout"),
-    path("performance/log-nutrition/", log_nutrition, name="log-nutrition"),
-    path("performance/dashboard/", get_dashboard, name="dashboard"),
-    path("performance/recommendations/", get_recommendations, name="recommendations"),
-    path("performance/optimize-workout/", optimize_workout, name="optimize-workout"),
-    path("performance/user-goal/", user_goal, name="user-goal"),
 ]
 
 urlpatterns += router.urls
