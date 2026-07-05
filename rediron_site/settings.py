@@ -144,6 +144,8 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'Authorization',
     'authorization',
     'content-type',
+    'x-clerk-email',
+    'x-clerk-name',
 ]
 
 _csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')

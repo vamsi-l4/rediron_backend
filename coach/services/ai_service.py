@@ -1,6 +1,8 @@
 import hashlib
 import json
 import logging
+from datetime import date, datetime
+from decimal import Decimal
 from datetime import timedelta
 
 from django.db import transaction
@@ -18,6 +20,18 @@ from .providers.openai_provider import OpenAIProvider
 logger = logging.getLogger(__name__)
 
 
+def make_json_safe(value):
+    if isinstance(value, (datetime, date)):
+        return value.isoformat()
+    if isinstance(value, Decimal):
+        return float(value)
+    if isinstance(value, dict):
+        return {str(key): make_json_safe(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple, set)):
+        return [make_json_safe(item) for item in value]
+    return value
+
+
 def get_provider():
     import os
 
@@ -30,6 +44,13 @@ def get_provider():
 def _hash_payload(intent, payload, context):
     source = json.dumps({"intent": intent, "payload": payload, "profile": context.get("profile")}, sort_keys=True, default=str)
     return hashlib.sha256(source.encode("utf-8")).hexdigest()
+
+
+def build_conversation_title(message):
+    words = [word.strip(".,!?;:()[]{}").title() for word in message.split() if len(word.strip(".,!?;:()[]{}")) > 2]
+    stop = {"The", "And", "For", "With", "Can", "You", "This", "That", "Into", "From", "Please"}
+    useful = [word for word in words if word not in stop][:6]
+    return " ".join(useful) or "Coach AI Chat"
 
 
 def _local_response(intent, payload, context):
@@ -104,11 +125,45 @@ def _local_response(intent, payload, context):
             "warnings": ["Avoid aggressive calorie cuts", "Deload if recovery drops"],
             "recommendations": ["Use saved RedIron exercises", "Review weekly reports", "Adjust plan from progress data"],
         }
-    return {"answer": "I have your RedIron profile and can help with workouts, nutrition, progress, supplements, and equipment.", "cards": [], "recommendations": articles[:4]}
+    message = str(payload.get("message") or "").lower()
+    if "nutrition" in message or "meal" in message or "protein" in message or "diet" in message:
+        answer = (
+            "Based on your RedIron profile, start by making protein consistent, then adjust calories from weekly progress. "
+            "Use 3-4 meals, place carbs around training, and keep hydration steady. "
+            f"Useful RedIron reads: {', '.join(item['title'] for item in articles[:3])}."
+        )
+        cards = [{"title": product["name"], "url": product["url"]} for product in products[:3]]
+    elif "equipment" in message or "home gym" in message:
+        answer = (
+            "For equipment, choose by your training style first: adjustable dumbbells and a bench for strength basics, "
+            "cables or bands for joint-friendly volume, and cardio equipment only if conditioning is a priority."
+        )
+        cards = equipment[:4]
+    elif "supplement" in message or "whey" in message or "creatine" in message:
+        answer = (
+            "Use supplements only to fill gaps: whey for protein convenience, creatine for strength output, and electrolytes if you sweat heavily. "
+            "I matched recommendations to RedIron catalog products where available."
+        )
+        cards = [{"title": product["name"], "url": product["url"]} for product in products[:4]]
+    elif "progress" in message or "streak" in message or "missed" in message:
+        answer = (
+            "Treat missed workouts as scheduling data, not failure. Move the highest-priority session forward, keep the next workout shorter, "
+            "and log one simple metric today so your trend stays alive."
+        )
+        cards = articles[:3]
+    else:
+        workout_names = ", ".join(ex["name"] for ex in exercises[:5]) or "compound lifts from the RedIron exercise library"
+        answer = (
+            f"Here is a practical Coach AI direction: use {workout_names}. "
+            "Keep the session focused, progress one variable at a time, and save the plan so I can remember it for your next recommendation."
+        )
+        cards = exercises[:5]
+    return {"answer": answer, "cards": cards, "recommendations": articles[:4]}
 
 
 def generate_plan(user, intent, payload):
-    context = load_user_context(user, intent=intent, payload=payload)
+    payload = make_json_safe(dict(payload or {}))
+    context = make_json_safe(load_user_context(user, intent=intent, payload=payload))
     prompt_hash = _hash_payload(intent, payload, context)
     cached = CoachPlan.objects.filter(
         user=user,
@@ -131,8 +186,8 @@ def generate_plan(user, intent, payload):
             raw = provider.generate_json(prompt + "\nRepair: return strictly valid JSON matching the schema.", schema_name)
             parsed = parse_ai_json(raw, schema_name)
         except Exception as second_error:
-            logger.exception("Coach AI provider failed twice; using deterministic RedIron response: %s", second_error)
-            parsed = _local_response(schema_name, payload, context)
+            logger.warning("Coach AI provider failed twice; using deterministic RedIron response: %s", second_error)
+            parsed = make_json_safe(_local_response(schema_name, payload, context))
 
     title = payload.get("title") or f"{schema_name.replace('_', ' ').title()} Plan"
     plan_type = schema_name if schema_name in dict(CoachPlan.PLAN_TYPES) else "workout"
@@ -141,10 +196,11 @@ def generate_plan(user, intent, payload):
         title=title,
         plan_type=plan_type,
         input_payload=payload,
-        response_json=parsed,
+        response_json=make_json_safe(parsed),
         source_context=context,
         prompt_hash=prompt_hash,
         provider=getattr(provider, "name", ""),
+        is_saved=plan_type != "chat",
     )
     return plan, False
 
@@ -154,9 +210,18 @@ def send_chat_message(user, message, conversation_id=None):
     if conversation_id:
         conversation = AIConversation.objects.get(id=conversation_id, user=user)
     else:
-        conversation = AIConversation.objects.create(user=user, title=message[:60] or "Coach Chat")
+        conversation = AIConversation.objects.create(user=user, title=build_conversation_title(message)[:80])
     ConversationMessage.objects.create(user=user, conversation=conversation, role="user", content=message)
-    plan, _ = generate_plan(user, "chat", {"message": message, "conversation_id": conversation.id})
+    recent_messages = list(
+        conversation.messages.order_by("-created_at")
+        .values("role", "content", "structured_content", "created_at")[:10]
+    )
+    recent_messages.reverse()
+    plan, _ = generate_plan(user, "chat", {
+        "message": message,
+        "conversation_id": conversation.id,
+        "recent_messages": make_json_safe(recent_messages),
+    })
     answer = plan.response_json
     ConversationMessage.objects.create(
         user=user,
@@ -168,4 +233,3 @@ def send_chat_message(user, message, conversation_id=None):
     conversation.last_message_at = timezone.now()
     conversation.save(update_fields=["last_message_at", "updated_at"])
     return conversation
-

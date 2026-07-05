@@ -1,4 +1,5 @@
 from datetime import timedelta
+import logging
 
 from django.db.models import Count
 from django.utils import timezone
@@ -6,6 +7,7 @@ from rest_framework import status, viewsets
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from accounts.models import UserProfile
 
 from .models import (
     AIConversation,
@@ -30,6 +32,8 @@ from .services.ai_service import generate_plan, send_chat_message
 from .services.context_loader import load_user_context
 from .utils import generate_weekly_report
 
+logger = logging.getLogger(__name__)
+
 
 class UserScopedViewSet(viewsets.ModelViewSet):
     permission_classes = [IsCoachOwner]
@@ -46,6 +50,12 @@ class CoachPlanViewSet(UserScopedViewSet):
     serializer_class = CoachPlanSerializer
     search_fields = ["title", "plan_type"]
     ordering_fields = ["created_at", "updated_at", "title"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if self.action == "list":
+            queryset = queryset.filter(is_saved=True).exclude(plan_type__in=["chat", "body_explorer"])
+        return queryset
 
     @action(detail=True, methods=["post"])
     def duplicate(self, request, pk=None):
@@ -117,8 +127,12 @@ class AIConversationViewSet(UserScopedViewSet):
         message = request.data.get("message", "").strip()
         if not message:
             return Response({"detail": "Message is required."}, status=status.HTTP_400_BAD_REQUEST)
-        conversation = send_chat_message(request.user, message, conversation_id=pk)
-        return Response(self.get_serializer(conversation).data)
+        try:
+            conversation = send_chat_message(request.user, message, conversation_id=pk)
+            return Response(self.get_serializer(conversation).data)
+        except Exception:
+            logger.exception("Coach chat message failed")
+            return Response({"detail": "Coach AI could not process this message. Please retry."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
     @action(detail=True, methods=["post"])
     def pin(self, request, pk=None):
@@ -134,20 +148,43 @@ def dashboard(request):
     user = request.user
     today = timezone.localdate()
     context = load_user_context(user, intent="dashboard")
+    profile_obj, _ = UserProfile.objects.get_or_create(user=user)
+    missing_fields = [
+        field for field, value in {
+            "height": profile_obj.height,
+            "weight": profile_obj.weight,
+            "fitness_goal": profile_obj.fitness_goal,
+            "experience_level": profile_obj.experience_level,
+            "gender": profile_obj.gender,
+        }.items() if not value
+    ]
+    needs_setup = bool(missing_fields)
+    estimated_calories = None
+    estimated_protein = None
+    estimated_water = None
+    if profile_obj.weight and profile_obj.height and profile_obj.fitness_goal:
+        base = 24 * profile_obj.weight
+        multiplier = {"weight_loss": 1.15, "muscle_gain": 1.35, "maintenance": 1.25, "endurance": 1.4, "flexibility": 1.2}.get(profile_obj.fitness_goal, 1.25)
+        estimated_calories = round(base * multiplier)
+        estimated_protein = round(profile_obj.weight * 1.8)
+        estimated_water = f"{max(2.2, round(profile_obj.weight * 0.04, 1))}L"
     latest_progress = ProgressHistory.objects.filter(user=user).order_by("-recorded_on").first()
     today_event = CalendarEvent.objects.filter(user=user, event_date=today).order_by("created_at").first()
-    counts = CoachPlan.objects.filter(user=user).values("plan_type").annotate(total=Count("id"))
+    saved_plan_queryset = CoachPlan.objects.filter(user=user, is_saved=True).exclude(plan_type__in=["chat", "body_explorer"])
+    counts = saved_plan_queryset.values("plan_type").annotate(total=Count("id"))
     notifications = CoachNotification.objects.filter(user=user, read_at__isnull=True)[:6]
     reports = WeeklyReport.objects.filter(user=user)[:4]
-    saved_plans = CoachPlan.objects.filter(user=user, is_saved=True)[:6]
+    saved_plans = saved_plan_queryset[:6]
     challenge = ChallengeProgress.objects.filter(user=user, is_completed=False).first()
     payload = {
         "profile": context["profile"],
+        "needs_setup": needs_setup,
+        "missing_fields": missing_fields,
         "today": {
-            "workout": today_event.title if today_event else "Generate today's workout",
-            "calories": 2200,
-            "protein": 140,
-            "water": "3.0 L",
+            "workout": today_event.title if today_event else "No workout scheduled yet",
+            "calories": estimated_calories,
+            "protein": estimated_protein,
+            "water": estimated_water,
         },
         "current_challenge": ChallengeProgressSerializer(challenge).data if challenge else None,
         "progress_summary": {
@@ -167,14 +204,41 @@ def dashboard(request):
     return Response(payload)
 
 
+@api_view(["PATCH"])
+@permission_classes([IsAuthenticated])
+def profile_setup(request):
+    profile, _ = UserProfile.objects.get_or_create(user=request.user)
+    allowed = {"height", "weight", "fitness_goal", "experience_level", "gender", "date_of_birth"}
+    for field in allowed:
+        if field in request.data:
+            setattr(profile, field, request.data.get(field) or None)
+    profile.is_complete = all([profile.height, profile.weight, profile.fitness_goal, profile.experience_level, profile.gender])
+    profile.save()
+    return Response({
+        "success": True,
+        "profile": {
+            "height": profile.height,
+            "weight": profile.weight,
+            "fitness_goal": profile.fitness_goal,
+            "experience_level": profile.experience_level,
+            "gender": profile.gender,
+            "is_complete": profile.is_complete,
+        },
+    })
+
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def generate_ai_plan(request, intent):
     allowed = {"workout", "nutrition", "transformation", "supplement", "equipment", "body_explorer"}
     if intent not in allowed:
         return Response({"detail": "Unsupported Coach AI intent."}, status=status.HTTP_400_BAD_REQUEST)
-    plan, cached = generate_plan(request.user, intent, request.data or {})
-    return Response({"cached": cached, "plan": CoachPlanSerializer(plan).data}, status=status.HTTP_201_CREATED if not cached else status.HTTP_200_OK)
+    try:
+        plan, cached = generate_plan(request.user, intent, request.data or {})
+        return Response({"cached": cached, "plan": CoachPlanSerializer(plan).data}, status=status.HTTP_201_CREATED if not cached else status.HTTP_200_OK)
+    except Exception:
+        logger.exception("Coach AI generation failed")
+        return Response({"detail": "Coach AI could not generate this response. Please retry."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
 
 @api_view(["POST"])
@@ -183,6 +247,9 @@ def start_chat(request):
     message = request.data.get("message", "").strip()
     if not message:
         return Response({"detail": "Message is required."}, status=status.HTTP_400_BAD_REQUEST)
-    conversation = send_chat_message(request.user, message)
-    return Response(AIConversationSerializer(conversation).data, status=status.HTTP_201_CREATED)
-
+    try:
+        conversation = send_chat_message(request.user, message)
+        return Response(AIConversationSerializer(conversation).data, status=status.HTTP_201_CREATED)
+    except Exception:
+        logger.exception("Coach chat start failed")
+        return Response({"detail": "Coach AI could not start this chat. Please retry."}, status=status.HTTP_503_SERVICE_UNAVAILABLE)

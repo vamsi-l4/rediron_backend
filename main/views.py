@@ -24,6 +24,11 @@ from threading import Thread
 
 logger = logging.getLogger(__name__)
 
+
+def _is_real_email(value):
+    email = str(value or "").strip()
+    return bool(email and "@" in email and not email.endswith("@clerk.invalid"))
+
 # ---------------- PAGINATION ----------------
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 10
@@ -130,8 +135,10 @@ def contact_message_api(request):
     """
     data = request.data.copy()
     if getattr(request.user, "is_authenticated", False):
-        data["name"] = getattr(request.user, "name", "") or getattr(request.user, "email", "") or data.get("name", "")
-        data["email"] = getattr(request.user, "email", "") or data.get("email", "")
+        user_email = getattr(request.user, "email", "")
+        typed_email = data.get("email", "")
+        data["name"] = data.get("name", "") or getattr(request.user, "name", "") or user_email
+        data["email"] = typed_email if _is_real_email(typed_email) else (user_email if _is_real_email(user_email) else typed_email)
 
     serializer = ContactMessageSerializer(data=data, context={"request": request})
     if serializer.is_valid():

@@ -11,6 +11,7 @@ from .views import (
     WeeklyReportViewSet,
     dashboard,
     generate_ai_plan,
+    profile_setup,
     start_chat,
 )
 
@@ -25,9 +26,9 @@ router.register("conversations", AIConversationViewSet, basename="coach-conversa
 
 urlpatterns = [
     path("dashboard/", dashboard, name="coach-dashboard"),
+    path("profile-setup/", profile_setup, name="coach-profile-setup"),
     path("generate/<str:intent>/", generate_ai_plan, name="coach-generate"),
     path("chat/", start_chat, name="coach-chat"),
 ]
 
 urlpatterns += router.urls
-

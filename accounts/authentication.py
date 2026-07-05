@@ -21,6 +21,21 @@ import base64
 
 User = get_user_model()
 
+
+def _clean_real_email(value):
+    email = (value or "").strip()
+    if not email or email.endswith("@clerk.invalid") or "@" not in email:
+        return ""
+    return email
+
+
+def _clean_name(value):
+    return " ".join(str(value or "").split())[:150]
+
+
+def _email_available_for_user(email, user):
+    return bool(email) and not User.objects.filter(email__iexact=email).exclude(pk=user.pk).exists()
+
 # ============================================
 # CLERK TOKEN VERIFICATION
 # ============================================
@@ -156,29 +171,53 @@ class ClerkAuthentication(BaseAuthentication):
                 user = User.objects.get(clerk_user_id=clerk_user_id)
                 logger.info(f'✅ Found existing user for Clerk ID: {clerk_user_id}')
 
-                token_email = payload.get('email') or payload.get('primary_email_address')
-                if token_email and user.email.endswith('@clerk.invalid'):
-                    user.email = token_email
-                    user.save(update_fields=['email'])
-                    logger.info(f'✅ Repaired placeholder Clerk email for: {clerk_user_id}')
+                token_email = _clean_real_email(payload.get('email') or payload.get('primary_email_address'))
+                header_email = _clean_real_email(request.headers.get('X-Clerk-Email'))
+                header_name = _clean_name(request.headers.get('X-Clerk-Name'))
+                update_fields = []
+                real_email = token_email or header_email
+                if real_email and user.email.endswith('@clerk.invalid') and _email_available_for_user(real_email, user):
+                    user.email = real_email
+                    update_fields.append('email')
+                if header_name and (not user.name or user.name == 'Clerk User'):
+                    user.name = header_name
+                    update_fields.append('name')
+                if update_fields:
+                    user.save(update_fields=update_fields)
+                    logger.info(f'✅ Repaired Clerk profile data for: {clerk_user_id}')
             except User.DoesNotExist:
                 # ============================================
                 # STEP 4A: CREATE NEW USER FROM CLERK TOKEN
                 # ============================================
                 try:
-                    email = payload.get('email', f'{clerk_user_id}@clerk.invalid')
-                    name = payload.get('name', 'Clerk User')
+                    real_email = _clean_real_email(
+                        payload.get('email') or payload.get('primary_email_address') or request.headers.get('X-Clerk-Email')
+                    )
+                    name = _clean_name(request.headers.get('X-Clerk-Name')) or payload.get('name', 'Clerk User')
                     first_name = payload.get('given_name', '')
                     last_name = payload.get('family_name', '')
 
-                    user = User.objects.create(
-                        email=email,
-                        name=f"{first_name} {last_name}".strip() or name,
-                        clerk_user_id=clerk_user_id,
-                        is_active=True,
-                        is_verified=True,
-                    )
-                    logger.info(f'✅ Created new user from Clerk token: {clerk_user_id}')
+                    existing_user = User.objects.filter(email__iexact=real_email).first() if real_email else None
+                    if existing_user and not existing_user.clerk_user_id:
+                        existing_user.clerk_user_id = clerk_user_id
+                        fields = ['clerk_user_id']
+                        resolved_name = f"{first_name} {last_name}".strip() or name
+                        if resolved_name and (not existing_user.name or existing_user.name == 'Clerk User'):
+                            existing_user.name = resolved_name
+                            fields.append('name')
+                        existing_user.save(update_fields=fields)
+                        user = existing_user
+                        logger.info(f'✅ Linked existing user to Clerk ID: {clerk_user_id}')
+                    else:
+                        email = real_email or f'{clerk_user_id}@clerk.invalid'
+                        user = User.objects.create(
+                            email=email,
+                            name=f"{first_name} {last_name}".strip() or name,
+                            clerk_user_id=clerk_user_id,
+                            is_active=True,
+                            is_verified=True,
+                        )
+                        logger.info(f'✅ Created new user from Clerk token: {clerk_user_id}')
                 except Exception as create_error:
                     # If user creation fails, log but still allow authentication
                     # The user object from Clerk is valid even if DB creation fails
