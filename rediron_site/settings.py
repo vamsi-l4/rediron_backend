@@ -1,4 +1,5 @@
 import os
+import base64
 from pathlib import Path
 from urllib.parse import urlsplit
 import dj_database_url
@@ -224,8 +225,24 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # ============================================
 CLERK_SECRET_KEY = os.environ.get('CLERK_SECRET_KEY', '')
 CLERK_PUBLISH_KEY = os.environ.get('CLERK_PUBLISH_KEY') or os.environ.get('CLERK_PUBLISHABLE_KEY', '')
-CLERK_ISSUER = os.environ.get('CLERK_ISSUER', '')
-CLERK_JWKS_URL = os.environ.get('CLERK_JWKS_URL', '')
+
+def _clerk_frontend_api_from_publishable_key(publishable_key):
+    """Clerk publishable keys encode the frontend API domain after the prefix."""
+    try:
+        encoded = (publishable_key or '').split('_', 2)[-1]
+        padded = encoded + '=' * (-len(encoded) % 4)
+        decoded = base64.urlsafe_b64decode(padded).decode('utf-8').strip()
+        return decoded.rstrip('$').strip()
+    except Exception:
+        return ''
+
+_clerk_frontend_api = _clerk_frontend_api_from_publishable_key(CLERK_PUBLISH_KEY)
+_clerk_issuer = f'https://{_clerk_frontend_api}' if _clerk_frontend_api else ''
+CLERK_ISSUER = (os.environ.get('CLERK_ISSUER') or _clerk_issuer).rstrip('/')
+CLERK_JWKS_URL = (
+    os.environ.get('CLERK_JWKS_URL')
+    or (f'{CLERK_ISSUER}/.well-known/jwks.json' if CLERK_ISSUER else 'https://api.clerk.dev/v1/jwks')
+)
 
 # In production, both keys are required
 if not DEBUG:
