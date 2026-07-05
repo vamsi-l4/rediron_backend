@@ -7,6 +7,7 @@ from .views import (
     NutritionArticleViewSet, WorkoutArticleViewSet, FitnessArticleViewSet,
     ExerciseViewSet, MuscleGroupViewSet,
     contact_message_api,
+    email_health_api,
     nutrition_articles_list_api, nutrition_article_detail_api,
     workout_articles_list_api, workout_article_detail_api,
     fitness_articles_list_api, fitness_article_detail_api, fitness_articles_related_api,
@@ -25,6 +26,7 @@ router.register(r"muscle-groups", MuscleGroupViewSet, basename="muscle-groups")
 urlpatterns = [
     # Contact form endpoint
     path("contact/", contact_message_api, name="contact"),
+    path("email-health/", email_health_api, name="email-health"),
 
     # Non-paginated convenience endpoints
     path("nutrition-list/", nutrition_articles_list_api, name="nutrition-list"),

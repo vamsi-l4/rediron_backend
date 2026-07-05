@@ -164,7 +164,14 @@ def contact_message_api(request):
                 <p>{msg.message.replace(chr(10), '<br>')}</p>
             </body></html>
             """
-            send_email_async(subject_admin, message_plain_admin, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [recipient for recipient in admin_to if recipient], html_content=admin_html_message, fail_silently=True)
+            admin_email_sent = send_email_message(
+                subject=subject_admin,
+                message=message_plain_admin,
+                recipient_list=[recipient for recipient in admin_to if recipient],
+                from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
+                html_message=admin_html_message,
+                fail_silently=False,
+            )
 
             subject_user = "✅ We received your message at RedIron Gym"
             auto_message_plain = (
@@ -179,14 +186,46 @@ def contact_message_api(request):
                 <p><strong>Regards,</strong><br>The RedIron Gym Team</p>
             </body></html>
             """
-            send_email_async(subject_user, auto_message_plain, settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER, [msg.email], html_content=user_html_message, fail_silently=True)
+            user_email_sent = send_email_message(
+                subject=subject_user,
+                message=auto_message_plain,
+                recipient_list=[msg.email],
+                from_email=settings.DEFAULT_FROM_EMAIL or settings.EMAIL_HOST_USER,
+                html_message=user_html_message,
+                fail_silently=False,
+            )
 
-            return Response({"success": "Message received"}, status=status.HTTP_201_CREATED)
+            warning = "" if admin_email_sent and user_email_sent else "Message saved, but one or more emails were not delivered."
+            return Response({"success": "Message received", "email_sent": admin_email_sent and user_email_sent, "warning": warning}, status=status.HTTP_201_CREATED)
         except Exception as e:
             logger.exception("Error while handling contact message")
-            return Response({"success": "Message received", "warning": f"Email notification failed: {e}"}, status=status.HTTP_201_CREATED)
+            return Response({"success": "Message received", "email_sent": False, "warning": f"Email notification failed: {e}"}, status=status.HTTP_201_CREATED)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(["POST"])
+@permission_classes([permissions.IsAuthenticated])
+def email_health_api(request):
+    recipient = request.data.get("email") if getattr(request.user, "is_staff", False) else request.user.email
+    if not _is_real_email(recipient):
+        return Response({"detail": "No valid recipient email available for this account."}, status=status.HTTP_400_BAD_REQUEST)
+
+    sent = send_user_email(
+        "RedIron email test",
+        recipient,
+        "This is a RedIron SMTP test email. If you received this, deployed email delivery is working.",
+        html_message="<p>This is a RedIron SMTP test email. If you received this, deployed email delivery is working.</p>",
+    )
+    if not sent:
+        return Response({
+            "ok": False,
+            "detail": "SMTP backend did not confirm delivery. Check Render logs for the Brevo error.",
+            "from_email": settings.DEFAULT_FROM_EMAIL,
+            "host": settings.EMAIL_HOST,
+            "port": settings.EMAIL_PORT,
+        }, status=status.HTTP_502_BAD_GATEWAY)
+    return Response({"ok": True, "recipient": recipient, "from_email": settings.DEFAULT_FROM_EMAIL})
 
 
 # ---------------- NUTRITION ARTICLES ----------------

@@ -1,6 +1,7 @@
 from datetime import timedelta
 import logging
 
+from django.db import IntegrityError
 from django.db.models import Count
 from django.utils import timezone
 from rest_framework import status, viewsets
@@ -78,6 +79,24 @@ class ProgressHistoryViewSet(UserScopedViewSet):
     queryset = ProgressHistory.objects.all()
     serializer_class = ProgressHistorySerializer
     ordering_fields = ["recorded_on", "created_at"]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = serializer.validated_data
+        recorded_on = data.get("recorded_on") or timezone.localdate()
+        defaults = {key: value for key, value in data.items() if key != "recorded_on"}
+        try:
+            progress, created = ProgressHistory.objects.update_or_create(
+                user=request.user,
+                recorded_on=recorded_on,
+                defaults=defaults,
+            )
+        except IntegrityError:
+            logger.exception("Progress upsert failed for user=%s date=%s", request.user.pk, recorded_on)
+            return Response({"detail": "Could not save progress for this date."}, status=status.HTTP_409_CONFLICT)
+        output = self.get_serializer(progress)
+        return Response(output.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
 
 
 class ChallengeProgressViewSet(UserScopedViewSet):

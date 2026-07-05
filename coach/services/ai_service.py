@@ -6,9 +6,11 @@ from decimal import Decimal
 from datetime import timedelta
 
 from django.db import transaction
+from django.utils.text import slugify
 from django.utils import timezone
 
 from coach.models import AIConversation, CoachPlan, ConversationMessage
+from main.models import Exercise
 from .context_loader import load_user_context
 from .json_validator import ResponseValidationError
 from .prompt_builder import build_prompt
@@ -42,7 +44,13 @@ def get_provider():
 
 
 def _hash_payload(intent, payload, context):
-    source = json.dumps({"intent": intent, "payload": payload, "profile": context.get("profile")}, sort_keys=True, default=str)
+    source = json.dumps({
+        "intent": intent,
+        "payload": payload,
+        "profile": context.get("profile"),
+        "previous_plans": context.get("previous_plans", [])[:6],
+        "saved_items": context.get("saved_items", [])[:10],
+    }, sort_keys=True, default=str)
     return hashlib.sha256(source.encode("utf-8")).hexdigest()
 
 
@@ -161,6 +169,76 @@ def _local_response(intent, payload, context):
     return {"answer": answer, "cards": cards, "recommendations": articles[:4]}
 
 
+def _normalize_text(value):
+    return " ".join(str(value or "").lower().replace("&", "and").split())
+
+
+def _exercise_url_for_name(name, exercise_lookup):
+    normalized = _normalize_text(name)
+    if normalized in exercise_lookup:
+        return exercise_lookup[normalized]
+
+    slug = slugify(name or "")
+    if slug in exercise_lookup:
+        return exercise_lookup[slug]
+
+    stripped = normalized
+    for token in (" modified", " controlled", " single arm", " mid position"):
+        stripped = stripped.replace(token, "")
+    return exercise_lookup.get(stripped) or exercise_lookup.get(slugify(stripped))
+
+
+def _post_process_plan(intent, payload, parsed):
+    if not isinstance(parsed, dict):
+        return parsed
+
+    if intent == "workout":
+        exercises = Exercise.objects.only("name", "slug")
+        exercise_lookup = {}
+        for item in exercises:
+            url = f"/exercises/{item.slug}"
+            exercise_lookup[_normalize_text(item.name)] = url
+            exercise_lookup[item.slug] = url
+
+        for day in parsed.get("daily_workouts") or []:
+            for exercise in day.get("exercises") or []:
+                if not isinstance(exercise, dict):
+                    continue
+                url = _exercise_url_for_name(exercise.get("name"), exercise_lookup)
+                exercise["exercise_url"] = url or ""
+
+    if intent == "nutrition":
+        diet_type = _normalize_text(payload.get("diet_type"))
+        if diet_type in {"veg", "vegetarian"}:
+            blocked = ("chicken", "fish", "egg", "eggs", "mutton", "beef", "pork", "turkey", "shrimp", "prawn")
+            replacements = {
+                "chicken": "paneer or tofu",
+                "fish": "tofu or dal",
+                "egg": "paneer or sprouted moong",
+                "eggs": "paneer or sprouted moong",
+                "mutton": "rajma or chana",
+                "beef": "rajma or chana",
+                "pork": "rajma or chana",
+                "turkey": "tofu or paneer",
+                "shrimp": "chana or tofu",
+                "prawn": "chana or tofu",
+            }
+            for meal in parsed.get("meals") or []:
+                items = []
+                for item in meal.get("items") or []:
+                    text = str(item)
+                    lowered = text.lower()
+                    for blocked_food in blocked:
+                        if blocked_food in lowered:
+                            text = replacements[blocked_food]
+                            break
+                    items.append(text)
+                meal["items"] = items
+            parsed["diet_type"] = "vegetarian"
+
+    return parsed
+
+
 def generate_plan(user, intent, payload):
     payload = make_json_safe(dict(payload or {}))
     context = make_json_safe(load_user_context(user, intent=intent, payload=payload))
@@ -188,6 +266,7 @@ def generate_plan(user, intent, payload):
         except Exception as second_error:
             logger.warning("Coach AI provider failed twice; using deterministic RedIron response: %s", second_error)
             parsed = make_json_safe(_local_response(schema_name, payload, context))
+    parsed = make_json_safe(_post_process_plan(schema_name, payload, parsed))
 
     title = payload.get("title") or f"{schema_name.replace('_', ' ').title()} Plan"
     plan_type = schema_name if schema_name in dict(CoachPlan.PLAN_TYPES) else "workout"
