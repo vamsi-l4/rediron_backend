@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from urllib.parse import urlsplit
 import dj_database_url
 import dotenv
 
@@ -129,8 +130,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # CORS
 CORS_ALLOW_ALL_ORIGINS = False
+
+def _clean_origin(origin):
+    value = (origin or '').strip().rstrip('/')
+    while value.startswith('https://https://'):
+        value = 'https://' + value[len('https://https://'):]
+    while value.startswith('http://http://'):
+        value = 'http://' + value[len('http://http://'):]
+    parsed = urlsplit(value)
+    if parsed.scheme not in {'http', 'https'} or not parsed.netloc:
+        return ''
+    return f'{parsed.scheme}://{parsed.netloc}'
+
+def _clean_origin_list(raw_value):
+    cleaned = [_clean_origin(item) for item in (raw_value or '').split(',')]
+    return [item for item in cleaned if item]
+
 _cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
-CORS_ALLOWED_ORIGINS = [u.strip() for u in _cors_origins.split(',') if u.strip()]
+CORS_ALLOWED_ORIGINS = _clean_origin_list(_cors_origins)
 CORS_ALLOWED_ORIGINS.extend([
     'https://roaring-scone-cfda07.netlify.app',
     'http://localhost:3000',
@@ -149,7 +166,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 _csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
-CSRF_TRUSTED_ORIGINS = [u.strip() for u in _csrf_origins.split(',') if u.strip()]
+CSRF_TRUSTED_ORIGINS = _clean_origin_list(_csrf_origins)
 # Add CORS origins to trusted CSRF origins to support cross-origin requests
 # from frontend servers like localhost:3000
 CSRF_TRUSTED_ORIGINS.extend([
