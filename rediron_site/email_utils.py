@@ -49,7 +49,17 @@ def send_email_message(
             return False
         raise EmailServiceError("Invalid email header")
     except Exception:
-        logger.exception("Email sending failed for subject '%s'", subject)
+        logger.exception(
+            "Email sending failed for subject '%s' via host=%s port=%s tls=%s ssl=%s user_configured=%s from=%s recipients=%s",
+            subject,
+            getattr(settings, "EMAIL_HOST", None),
+            getattr(settings, "EMAIL_PORT", None),
+            getattr(settings, "EMAIL_USE_TLS", None),
+            getattr(settings, "EMAIL_USE_SSL", None),
+            bool(getattr(settings, "EMAIL_HOST_USER", None)),
+            sender,
+            recipients,
+        )
         if fail_silently:
             return False
         raise EmailServiceError("Email delivery failed")
