@@ -41,8 +41,12 @@ def _shop_admin_email():
 
 def _send_shop_mail(subject, message, recipients):
     try:
-        return send_email_message(subject, message, recipients, fail_silently=True)
+        delivered = send_email_message(subject, message, recipients, fail_silently=False)
+        if not delivered:
+            logger.warning("Shop email was not delivered subject='%s' recipients=%s", subject, recipients)
+        return delivered
     except EmailServiceError:
+        logger.exception("Shop email failed subject='%s' recipients=%s", subject, recipients)
         return False
 
 # --- Category & Product ---
@@ -256,7 +260,9 @@ class CartItemViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         if self.request.user and self.request.user.is_authenticated:
-            return CartItem.objects.filter(cart__user=self.request.user).order_by('cart__id')
+            return CartItem.objects.filter(
+                Q(cart__user=self.request.user) | Q(cart__user__isnull=True)
+            ).order_by('cart__id')
         return CartItem.objects.filter(cart__user__isnull=True).order_by('cart__id')
 
     @action(detail=False, methods=['post'], url_path='add')

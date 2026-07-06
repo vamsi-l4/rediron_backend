@@ -1,11 +1,40 @@
 from datetime import timedelta
 
+from django.db.models import Q
 from django.utils import timezone
 
 from accounts.models import FitnessProgress, SavedItem
 from main.models import Equipment, Exercise, FitnessArticle, NutritionArticle, WorkoutTip
 from rediron_shop.models import Order, Product, Subscription, WishlistItem
 from coach.models import ChallengeProgress, CoachPlan, ProgressHistory, WeeklyReport
+
+
+MUSCLE_ALIASES = {
+    "chest": ("chest", "pec", "pector"),
+    "upper chest": ("chest", "pec", "pector", "incline"),
+    "back": ("back", "lat", "row", "pull"),
+    "shoulders": ("shoulder", "delt"),
+    "biceps": ("bicep", "curl", "arm"),
+    "triceps": ("tricep", "pushdown", "dip", "extension"),
+    "forearms": ("forearm", "wrist", "grip", "farmer"),
+    "abs": ("abs", "core", "abdominal", "oblique"),
+    "legs": ("leg", "quad", "hamstring", "glute", "calf", "squat", "curl", "press"),
+}
+
+
+def _payload_muscles(payload):
+    muscles = payload.get("focus_muscles") or payload.get("muscle") or []
+    if isinstance(muscles, str):
+        muscles = [muscles]
+    return [str(item).strip() for item in muscles if str(item).strip()]
+
+
+def _muscle_keywords(muscles):
+    keywords = []
+    for muscle in muscles:
+        normalized = muscle.lower()
+        keywords.extend(MUSCLE_ALIASES.get(normalized, (normalized,)))
+    return tuple(dict.fromkeys(keyword for keyword in keywords if keyword))
 
 
 def _safe_profile(user):
@@ -43,12 +72,16 @@ def load_user_context(user, intent="dashboard", payload=None):
     saved = SavedItem.objects.filter(user=user).order_by("-saved_at")[:20]
 
     focus = " ".join(str(v) for v in payload.values()).lower()
+    requested_muscles = _payload_muscles(payload)
+    muscle_keywords = _muscle_keywords(requested_muscles)
     exercises = Exercise.objects.all()
-    if payload.get("focus_muscles"):
-        muscles = payload.get("focus_muscles")
-        if isinstance(muscles, str):
-            muscles = [muscles]
-        exercises = exercises.filter(muscle_group__in=muscles)
+    if requested_muscles:
+        exercise_filter = Q()
+        for muscle in requested_muscles:
+            exercise_filter |= Q(muscle_group__iexact=muscle)
+        for keyword in muscle_keywords:
+            exercise_filter |= Q(muscle_group__icontains=keyword) | Q(name__icontains=keyword)
+        exercises = exercises.filter(exercise_filter)
     exercises = exercises.select_related().prefetch_related("equipment")[:20]
 
     products = Product.objects.filter(is_active=True)
@@ -62,6 +95,11 @@ def load_user_context(user, intent="dashboard", payload=None):
     equipment = Equipment.objects.all()
     if payload.get("equipment"):
         equipment = equipment.filter(name__icontains=str(payload.get("equipment")).split(",")[0])
+    elif intent == "body_explorer" and muscle_keywords:
+        equipment_filter = Q(exercises__in=exercises)
+        for keyword in muscle_keywords:
+            equipment_filter |= Q(name__icontains=keyword) | Q(usage__icontains=keyword)
+        equipment = equipment.filter(equipment_filter).distinct()
     equipment = equipment[:16]
 
     articles = list(FitnessArticle.objects.filter(is_published=True).order_by("-published_at")[:8])
@@ -132,4 +170,3 @@ def load_user_context(user, intent="dashboard", payload=None):
             .values("id", "week_start", "week_end", "score", "summary_json")[:6]
         ),
     }
-

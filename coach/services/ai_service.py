@@ -188,9 +188,10 @@ def _exercise_url_for_name(name, exercise_lookup):
     return exercise_lookup.get(stripped) or exercise_lookup.get(slugify(stripped))
 
 
-def _post_process_plan(intent, payload, parsed):
+def _post_process_plan(intent, payload, parsed, context=None):
     if not isinstance(parsed, dict):
         return parsed
+    context = context or {}
 
     if intent == "workout":
         exercises = Exercise.objects.only("name", "slug")
@@ -236,6 +237,26 @@ def _post_process_plan(intent, payload, parsed):
                 meal["items"] = items
             parsed["diet_type"] = "vegetarian"
 
+    if intent == "body_explorer":
+        context_equipment = context.get("equipment") or []
+        context_exercises = context.get("exercises") or []
+        context_articles = context.get("articles") or []
+        context_nutrition = context.get("nutrition_articles") or []
+        context_products = context.get("products") or []
+
+        allowed_equipment_ids = {item.get("id") for item in context_equipment if isinstance(item, dict)}
+        filtered_equipment = []
+        for item in parsed.get("equipment") or []:
+            if isinstance(item, dict) and item.get("id") in allowed_equipment_ids:
+                filtered_equipment.append(item)
+
+        parsed["muscle"] = payload.get("muscle") or parsed.get("muscle") or "Chest"
+        parsed["exercises"] = parsed.get("exercises") or context_exercises[:8]
+        parsed["articles"] = parsed.get("articles") or context_articles[:4]
+        parsed["nutrition"] = parsed.get("nutrition") or context_nutrition[:4]
+        parsed["supplements"] = parsed.get("supplements") or context_products[:4]
+        parsed["equipment"] = filtered_equipment or context_equipment[:6]
+
     return parsed
 
 
@@ -266,7 +287,7 @@ def generate_plan(user, intent, payload):
         except Exception as second_error:
             logger.warning("Coach AI provider failed twice; using deterministic RedIron response: %s", second_error)
             parsed = make_json_safe(_local_response(schema_name, payload, context))
-    parsed = make_json_safe(_post_process_plan(schema_name, payload, parsed))
+    parsed = make_json_safe(_post_process_plan(schema_name, payload, parsed, context))
 
     title = payload.get("title") or f"{schema_name.replace('_', ' ').title()} Plan"
     plan_type = schema_name if schema_name in dict(CoachPlan.PLAN_TYPES) else "workout"

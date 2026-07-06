@@ -54,6 +54,7 @@ Do not repeat a previous plan unless the user asks to repeat it; vary exercises,
 If diet_type is veg or vegetarian, do not include chicken, fish, eggs, meat, seafood, or non-vegetarian foods. Use paneer, tofu, dal, chana, rajma, curd, milk, soy, nuts, seeds, and vegetarian Indian meals instead.
 If the requested exercise, product, equipment, or article is not present in RedIron context, leave its URL blank and explain the recommendation without pretending it exists in the database.
 For workout daily_workouts exercises, use exact exercise names from Available RedIron context whenever possible.
+For body_explorer intent, only recommend exercises and equipment from the supplied context for the requested muscle. If context has no equipment for that muscle, return an empty equipment array instead of generic racks or unrelated machines.
 
 Intent: {intent}
 User request/input JSON: {compact_payload}
