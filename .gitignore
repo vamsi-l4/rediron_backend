@@ -35,6 +35,8 @@ htmlcov/
 .coverage.*
 *.gcda
 *.gcno
+.pytest_cache/
+.mypy_cache/
 
 # Build artifacts
 dist/
@@ -43,7 +45,17 @@ build/
 # OS files
 .DS_Store
 Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
 
 # Misc
 *.pid
 *.lock
+*.tmp
+*.bak
+*.backup
+tmp/
+temp/

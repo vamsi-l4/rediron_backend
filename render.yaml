@@ -21,7 +21,7 @@ services:
       - key: EMAIL_BACKEND
         value: "django.core.mail.backends.smtp.EmailBackend"
       - key: EMAIL_HOST
-        value: "smtp-relay.brevo.com"
+        sync: false
       - key: EMAIL_PORT
         value: "587"
       - key: EMAIL_USE_TLS
@@ -31,7 +31,7 @@ services:
       - key: EMAIL_HOST_PASSWORD
         sync: false
       - key: DEFAULT_FROM_EMAIL
-        value: "RedIron Gym <kvamsim7@gmail.com>"
+        sync: false
       - key: ADMIN_EMAIL
         sync: false
       - key: SHOP_ADMIN_EMAIL

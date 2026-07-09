@@ -1,19 +1,9 @@
 """
 Trial Subscription API Views
 Handles free trial management, upgrades, and payment verification
-
-TODO: Payment Integration Notes
-- Razorpay payment verification currently disabled
-- When integrating real payments:
-  1. Uncomment payment verification in upgrade_trial()
-  2. Implement webhook handling for async payment confirmation
-  3. Add retry logic for failed payment transactions
-  4. Integrate with Clerk user metadata to track trial status
-  5. Add email notifications for trial expiration
 """
 
 from django.utils import timezone
-from django.http import JsonResponse
 from datetime import timedelta
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated

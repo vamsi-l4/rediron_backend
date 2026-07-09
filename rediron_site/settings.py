@@ -44,7 +44,7 @@ MIDDLEWARE = [
     # PRODUCTION-GRADE: DATA ISOLATION MIDDLEWARE
     # ============================================
     'accounts.middleware.DataIsolationMiddleware',  # Ensure user data isolation
-    'accounts.middleware.ClerkUserValidationMiddleware',  # Validate Clerk setup
+    'accounts.middleware.ClerkUserValidationMiddleware',
 ]
 
 ROOT_URLCONF = 'rediron_site.urls'
@@ -177,9 +177,7 @@ CSRF_TRUSTED_ORIGINS.extend([
 ])
 CSRF_TRUSTED_ORIGINS = list(dict.fromkeys(CSRF_TRUSTED_ORIGINS))
 
-# ============================================
-# BREVO SMTP CONFIGURATION
-# ============================================
+# Email notification configuration
 EMAIL_BACKEND = os.environ.get(
     'EMAIL_BACKEND',
     'django.core.mail.backends.smtp.EmailBackend'
@@ -187,7 +185,7 @@ EMAIL_BACKEND = os.environ.get(
 def _env_bool(name, default=False):
     return str(os.environ.get(name, str(default))).strip().lower() in {'1', 'true', 'yes', 'on'}
 
-EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
+EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
 EMAIL_PORT = int(str(os.environ.get('EMAIL_PORT', '587')).strip())
 EMAIL_USE_TLS = _env_bool('EMAIL_USE_TLS', True)
 EMAIL_USE_SSL = _env_bool('EMAIL_USE_SSL', False)
@@ -210,10 +208,9 @@ JWT_EXP_DELTA_SECONDS = int(os.environ.get('JWT_EXP_DELTA_SECONDS', 3600))
 # DRF
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'accounts.authentication.ClerkAuthentication',  # NEW: Clerk authentication
+        'accounts.authentication.ClerkAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # 'accounts.authentication.JWTAuthentication',  # COMMENTED OUT: Old JWT authentication
     ),
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
@@ -226,9 +223,7 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# ============================================
-# CLERK AUTHENTICATION (PRODUCTION-GRADE)
-# ============================================
+# Authentication service configuration
 CLERK_SECRET_KEY = os.environ.get('CLERK_SECRET_KEY', '')
 CLERK_PUBLISH_KEY = os.environ.get('CLERK_PUBLISH_KEY') or os.environ.get('CLERK_PUBLISHABLE_KEY', '')
 
@@ -250,18 +245,16 @@ CLERK_JWKS_URL = (
     or (f'{CLERK_ISSUER}/.well-known/jwks.json' if CLERK_ISSUER else 'https://api.clerk.dev/v1/jwks')
 )
 
-# In production, both keys are required
 if not DEBUG:
     if not CLERK_SECRET_KEY or not CLERK_PUBLISH_KEY:
         raise ValueError('CLERK_SECRET_KEY and CLERK_PUBLISH_KEY are required in production')
 
-# Log Clerk configuration status
 if CLERK_SECRET_KEY:
     logger = __import__('logging').getLogger(__name__)
-    logger.info('✅ Clerk authentication configured')
+    logger.info('Authentication service configured')
 else:
     logger = __import__('logging').getLogger(__name__)
-    logger.warning('⚠️ Clerk keys not configured - using development mode')
+    logger.warning('Authentication service keys not configured - using development mode')
 
 AUTHENTICATION_BACKENDS = [
     'accounts.authentication.AllowInactiveUserBackend',
