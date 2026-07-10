@@ -8,6 +8,8 @@ from django.test import TestCase, override_settings
 
 from .models import CustomUser, UserProfile
 
+TEST_WEBHOOK_SECRET = 'whsec_' + base64.urlsafe_b64encode(b'local-webhook-test-key').decode().rstrip('=')
+
 
 class ClerkWebhookTests(TestCase):
     signing_key = b'local-webhook-test-key'
@@ -23,7 +25,7 @@ class ClerkWebhookTests(TestCase):
             'HTTP_SVIX_SIGNATURE': f'v1,{signature}',
         }
 
-    @override_settings(CLERK_WEBHOOK_SIGNING_SECRET='whsec_bG9jYWwtd2ViaG9vay10ZXN0LWtleQ')
+    @override_settings(CLERK_WEBHOOK_SIGNING_SECRET=TEST_WEBHOOK_SECRET)
     def test_user_deleted_event_removes_local_user_and_profile(self):
         user = CustomUser.objects.create_user(
             email='deleted@example.com', name='Deleted User', clerk_user_id='user_deleted_test'

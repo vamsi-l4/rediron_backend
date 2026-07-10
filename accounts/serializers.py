@@ -82,7 +82,7 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = (
-            'id', 'user', 'address_type', 'street_address', 'city',
+            'id', 'user', 'address_type', 'recipient_name', 'phone', 'street_address', 'city',
             'state', 'postal_code', 'country', 'is_primary',
             'is_default_shipping', 'is_default_billing', 'created_at', 'updated_at'
         )
@@ -91,9 +91,12 @@ class AddressSerializer(serializers.ModelSerializer):
     def validate(self, data):
         """Prevent multiple primary addresses"""
         user = self.context['request'].user
-        if data.get('is_primary') and self.instance is None:
-            # Creating new primary address - unset others
-            Address.objects.filter(user=user, is_primary=True).update(is_primary=False)
+        if data.get('is_primary'):
+            # Keep a single default address on both creation and updates.
+            addresses = Address.objects.filter(user=user, is_primary=True)
+            if self.instance:
+                addresses = addresses.exclude(pk=self.instance.pk)
+            addresses.update(is_primary=False, is_default_shipping=False)
         return data
 
 

@@ -394,6 +394,8 @@ class Address(models.Model):
         choices=ADDRESS_TYPE_CHOICES,
         default='home'
     )
+    recipient_name = models.CharField(max_length=120, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
     street_address = models.CharField(max_length=255)
     city = models.CharField(max_length=100)
     state = models.CharField(max_length=100)

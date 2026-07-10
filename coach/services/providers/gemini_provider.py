@@ -26,7 +26,7 @@ class GeminiProvider(BaseAIProvider):
             "contents": [{"parts": [{"text": prompt}]}],
             "generationConfig": {
                 "response_mime_type": "application/json",
-                "temperature": 0.35,
+                "temperature": 0.2,
             },
         }
         last_error = None
