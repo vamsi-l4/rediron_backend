@@ -1,6 +1,7 @@
 import hmac
 import hashlib
 import base64
+import binascii
 import json
 import logging
 from pathlib import Path
@@ -10,6 +11,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.conf import settings
+from django.db import transaction
 from django.contrib.auth import get_user_model
 from rediron_site.email_utils import send_email_message, send_user_email, send_admin_notification, EmailServiceError
 from rest_framework.decorators import api_view, permission_classes, parser_classes
@@ -22,6 +24,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework_simplejwt.tokens import RefreshToken as JWTRefreshToken
 from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 import random
+import time
 
 from .razorpay_client import client as razorpay_client
 from .models import (
@@ -36,6 +39,64 @@ logger = logging.getLogger(__name__)
 
 ALLOWED_PROFILE_IMAGE_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.webp'}
 ALLOWED_PROFILE_IMAGE_CONTENT_TYPES = {'image/jpeg', 'image/png', 'image/webp'}
+
+
+def _valid_clerk_webhook(request):
+    """Validate Clerk/Svix webhook signatures without trusting a public POST."""
+    secret = getattr(settings, 'CLERK_WEBHOOK_SIGNING_SECRET', '')
+    if not secret:
+        return False
+    webhook_id = request.headers.get('svix-id', '')
+    timestamp = request.headers.get('svix-timestamp', '')
+    signatures = request.headers.get('svix-signature', '')
+    if not webhook_id or not timestamp or not signatures:
+        return False
+    try:
+        if abs(time.time() - int(timestamp)) > 300:
+            return False
+        encoded_secret = secret.split('_', 1)[-1]
+        key = base64.urlsafe_b64decode(encoded_secret + '=' * (-len(encoded_secret) % 4))
+        signed_payload = f'{webhook_id}.{timestamp}.'.encode() + request.body
+        expected = base64.b64encode(hmac.new(key, signed_payload, hashlib.sha256).digest()).decode()
+        return any(
+            hmac.compare_digest(value.strip().split(',', 1)[-1], expected)
+            for value in signatures.split(' ')
+            if value.strip().startswith('v1,')
+        )
+    except (TypeError, ValueError, binascii.Error):
+        return False
+
+
+@csrf_exempt
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def clerk_webhook(request):
+    """Delete local personal data when Clerk deletes a user account."""
+    if not _valid_clerk_webhook(request):
+        logger.warning('Rejected Clerk webhook with an invalid signature')
+        return Response({'detail': 'Invalid webhook signature.'}, status=status.HTTP_401_UNAUTHORIZED)
+    try:
+        event = json.loads(request.body.decode('utf-8'))
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return Response({'detail': 'Invalid webhook payload.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    if event.get('type') != 'user.deleted':
+        return Response({'received': True})
+    clerk_user_id = (event.get('data') or {}).get('id')
+    if not clerk_user_id:
+        return Response({'detail': 'Missing Clerk user id.'}, status=status.HTTP_400_BAD_REQUEST)
+    # Deleting CustomUser cascades profile image records, carts, orders,
+    # addresses, coach data and all other user-linked models. Payment records
+    # use SET_NULL for normal admin deletions, so explicitly remove them here
+    # to honour an account-deletion request.
+    with transaction.atomic():
+        user = User.objects.filter(clerk_user_id=clerk_user_id).first()
+        if not user:
+            return Response({'received': True})
+        PaymentTransaction.objects.filter(user=user).delete()
+        deleted, _ = user.delete()
+    logger.info('Clerk deletion synced for %s (%s local records deleted)', clerk_user_id, deleted)
+    return Response({'received': True})
 
 
 def _profile_image_url(request, user, profile=None):

@@ -149,12 +149,18 @@ def _clean_origin_list(raw_value):
 
 _cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
 CORS_ALLOWED_ORIGINS = _clean_origin_list(_cors_origins)
+CORS_ALLOWED_ORIGINS.extend(_clean_origin_list(os.environ.get('FRONTEND_URL', '')))
+CORS_ALLOWED_ORIGINS.extend(_clean_origin_list(os.environ.get('NETLIFY_URL', '')))
 CORS_ALLOWED_ORIGINS.extend([
     'https://roaring-scone-cfda07.netlify.app',
     'http://localhost:3000',
     'https://localhost:3000',
 ])
 CORS_ALLOWED_ORIGINS = list(dict.fromkeys(CORS_ALLOWED_ORIGINS))
+# Netlify preview URLs change on every deploy. Keep this optional so a
+# production deployment can explicitly opt in without opening CORS globally.
+if str(os.environ.get('ALLOW_NETLIFY_PREVIEW_ORIGINS', 'False')).strip().lower() in {'1', 'true', 'yes', 'on'}:
+    CORS_ALLOWED_ORIGIN_REGEXES = [r'^https://[a-z0-9-]+\.netlify\.app$']
 CORS_ALLOW_CREDENTIALS = True
 
 from corsheaders.defaults import default_headers
@@ -226,6 +232,7 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # Authentication service configuration
 CLERK_SECRET_KEY = os.environ.get('CLERK_SECRET_KEY', '')
 CLERK_PUBLISH_KEY = os.environ.get('CLERK_PUBLISH_KEY') or os.environ.get('CLERK_PUBLISHABLE_KEY', '')
+CLERK_WEBHOOK_SIGNING_SECRET = os.environ.get('CLERK_WEBHOOK_SIGNING_SECRET', '')
 
 def _clerk_frontend_api_from_publishable_key(publishable_key):
     """Clerk publishable keys encode the frontend API domain after the prefix."""

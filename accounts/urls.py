@@ -5,6 +5,7 @@ from . import trial_views
 urlpatterns = [
     # ====== PAYMENT ENDPOINTS ======
     path('razorpay-webhook/', views.razorpay_webhook, name='razorpay_webhook'),
+    path('clerk-webhook/', views.clerk_webhook, name='clerk_webhook'),
     path('verify-razorpay-payment/', views.verify_razorpay_payment, name='verify_razorpay_payment'),
     path('create-razorpay-order/', views.create_razorpay_order, name='create_razorpay_order'),
     

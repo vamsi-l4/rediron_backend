@@ -8,6 +8,8 @@ from jwt import PyJWTError
 from django.conf import settings
 import logging
 import requests
+from django.db import IntegrityError, transaction
+from django.core.cache import cache
 logger = logging.getLogger(__name__)
 
 try:
@@ -35,6 +37,45 @@ def _clean_name(value):
 
 def _email_available_for_user(email, user):
     return bool(email) and not User.objects.filter(email__iexact=email).exclude(pk=user.pk).exists()
+
+
+def _clerk_user_details(clerk_user_id):
+    """Return email/name directly from Clerk, never from browser supplied headers.
+
+    Clerk's session JWT normally contains only the user id.  Fetching the user
+    record with the backend secret lets us safely reconnect a database record
+    after a Clerk account was deleted and recreated with the same email.
+    """
+    secret = getattr(settings, 'CLERK_SECRET_KEY', '')
+    if not secret:
+        return {}
+
+    cache_key = f'clerk-user-details:{clerk_user_id}'
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    try:
+        response = requests.get(
+            f'https://api.clerk.com/v1/users/{clerk_user_id}',
+            headers={'Authorization': f'Bearer {secret}'},
+            timeout=5,
+        )
+        response.raise_for_status()
+        data = response.json()
+        primary_id = data.get('primary_email_address_id')
+        emails = data.get('email_addresses') or []
+        primary = next((item for item in emails if item.get('id') == primary_id), emails[0] if emails else {})
+        details = {
+            'email': _clean_real_email(primary.get('email_address')),
+            'name': _clean_name(' '.join(filter(None, [data.get('first_name'), data.get('last_name')])))
+                    or _clean_name(data.get('username')),
+        }
+        cache.set(cache_key, details, timeout=300)
+        return details
+    except requests.RequestException:
+        logger.exception('[Clerk] Could not retrieve user details for %s', clerk_user_id)
+        return {}
 
 # ============================================
 # CLERK TOKEN VERIFICATION
@@ -167,20 +208,28 @@ class ClerkAuthentication(BaseAuthentication):
             # ============================================
             # STEP 4: GET OR CREATE USER IN DJANGO
             # ============================================
+            verified_identity = _clerk_user_details(clerk_user_id)
+            # JWT claims are acceptable when present.  X-Clerk headers are only
+            # a development fallback and must never be used to take over an
+            # existing account in production.
+            token_email = _clean_real_email(payload.get('email') or payload.get('primary_email_address'))
+            verified_email = verified_identity.get('email') or token_email
+            header_email = _clean_real_email(request.headers.get('X-Clerk-Email')) if settings.DEBUG else ''
+            verified_name = verified_identity.get('name') or _clean_name(payload.get('name'))
+            header_name = _clean_name(request.headers.get('X-Clerk-Name'))
+
             try:
                 user = User.objects.get(clerk_user_id=clerk_user_id)
                 logger.info(f'✅ Found existing user for Clerk ID: {clerk_user_id}')
 
-                token_email = _clean_real_email(payload.get('email') or payload.get('primary_email_address'))
-                header_email = _clean_real_email(request.headers.get('X-Clerk-Email'))
-                header_name = _clean_name(request.headers.get('X-Clerk-Name'))
                 update_fields = []
-                real_email = token_email or header_email
+                real_email = verified_email or header_email
                 if real_email and user.email.endswith('@clerk.invalid') and _email_available_for_user(real_email, user):
                     user.email = real_email
                     update_fields.append('email')
-                if header_name and (not user.name or user.name == 'Clerk User'):
-                    user.name = header_name
+                real_name = verified_name or header_name
+                if real_name and (not user.name or user.name == 'Clerk User'):
+                    user.name = real_name
                     update_fields.append('name')
                 if update_fields:
                     user.save(update_fields=update_fields)
@@ -190,33 +239,42 @@ class ClerkAuthentication(BaseAuthentication):
                 # STEP 4A: CREATE NEW USER FROM CLERK TOKEN
                 # ============================================
                 try:
-                    real_email = _clean_real_email(
-                        payload.get('email') or payload.get('primary_email_address') or request.headers.get('X-Clerk-Email')
-                    )
-                    name = _clean_name(request.headers.get('X-Clerk-Name')) or payload.get('name', 'Clerk User')
+                    real_email = verified_email or header_email
+                    name = verified_name or header_name or 'Clerk User'
                     first_name = payload.get('given_name', '')
                     last_name = payload.get('family_name', '')
 
                     existing_user = User.objects.filter(email__iexact=real_email).first() if real_email else None
-                    if existing_user and not existing_user.clerk_user_id:
-                        existing_user.clerk_user_id = clerk_user_id
-                        fields = ['clerk_user_id']
-                        resolved_name = f"{first_name} {last_name}".strip() or name
-                        if resolved_name and (not existing_user.name or existing_user.name == 'Clerk User'):
-                            existing_user.name = resolved_name
-                            fields.append('name')
-                        existing_user.save(update_fields=fields)
+                    if existing_user:
+                        # A recreated Clerk account has a new user_ id but the
+                        # same verified email. Rebind its existing RedIron data
+                        # rather than attempting a duplicate INSERT.
+                        with transaction.atomic():
+                            existing_user = User.objects.select_for_update().get(pk=existing_user.pk)
+                            existing_user.clerk_user_id = clerk_user_id
+                            fields = ['clerk_user_id']
+                            resolved_name = f"{first_name} {last_name}".strip() or name
+                            if resolved_name and (not existing_user.name or existing_user.name == 'Clerk User'):
+                                existing_user.name = resolved_name
+                                fields.append('name')
+                            existing_user.save(update_fields=fields)
                         user = existing_user
-                        logger.info(f'✅ Linked existing user to Clerk ID: {clerk_user_id}')
+                        logger.info(f'✅ Reconnected existing user to Clerk ID: {clerk_user_id}')
                     else:
                         email = real_email or f'{clerk_user_id}@clerk.invalid'
-                        user = User.objects.create(
-                            email=email,
-                            name=f"{first_name} {last_name}".strip() or name,
-                            clerk_user_id=clerk_user_id,
-                            is_active=True,
-                            is_verified=True,
-                        )
+                        try:
+                            user = User.objects.create(
+                                email=email,
+                                name=f"{first_name} {last_name}".strip() or name,
+                                clerk_user_id=clerk_user_id,
+                                is_active=True,
+                                is_verified=True,
+                            )
+                        except IntegrityError:
+                            # A concurrent first request may have created the
+                            # same Clerk record. Fetch it instead of returning
+                            # a 403 to the browser.
+                            user = User.objects.get(clerk_user_id=clerk_user_id)
                         logger.info(f'✅ Created new user from Clerk token: {clerk_user_id}')
                 except Exception as create_error:
                     # If user creation fails, log but still allow authentication
